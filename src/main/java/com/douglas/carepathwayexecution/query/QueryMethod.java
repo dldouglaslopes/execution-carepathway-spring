@@ -190,7 +190,7 @@ public class QueryMethod {
 		
 		//getting the average time
 		double avg = sum / cont;
-		
+		System.out.println(decimalFormat( avg / 60));
 		return decimalFormat( avg / 60);
 	}
 		
@@ -278,10 +278,12 @@ public class QueryMethod {
 	}
 	
 	private FindIterable<Document> filterDocuments() {
-		FindIterable<Document> docs = dbConfig.getCollection()
-												.find()
-												.filter( Filters.all( "name", 
-																	carePathway.getCarePathways()));
+		FindIterable<Document> docs = dbConfig.getCollection().find();
+		
+		if (!carePathway.getCarePathways().isEmpty()) {
+			docs.filter( Filters.all( "name", 
+										carePathway.getCarePathways()));
+		}
 		
 		if (!carePathway.getSteps().contains(EStep.ALL) &&
 			!carePathway.getConducts().contains(EConduct.ALL)) {
@@ -323,19 +325,19 @@ public class QueryMethod {
 											age.getTo())));
 		}
 		
-		List<Document> docList = new ArrayList<>();
-		
-		for (Document document : docs) {
-			
-			if(document.getDate("creation").after(date.getFrom()) &&
-					document.getDate("conclusion").before(date.getTo())) {
-				
-				docList.add(document);
-			}	
-		}	
-		for (Document document : docList) {
-			System.err.println(docList.get(0).get("creation"));
-		} 
+//		List<Document> docList = new ArrayList<>();
+//		
+//		for (Document document : docs) {
+//			
+//			if(document.getDate("creation").after(date.getFrom()) &&
+//					document.getDate("conclusion").before(date.getTo())) {
+//				
+//				docList.add(document);
+//			}	
+//		}	
+//		for (Document document : docList) {
+//			System.err.println(docList.get(0).get("creation"));
+//		} 
 	
 		return docs;
 	}	

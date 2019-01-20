@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.douglas.carepathwayexecution.query.QueryStructure;
 import com.douglas.carepathwayexecution.web.model.EForm;
 
 import QueryMetamodel.CarePathway;
@@ -22,17 +24,27 @@ import QueryMetamodel.Query_metamodelFactory;
 @RequestMapping("/")
 public class ExecutedCarePathwayController {
 	
-	@RequestMapping(value = { "/medicalCare/execution/{method}" }, method = RequestMethod.GET)
-	public String selectByParam(Model model) {		
+	@RequestMapping(value = { "/medcare/execution/{method}" }, method = RequestMethod.GET)
+	public String selectByParam(@PathVariable("method") String method, 
+								Model model){		
+		
+		EForm form = new EForm();
+	    model.addAttribute("form", form);	
+	    
+	    QueryStructure queryStructure = new QueryStructure();
+	    queryStructure.call(queryStructure.create(method));
+	    	    
+		//model.addAttribute("methodNames", result);
+		
 		return "selectByParam";
 	}
 	
-	@RequestMapping(value = { "/medicalCare/execution/{id}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/medcare/execution/{id}" }, method = RequestMethod.GET)
 	public String selectById(Model model) {		
 		return "selectById";
 	}
 	
-	@RequestMapping(value = { "/medicalCare/execution" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/medcare/execution" }, method = RequestMethod.GET)
 	public String selectByOptions(Model model) {		
 	    EForm form = new EForm();
 	    model.addAttribute("form", form);
@@ -69,5 +81,10 @@ public class ExecutedCarePathwayController {
 	    model.addAttribute("eCarePathway", eCarePathway);
 	    
 	    return "selectByOptions";
+	}
+	
+	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
+	public String structure(Model model) {		
+		return "howToStructure";
 	}
 }
