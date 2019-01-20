@@ -14,24 +14,25 @@
             <tr>
                 <td>Select Function:</td>
                 <td>
-                    <select th:field="*{methodId}">
+                    <select th:field="*{method}">
                          <option value=""> -- </option>
                          <option th:each="method : ${methodNames}"
-                            th:value="${method.name.name}"/>
+                            th:value="${method.name.name}" 
+                            th:utext="${method.name.literal}"/>
                   	</select> 
                 </td>
             </tr>
-<!--             <tr> -->
-<!--                 <td>Select Care Pathways:</td> -->
-<!--                 <td> -->
-<!--                     <select th:field="*{countryId}"> -->
-<!--                          <option value=""> -- </option> -->
-<!--                          <option th:each="country : ${countries}" -->
-<!--                             th:value="${country.countryId}" -->
-<!--                             th:utext="${country.countryName}"/> -->
-<!--                   	</select>  -->
-<!--                 </td> -->
-<!--             </tr> -->
+            <tr>
+                <td>Select Care Pathways:</td>
+                <td>
+                    <select th:field="*{carePathway}">
+                         <option value=""> -- </option>
+                         <option th:each="carePathway : ${eCarePathway.carePathways}"
+                            th:value="${carePathway.name}"
+                            th:utext="${carePathway.literal}"/>
+                  	</select> 
+                </td>
+            </tr>
 <!--            	<tr> -->
 <!--                 <td>Select Steps:</td> -->
 <!--                 <td> -->

@@ -8,7 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.douglas.carepathwayexecution.web.model.EForm;
+
+import QueryMetamodel.CarePathway;
+import QueryMetamodel.ECarePathway;
+import QueryMetamodel.EConduct;
 import QueryMetamodel.EMethod;
+import QueryMetamodel.EStep;
 import QueryMetamodel.Method;
 import QueryMetamodel.Query_metamodelFactory;
 
@@ -16,9 +22,19 @@ import QueryMetamodel.Query_metamodelFactory;
 @RequestMapping("/")
 public class ExecutedCarePathwayController {
 	
-	@RequestMapping(value = { "/execution" }, method = RequestMethod.GET)
-	public String selectOptions(Model model) {		
-	    Form form = new Form();
+	@RequestMapping(value = { "/medicalCare/execution/{method}" }, method = RequestMethod.GET)
+	public String selectByParam(Model model) {		
+		return "selectByParam";
+	}
+	
+	@RequestMapping(value = { "/medicalCare/execution/{id}" }, method = RequestMethod.GET)
+	public String selectById(Model model) {		
+		return "selectById";
+	}
+	
+	@RequestMapping(value = { "/medicalCare/execution" }, method = RequestMethod.GET)
+	public String selectByOptions(Model model) {		
+	    EForm form = new EForm();
 	    model.addAttribute("form", form);
 	
 	    List<EMethod> methodNames = new ArrayList<>();
@@ -26,26 +42,32 @@ public class ExecutedCarePathwayController {
 	    
 	    for (Method method : methodEnums) {
 			EMethod eMethod = Query_metamodelFactory.eINSTANCE.createEMethod();
-			eMethod.setName(method);
+	    	eMethod.setName(method);
 			
 			methodNames.add(eMethod);
 		}
 	    
 	    model.addAttribute("methodNames", methodNames);
 	    
-	    return "executionCarePathway";
+	    ECarePathway eCarePathway = Query_metamodelFactory.eINSTANCE.createECarePathway();
+	    List<EConduct> eConducts = EConduct.VALUES;
+	    List<EStep> eSteps = EStep.VALUES;
+	    List<CarePathway> carePathways = CarePathway.VALUES;
+	    
+	    for (EStep eStep : eSteps) {
+			eCarePathway.getSteps().add(eStep);
+		}
+	    
+	    for (EConduct eConduct : eConducts) {
+	    	eCarePathway.getConducts().add(eConduct);
+		}
+	    
+	    for (CarePathway carePathway : carePathways) {
+	    	eCarePathway.getCarePathways().add(carePathway);
+	    }
+	    
+	    model.addAttribute("eCarePathway", eCarePathway);
+	    
+	    return "selectByOptions";
 	}
-}
-
-class Form {
-	 
-	private Long methodId;
- 
-    public Long getMethodId() {
-        return methodId;
-    }
- 
-    public void setMethodId(Long methodId) {
-        this.methodId = methodId;
-    }
 }

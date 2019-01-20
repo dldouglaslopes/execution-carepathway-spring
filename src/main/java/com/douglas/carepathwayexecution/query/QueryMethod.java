@@ -111,7 +111,7 @@ public class QueryMethod {
 		
 		//counting how many medication occurences in complementary conducts/executed steps
 		for( Document doc : medicationComps) {
-			if (carePathway.getConduct().contains(EConduct.MEDICATION)) {
+			if (carePathway.getConducts().contains(EConduct.MEDICATION)) {
 				
 				List<Document> complementaryConducts = ( List<Document>) doc.get( "complementaryConducts");
 
@@ -140,8 +140,8 @@ public class QueryMethod {
 				List<Document> executedSteps = ( List<Document>) doc.get( "executedSteps");
 				
 				if( !executedSteps.isEmpty() &&
-					(carePathway.getConduct().contains( EStep.TREATMENT) ||
-					carePathway.getConduct().contains( EStep.PRESCRIPTION)) ) {	
+					(carePathway.getConducts().contains( EStep.TREATMENT) ||
+					carePathway.getConducts().contains( EStep.PRESCRIPTION)) ) {	
 					
 					for( Document step : executedSteps) {						
 						if (doc.get("step.type").equals(EStep.TREATMENT) || 
@@ -202,8 +202,8 @@ public class QueryMethod {
 		String field = "name";
 		
 		for (Document document : carePathwayDocs) {
-			for (int i = 0; i < carePathway.getName().size(); i++) {
-				String name = carePathway.getName().get(i);
+			for (int i = 0; i < carePathway.getCarePathways().size(); i++) {
+				String name = carePathway.getCarePathways().get(i).getName();
 				int size = count( field, name, carePathwayDocs);	
 			
 				if (occurrenciesMap.containsKey(name)) {
@@ -231,14 +231,14 @@ public class QueryMethod {
 				
 		//count how many occurrences of same care pathway name 
 		String field = "name";
-		String name = carePathway.getName().get(0);
+		String name = carePathway.getCarePathways().get(0).getName();
 		int size = count( field, name, carePathwayDocs);
 		
 		Map<String, Integer> flowMap = new HashMap<>();
 		
 		//quering the flows and counting how many flow occurrences
 		for( Document carePathwayDoc : carePathwayDocs) {
-			if ( carePathway.getName().equals(carePathwayDoc.get("name"))) {
+			if ( carePathway.getCarePathways().equals(carePathwayDoc.get("name"))) {
 				
 				List<Document> executedStepDocs =  (List<Document>) carePathwayDoc.get( "executedSteps");
 				
@@ -281,27 +281,27 @@ public class QueryMethod {
 		FindIterable<Document> docs = dbConfig.getCollection()
 												.find()
 												.filter( Filters.all( "name", 
-																	carePathway.getName()));
+																	carePathway.getCarePathways()));
 		
-		if (!carePathway.getStep().contains(EStep.ALL) &&
-			!carePathway.getConduct().contains(EConduct.ALL)) {
+		if (!carePathway.getSteps().contains(EStep.ALL) &&
+			!carePathway.getConducts().contains(EConduct.ALL)) {
 			
 			docs.filter( Filters.or( Filters.all( "executedsteps.step.name", 
-													carePathway.getStep()),
+													carePathway.getSteps()),
 									Filters.all( "complementaryconducts.type", 
-													carePathway.getConduct())));
+													carePathway.getConducts())));
 		}
-		else if (carePathway.getStep().contains(EStep.ALL) &&
-				!carePathway.getConduct().contains(EConduct.ALL)) {
+		else if (carePathway.getSteps().contains(EStep.ALL) &&
+				!carePathway.getConducts().contains(EConduct.ALL)) {
 			
 			docs.filter( Filters.all( "complementaryconducts.type", 
-										carePathway.getConduct()));
+										carePathway.getConducts()));
 		} 
-		else if (!carePathway.getStep().contains(EStep.ALL) &&
-				carePathway.getConduct().contains(EConduct.ALL)) {
+		else if (!carePathway.getSteps().contains(EStep.ALL) &&
+				carePathway.getConducts().contains(EConduct.ALL)) {
 			
 			docs.filter( Filters.all( "executedsteps.step.name", 
-										carePathway.getStep()));
+										carePathway.getSteps()));
 		}		
 		
 		if (!sex.getSex().equals(Gender.ALL)) {

@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import QueryMetamodel.Age;
+import QueryMetamodel.CarePathway;
 import QueryMetamodel.Date;
 import QueryMetamodel.EAttribute;
 import QueryMetamodel.ECarePathway;
@@ -42,9 +43,9 @@ public class QueryStructure {
 		age.setTo(0);
 		range.setQuantity(5);
 		range.setOrder(Order.TOP);
-		eCarePathway.getStep().add(EStep.ALL);
-		eCarePathway.getConduct().add(EConduct.ALL);
-		eCarePathway.getName().add("Pneumonia & Influenza");
+		eCarePathway.getSteps().add(EStep.ALL);
+		eCarePathway.getConducts().add(EConduct.ALL);
+		eCarePathway.getCarePathways().add(CarePathway.PNEUMONIA_INFLUENZA);
 		date.setFrom(null);
 		date.setTo(null);
 		status.setMessage(Message.ALL);
