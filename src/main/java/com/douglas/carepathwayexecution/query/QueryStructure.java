@@ -3,7 +3,10 @@ package com.douglas.carepathwayexecution.query;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import QueryMetamodel.Age;
 import QueryMetamodel.CarePathway;
@@ -24,7 +27,15 @@ import QueryMetamodel.Sex;
 import QueryMetamodel.Status;
 
 public class QueryStructure {			
-	public EQuery create( String methodStr){
+	public EQuery create( String methodStr, 
+						List<String> pathways, 
+						List<String> steps, 
+						List<String> conducts, 
+						List<String> ages, 
+						List<String> sexes, 
+						List<String> dates, 
+						List<String> ranges){
+		
 		EQuery query = Query_metamodelFactory.eINSTANCE.createEQuery();
 		
 		EMethod method = Query_metamodelFactory.eINSTANCE.createEMethod();
@@ -52,7 +63,10 @@ public class QueryStructure {
 		range.setOrder(Order.TOP);
 		eCarePathway.getSteps().add(EStep.ALL);
 		eCarePathway.getConducts().add(EConduct.ALL);
+		
+		//if only one
 		eCarePathway.getCarePathways().add(CarePathway.PNEUMONIA_INFLUENZA);
+		
 		date.setFrom(null);
 		date.setTo(null);
 		status.setMessage(Message.ALL);
@@ -70,17 +84,18 @@ public class QueryStructure {
 		return query;
 	}
 	
-	public void call(EQuery eQuery) {			
+	public List<Entry<String, Double>> call(EQuery eQuery) {			
 		//new QueryMethod(eQuery).conducts();		
 		
 		java.lang.reflect.Method method;
+		Object results = null;
 		
 		try {
 			System.out.println(eQuery.getEMethod().getName());
 			method = QueryMethod.class.getMethod(eQuery.getEMethod().getName() + "");
 			method.setAccessible(true);
 			try {
-				method.invoke(new QueryMethod(eQuery));
+				results =  method.invoke(new QueryMethod(eQuery));
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				e.printStackTrace();
 			}
@@ -88,6 +103,7 @@ public class QueryStructure {
 			e.printStackTrace();
 		}
 		
+		return (List<Entry<String, Double>>) results;
 	}
 	
 	public void runExample() throws ParseException {		

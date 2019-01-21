@@ -1,7 +1,6 @@
 package com.douglas.carepathwayexecution.query;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -16,6 +15,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.Filters;
 
 import QueryMetamodel.Age;
+import QueryMetamodel.CarePathway;
 import QueryMetamodel.Date;
 import QueryMetamodel.ECarePathway;
 import QueryMetamodel.EConduct;
@@ -47,58 +47,68 @@ public class QueryMethod {
 		this.status = eQuery.getEMethod().getEAttribute().getStatus();
 	}
 	
-	public Map<String, Integer> conducts() {
+	public List<Entry<String, Double>> conducts() {
 		//finding all the documents
 		FindIterable<Document> conductsDoc = filterDocuments();	
 		
-		Map<String, Integer> conductsSum = new HashMap<>();		
-		conductsSum.put( "with_conduct", 0);
-		conductsSum.put( "no_conduct", 0);
+		Map<String, Double> conductsSum = new HashMap<>();		
+		conductsSum.put( "with_conduct", 0.0);
+		conductsSum.put( "no_conduct", 0.0);
 		
 		//counting the occurrences when the care pathway has conducts or not
 		for (Document document : conductsDoc) {
 			List<Document> conducts = (List<Document>) document.get("complementaryConducts");
 			
 			if (!conducts.isEmpty()) {
-				int value = conductsSum.get( "with_conduct");
+				double value = conductsSum.get( "with_conduct");
 				conductsSum.replace( "with_conduct", value + 1);
 			}
 			else {
-				int value = conductsSum.get( "no_conduct");
+				double value = conductsSum.get( "no_conduct");
 				conductsSum.replace( "no_conduct", value + 1);
 			}
 		}
-			
-		return conductsSum;
+		
+		List<Entry<String, Double>> list = new LinkedList<>( conductsSum.entrySet());
+
+		//sorting the list with a comparator
+		sort(list, range.getOrder());
+
+		return list;
 	}
 	
-	public Map<String, Integer> status() {
+	public List<Entry<String, Double>> status() {
 		
 		//finding all the documents
 		FindIterable<Document> status = filterDocuments();	
 		
-		Map<String, Integer> statusSum = new HashMap<>();		
-		statusSum.put( "completed", 0);
-		statusSum.put( "aborted", 0);
-		statusSum.put( "inProgress", 0);
+		Map<String, Double> statusSum = new HashMap<>();		
+		statusSum.put( "completed", 0.0);
+		statusSum.put( "aborted", 0.0);
+		statusSum.put( "inProgress", 0.0);
 		
 		//counting the occurrences of each status types
 		for (Document doc : status) {
 			if (doc.getBoolean("aborted")) {
-				int value = statusSum.get( "aborted");
+				double value = statusSum.get( "aborted");
 				statusSum.replace( "aborted", value + 1);
 			}
 			else if (doc.getBoolean( "completed")) {
-				int value = statusSum.get( "completed");
+				double value = statusSum.get( "completed");
 				statusSum.replace( "completed", value + 1);
 			}
 			else{
-				int value = statusSum.get( "inProgress");
+				double value = statusSum.get( "inProgress");
 				statusSum.replace( "inProgress", value + 1);
 			}
 		}
 		
-		return statusSum;
+		List<Entry<String, Double>> list = new LinkedList<>( statusSum.entrySet());
+
+		//sorting the list with a comparator
+		sort(list, range.getOrder());
+		
+		return list;				
 	}
 	
 	///medication in executed step or conduct complementary
@@ -140,8 +150,8 @@ public class QueryMethod {
 				List<Document> executedSteps = ( List<Document>) doc.get( "executedSteps");
 				
 				if( !executedSteps.isEmpty() &&
-					(carePathway.getConducts().contains( EStep.TREATMENT) ||
-					carePathway.getConducts().contains( EStep.PRESCRIPTION)) ) {	
+					(carePathway.getSteps().contains( EStep.TREATMENT) ||
+					carePathway.getSteps().contains( EStep.PRESCRIPTION)) ) {	
 					
 					for( Document step : executedSteps) {						
 						if (doc.get("step.type").equals(EStep.TREATMENT) || 
@@ -176,9 +186,11 @@ public class QueryMethod {
 		return split(range.getQuantity(), list);				
 	}
 	
-	public String averageByTime() {	
+	public List<Entry<String, Double>> averageByTime() {	
 		//quering the average time
 		FindIterable<Document> docs = filterDocuments();
+		
+		Map<String, Double> avgMap = new HashMap<>();
 		
 		int cont = 0;
 		double sum = 0; 
@@ -190,8 +202,12 @@ public class QueryMethod {
 		
 		//getting the average time
 		double avg = sum / cont;
-		System.out.println(decimalFormat( avg / 60));
-		return decimalFormat( avg / 60);
+		
+		avgMap.put( carePathway.getCarePathways().get(0).getName(), avg / 60);
+		
+		List<Entry<String, Double>> list = new LinkedList<>(avgMap.entrySet());
+		
+		return list;
 	}
 		
 	public List<Entry<String, Double>> occurrencyExecution() {
@@ -203,9 +219,11 @@ public class QueryMethod {
 		
 		for (Document document : carePathwayDocs) {
 			for (int i = 0; i < carePathway.getCarePathways().size(); i++) {
-				String name = carePathway.getCarePathways().get(i).getName();
-				int size = count( field, name, carePathwayDocs);	
+				String literal = carePathway.getCarePathways().get(i).getLiteral();
+				int size = count( field, literal, carePathwayDocs);	
 			
+				String name = carePathway.getCarePathways().get(i).getName();				
+				
 				if (occurrenciesMap.containsKey(name)) {
 					double value = occurrenciesMap.get(name) + 1;
 					occurrenciesMap.replace(name, value);
@@ -231,16 +249,17 @@ public class QueryMethod {
 				
 		//count how many occurrences of same care pathway name 
 		String field = "name";
-		String name = carePathway.getCarePathways().get(0).getName();
-		int size = count( field, name, carePathwayDocs);
+		String literal = carePathway.getCarePathways().get(0).getLiteral();
+		int size = count( field, literal, carePathwayDocs);
 		
 		Map<String, Integer> flowMap = new HashMap<>();
 		
 		//quering the flows and counting how many flow occurrences
 		for( Document carePathwayDoc : carePathwayDocs) {
+			
 			if ( carePathway.getCarePathways().equals(carePathwayDoc.get("name"))) {
 				
-				List<Document> executedStepDocs =  (List<Document>) carePathwayDoc.get( "executedSteps");
+				List<Document> executedStepDocs = (List<Document>) carePathwayDoc.get( "executedSteps");
 				
 				String flow = "";
 				
@@ -258,7 +277,7 @@ public class QueryMethod {
 				}					
 			}				
 		}		
-
+	
 		Map<String, Double> percentMap = new HashMap<>();
 		
 		//calculating the percent of the flow
@@ -274,17 +293,17 @@ public class QueryMethod {
 		//sorting the list following the order
 		sort( list, range.getOrder());
 		
-		return split( range.getQuantity(), list);	
+		return split( range.getQuantity(), list);
 	}
 	
 	private FindIterable<Document> filterDocuments() {
-		FindIterable<Document> docs = dbConfig.getCollection().find();
-		
-		if (!carePathway.getCarePathways().isEmpty()) {
-			docs.filter( Filters.all( "name", 
-										carePathway.getCarePathways()));
-		}
-		
+		FindIterable<Document> docs = dbConfig.getCollection().find();		
+			
+		if(carePathway.getCarePathways().get(0) != CarePathway.ALL) {
+			docs.filter( Filters.eq( "name", 
+										carePathway.getCarePathways().get(0).getLiteral()));
+		}			
+	
 		if (!carePathway.getSteps().contains(EStep.ALL) &&
 			!carePathway.getConducts().contains(EConduct.ALL)) {
 			
