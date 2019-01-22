@@ -1,6 +1,5 @@
 package com.douglas.carepathwayexecution.query;
 
-import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -183,7 +182,7 @@ public class QueryMethod {
 		//sorting the list with a comparator
 		sort(list, range.getOrder());
 		
-		return split(range.getQuantity(), list);				
+		return select(range.getQuantity(), list);				
 	}
 	
 	public List<Entry<String, Double>> averageByTime() {	
@@ -239,7 +238,7 @@ public class QueryMethod {
 		//sorting the list following the order
 		sort( list, range.getOrder());
 		
-		return split( range.getQuantity(), list);		
+		return select( range.getQuantity(), list);		
 	}
 	
 	public List<Entry<String, Double>> occurrencyFlow() {
@@ -293,7 +292,7 @@ public class QueryMethod {
 		//sorting the list following the order
 		sort( list, range.getOrder());
 		
-		return split( range.getQuantity(), list);
+		return select( range.getQuantity(), list);
 	}
 	
 	private FindIterable<Document> filterDocuments() {
@@ -303,7 +302,7 @@ public class QueryMethod {
 			docs.filter( Filters.eq( "name", 
 										carePathway.getCarePathways().get(0).getLiteral()));
 		}			
-	
+		
 		if (!carePathway.getSteps().contains(EStep.ALL) &&
 			!carePathway.getConducts().contains(EConduct.ALL)) {
 			
@@ -325,14 +324,15 @@ public class QueryMethod {
 										carePathway.getSteps()));
 		}		
 		
-		if (!sex.getSex().equals(Gender.ALL)) {
+		if (!sex.getSex().equals(Gender.ALL) && sex != null) {
 			docs = docs.filter( Filters.eq( "medicalcare.sex", sex.getSex()));
 		}												
 		
-		if (!status.getMessage().equals(Message.ALL)) {
+		if (!status.getMessage().equals(Message.ALL) && status != null) {
 			docs = docs.filter( Filters.eq( status.getMessage().getName(), status.isValue()));
 		}
 		
+	
 		if (age.getFrom() > 0 && age.getTo() == 0) {
 			docs.filter( Filters.gte( "medicalcare.age", 
 										age.getFrom()));
@@ -343,6 +343,7 @@ public class QueryMethod {
 									Filters.lte( "medicalcare.age", 
 											age.getTo())));
 		}
+		
 		
 //		List<Document> docList = new ArrayList<>();
 //		
@@ -361,12 +362,10 @@ public class QueryMethod {
 		return docs;
 	}	
 	
-	private List<Entry<String, Double>> split(int quantity, List<Entry<String, Double>> list) {
-		int toIndex = quantity;
-		
-		if( list.size() < toIndex) {
-			return list.subList( 0, list.size());
-		}
+	private List<Entry<String, Double>> select(int quantity, List<Entry<String, Double>> list) {
+		if( list.size() < quantity || quantity == 0) {
+			return list;
+		}		
 		
 		return list.subList( 0, quantity);
 	}
@@ -395,10 +394,6 @@ public class QueryMethod {
 		
 		return cont; 
 	}
-
-	private String decimalFormat( double number) {
-		return new DecimalFormat("####0").format( number);
-	}
 	
 	private void descending(final List<Entry<String, Double>> list) {
 		//sorting the list with a comparator
@@ -420,6 +415,10 @@ public class QueryMethod {
 }
 
 /*
+ 	private String decimalFormat( double number) {
+		return new DecimalFormat("####0").format( number);
+	}
+	
  	private long countByName( String field, String name) {
 		return dbConfig.getCollection()
 						.count( Filters.eq( field,

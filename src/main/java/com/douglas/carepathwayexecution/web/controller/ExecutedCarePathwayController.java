@@ -1,7 +1,6 @@
 package com.douglas.carepathwayexecution.web.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -26,15 +25,16 @@ public class ExecutedCarePathwayController {
 	
 	@RequestMapping(value = { "/medcare/execution/{method}" }, method = RequestMethod.GET)
 	public String selectByParam(
-			@PathVariable( value = "method", required=true) String method, 
+			@PathVariable( value = "method", required=true) String methodStr, 
 			@RequestParam( value = "pathways", required=false) String pathwaysStr,
 			@RequestParam( value = "steps", required=false) String stepsStr,
 			@RequestParam( value = "conducts", required=false) String conductsStr,
+			@RequestParam( value = "status", required=false) String statusStr,
 			@RequestParam( value = "age", required=false) String ageStr,
 			@RequestParam( value = "sex", required=false) String sexStr,
 			@RequestParam( value = "date", required=false) String dateStr,
 			@RequestParam( value = "range", required=false) String rangeStr,
-			Model model){		
+			Model model) throws ParseException{		
 		
 		EForm form = new EForm();
 	    model.addAttribute("form", form);	
@@ -42,12 +42,13 @@ public class ExecutedCarePathwayController {
 	    QueryStructure queryStructure = new QueryStructure();
 		
 	    EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = queryStructure.create(method,
+		eQuery = queryStructure.create(methodStr,
 										splitBy( pathwaysStr, ","),
 										splitBy( stepsStr, ","),
 										splitBy( conductsStr, ","),
+										splitBy( statusStr, ","),
 										splitBy( ageStr, ","),
-										splitBy( sexStr, ","),
+										sexStr, 
 										splitBy( dateStr, ","),
 										splitBy( rangeStr, ","));
 		
@@ -58,61 +59,16 @@ public class ExecutedCarePathwayController {
 		return "selectByParam";
 	}
 	
-	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/medcare" }, method = RequestMethod.GET)
 	public String structure(Model model) {		
 		return "howToStructure";
 	}
 	
-	public List<String> splitBy( String str, String symbol) {		
+	public String[] splitBy( String str, String symbol) {		
 		if (!str.isEmpty()) {
-			String[] arr = str.split(symbol);
-		    List<String> list = new ArrayList<>(Arrays.asList(arr));
-		
-		    return list;
+			return str.split(symbol);
 		}
 		
 		return null;
 	}
-
 }
-
-/*
-	@RequestMapping(value = { "/medcare/execution" }, method = RequestMethod.GET)
-	public String selectByOptions(Model model) {		
-	    EForm form = new EForm();
-	    model.addAttribute("form", form);
-	
-	    List<EMethod> methodNames = new ArrayList<>();
-	    List<Method> methodEnums = Method.VALUES;
-	    
-	    for (Method method : methodEnums) {
-			EMethod eMethod = Query_metamodelFactory.eINSTANCE.createEMethod();
-	    	eMethod.setName(method);
-			
-			methodNames.add(eMethod);
-		}
-	    
-	    model.addAttribute("methodNames", methodNames);
-	    
-	    ECarePathway eCarePathway = Query_metamodelFactory.eINSTANCE.createECarePathway();
-	    List<EConduct> eConducts = EConduct.VALUES;
-	    List<EStep> eSteps = EStep.VALUES;
-	    List<CarePathway> carePathways = CarePathway.VALUES;
-	    
-	    for (EStep eStep : eSteps) {
-			eCarePathway.getSteps().add(eStep);
-		}
-	    
-	    for (EConduct eConduct : eConducts) {
-	    	eCarePathway.getConducts().add(eConduct);
-		}
-	    
-	    for (CarePathway carePathway : carePathways) {
-	    	eCarePathway.getCarePathways().add(carePathway);
-	    }
-	    
-	    model.addAttribute("eCarePathway", eCarePathway);
-	    
-	    return "selectByOptions";
-	}
-*/
