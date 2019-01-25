@@ -298,37 +298,37 @@ public class QueryMethod {
 	private FindIterable<Document> filterDocuments() {
 		FindIterable<Document> docs = dbConfig.getCollection().find();		
 			
-		if(carePathway.getCarePathways().get(0) != CarePathway.ALL) {
+		if(!carePathway.getCarePathways().isEmpty()) {
 			docs.filter( Filters.eq( "name", 
 										carePathway.getCarePathways().get(0).getLiteral()));
 		}			
 		
-		if (!carePathway.getSteps().contains(EStep.ALL) &&
-			!carePathway.getConducts().contains(EConduct.ALL)) {
+		if (carePathway.getSteps() != null &&
+			carePathway.getConducts() != null) {
 			
-			docs.filter( Filters.or( Filters.all( "executedsteps.step.name", 
+			docs.filter( Filters.and( Filters.all( "executedsteps.step.name", 
 													carePathway.getSteps()),
 									Filters.all( "complementaryconducts.type", 
 													carePathway.getConducts())));
 		}
-		else if (carePathway.getSteps().contains(EStep.ALL) &&
-				!carePathway.getConducts().contains(EConduct.ALL)) {
+		else if (carePathway.getSteps() == null &&
+				carePathway.getConducts() != null) {
 			
 			docs.filter( Filters.all( "complementaryconducts.type", 
 										carePathway.getConducts()));
 		} 
-		else if (!carePathway.getSteps().contains(EStep.ALL) &&
-				carePathway.getConducts().contains(EConduct.ALL)) {
+		else if (carePathway.getSteps() != null &&
+				carePathway.getConducts() == null) {
 			
 			docs.filter( Filters.all( "executedsteps.step.name", 
 										carePathway.getSteps()));
 		}		
 		
-		if (!sex.getSex().equals(Gender.ALL) && sex != null) {
+		if (sex != null) {
 			docs = docs.filter( Filters.eq( "medicalcare.sex", sex.getSex()));
 		}												
 		
-		if (!status.getMessage().equals(Message.ALL) && status != null) {
+		if (status != null) {
 			docs = docs.filter( Filters.eq( status.getMessage().getName(), status.isValue()));
 		}
 		

@@ -3,7 +3,6 @@ package com.douglas.carepathwayexecution.query;
 import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map.Entry;
@@ -73,26 +72,17 @@ public class QueryStructure {
 				eCarePathway.getSteps().add( EStep.get( Integer.parseInt(step)));
 			}
 		}
-		else {
-			eCarePathway.getSteps().add(EStep.ALL);
-		}
 		
 		if ( conducts != null) {
 			for (String conduct : conducts) {
 				eCarePathway.getConducts().add( EConduct.get( Integer.parseInt(conduct)));
 			}
 		}
-		else {
-			eCarePathway.getConducts().add(EConduct.ALL);
-		}
 				
 		if ( pathways != null) {
 			for (String pathway : pathways) {
 				eCarePathway.getCarePathways().add(CarePathway.get( Integer.parseInt(pathway)));
 			}
-		}
-		else {
-			eCarePathway.getCarePathways().add(CarePathway.ALL);
 		}
 		
 		if (dates != null) {
@@ -133,7 +123,7 @@ public class QueryStructure {
 				status.setMessage(Message.getByName(statusArr[0]));
 			}
 			else {
-				status.setMessage(Message.ALL);
+				status.setMessage(null);
 			}
 			
 			status.setValue(Boolean.valueOf(statusArr[1]));	
@@ -192,17 +182,17 @@ public class QueryStructure {
 		
 		date.setFrom(dateFormat.parse("2018-05-29T18:36:25.013818-03:00"));
 		date.setFrom(dateFormat.parse("2018-10-03T18:36:25.013818-03:00"));
-		sex.setSex(Gender.ALL);
+		sex.setSex(null);
 		age.setFrom(0);
 		age.setTo(0);
 		range.setQuantity(5);	
 		range.setOrder(Order.TOP);
-		eCarePathway.getSteps().add(EStep.ALL);
-		eCarePathway.getConducts().add(EConduct.ALL);
+		eCarePathway.getSteps().add(null);
+		eCarePathway.getConducts().add(null);
 		eCarePathway.getCarePathways().add(CarePathway.PNEUMONIA_INFLUENZA);
 		date.setFrom(null);
 		date.setTo(null);
-		status.setMessage(Message.ALL);
+		status.setMessage(null);
 		status.setValue(true);
 		attribute.setRange( range);
 		attribute.setSex( sex);

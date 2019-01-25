@@ -1,6 +1,7 @@
 package com.douglas.carepathwayexecution.web.controller;
 
 import java.text.ParseException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -54,6 +55,7 @@ public class ExecutedCarePathwayController {
 		
 		List<Entry<String, Double>> results = queryStructure.call(eQuery);
 	    	    
+		System.out.println(results.size());
 		model.addAttribute("results", results);
 		
 		return "selectByParam";

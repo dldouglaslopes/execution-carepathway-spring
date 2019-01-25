@@ -11,17 +11,10 @@
  
     <form name='f' th:object="${form}" method='POST'>
         <table>
-            <tr>
-                <td >
-               		
-<!--                     <select th:field="*{method}"> -->
-<!--                          <option value=""> -- </option> -->
-<!--                          <option th:each="method : ${methodNames}" -->
-<!--                             th:value="${method.name.name}"  -->
-<!--                             th:utext="${method.name.literal}"/> -->
-<!--                   	</select>  -->
-                </td>
-            </tr>
+            <tr th:each="result : ${results}">
+			    <td th:text="${result.key}"> FIELD:</td>
+			    <td th:text="${result.value}"> VALUE:</td>
+			</tr>
         </table>
     </form>
  
