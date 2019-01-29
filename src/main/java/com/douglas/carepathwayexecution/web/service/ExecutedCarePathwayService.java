@@ -23,6 +23,7 @@ import QueryMetamodel.CarePathway;
 import QueryMetamodel.Date;
 import QueryMetamodel.EAttribute;
 import QueryMetamodel.ECarePathway;
+import QueryMetamodel.EConduct;
 import QueryMetamodel.EQuery;
 import QueryMetamodel.EStatus;
 import QueryMetamodel.Gender;
@@ -43,34 +44,31 @@ public class ExecutedCarePathwayService {
 	private Sex sex;
 	private Status status;
 	
-	public List<Entry<String, Double>> conducts() {
+	public EQuery countConducts(EQuery eQuery) {
 		//finding all the documents
-		FindIterable<Document> conductsDoc = filterDocuments();	
+		FindIterable<Document> conductsDoc = getService(eQuery);	
 		
-		Map<String, Double> conductsSum = new HashMap<>();		
-		conductsSum.put( "with_conduct", 0.0);
-		conductsSum.put( "no_conduct", 0.0);
+		EConduct conduct = Query_metamodelFactory.eINSTANCE.createEConduct();
+		int withConduct = 0;
+		int noConduct = 0;
 		
 		//counting the occurrences when the care pathway has conducts or not
 		for (Document document : conductsDoc) {
 			List<Document> conducts = (List<Document>) document.get("complementaryConducts");
 			
 			if (!conducts.isEmpty()) {
-				double value = conductsSum.get( "with_conduct");
-				conductsSum.replace( "with_conduct", value + 1);
+				withConduct++;
 			}
 			else {
-				double value = conductsSum.get( "no_conduct");
-				conductsSum.replace( "no_conduct", value + 1);
+				noConduct++;
 			}
 		}
 		
-		List<Entry<String, Double>> list = new LinkedList<>( conductsSum.entrySet());
-
-		//sorting the list with a comparator
-		sort(list, range.getOrder());
-
-		return list;
+		conduct.setNoConduct(noConduct);
+		conduct.setWithConduct(withConduct);
+		eQuery.setEMethod(conduct);
+		
+		return eQuery;
 	}
 	
 	public EQuery countStatus(EQuery eQuery) {
@@ -78,8 +76,7 @@ public class ExecutedCarePathwayService {
 		//finding all the documents
 		FindIterable<Document> status = getService(eQuery);		
 
-		EStatus eStatus = Query_metamodelFactory.eINSTANCE.createEStatus();
-		
+		EStatus eStatus = Query_metamodelFactory.eINSTANCE.createEStatus();		
 		int aborted = 0;
 		int completed = 0;
 		int inProgress = 0;
