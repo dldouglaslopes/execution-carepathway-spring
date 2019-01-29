@@ -1,33 +1,40 @@
-package com.douglas.carepathwayexecution.query;
+package com.douglas.carepathwayexecution.web.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bson.Document;
+import org.springframework.stereotype.Service;
 
+import com.douglas.carepathwayexecution.query.DBConfig;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.Filters;
 
 import QueryMetamodel.Age;
 import QueryMetamodel.CarePathway;
 import QueryMetamodel.Date;
+import QueryMetamodel.EAttribute;
 import QueryMetamodel.ECarePathway;
-import QueryMetamodel.EConduct;
 import QueryMetamodel.EQuery;
-import QueryMetamodel.EStep;
+import QueryMetamodel.EStatus;
 import QueryMetamodel.Gender;
 import QueryMetamodel.Message;
 import QueryMetamodel.Order;
+import QueryMetamodel.Query_metamodelFactory;
 import QueryMetamodel.Range;
 import QueryMetamodel.Sex;
 import QueryMetamodel.Status;
 
-public class QueryMethod {
+@Service
+public class ExecutedCarePathwayService {
 	private DBConfig dbConfig;	
 	private ECarePathway carePathway;
 	private Age age; 
@@ -35,16 +42,6 @@ public class QueryMethod {
 	private Range range;
 	private Sex sex;
 	private Status status;
-	
-	public QueryMethod(EQuery eQuery) {
-		dbConfig = new DBConfig();
-		this.carePathway = eQuery.getEMethod().getEAttribute().getCarePathway();
-		this.age = eQuery.getEMethod().getEAttribute().getAge(); 
-		this.date = eQuery.getEMethod().getEAttribute().getDate();
-		this.range = eQuery.getEMethod().getEAttribute().getRange();
-		this.sex = eQuery.getEMethod().getEAttribute().getSex();
-		this.status = eQuery.getEMethod().getEAttribute().getStatus();
-	}
 	
 	public List<Entry<String, Double>> conducts() {
 		//finding all the documents
@@ -76,38 +73,36 @@ public class QueryMethod {
 		return list;
 	}
 	
-	public List<Entry<String, Double>> status() {
+	public EQuery countStatus(EQuery eQuery) {
 		
 		//finding all the documents
-		FindIterable<Document> status = filterDocuments();	
+		FindIterable<Document> status = getService(eQuery);		
+
+		EStatus eStatus = Query_metamodelFactory.eINSTANCE.createEStatus();
 		
-		Map<String, Double> statusSum = new HashMap<>();		
-		statusSum.put( "completed", 0.0);
-		statusSum.put( "aborted", 0.0);
-		statusSum.put( "inProgress", 0.0);
+		int aborted = 0;
+		int completed = 0;
+		int inProgress = 0;
 		
 		//counting the occurrences of each status types
 		for (Document doc : status) {
 			if (doc.getBoolean("aborted")) {
-				double value = statusSum.get( "aborted");
-				statusSum.replace( "aborted", value + 1);
+				aborted++;
 			}
 			else if (doc.getBoolean( "completed")) {
-				double value = statusSum.get( "completed");
-				statusSum.replace( "completed", value + 1);
+				completed++;
 			}
 			else{
-				double value = statusSum.get( "inProgress");
-				statusSum.replace( "inProgress", value + 1);
+				inProgress++;
 			}
 		}
 		
-		List<Entry<String, Double>> list = new LinkedList<>( statusSum.entrySet());
-
-		//sorting the list with a comparator
-		sort(list, range.getOrder());
+		eStatus.setAborted(aborted);
+		eStatus.setCompleted(completed);
+		eStatus.setInProgress(inProgress);
+		eQuery.setEMethod(eStatus);
 		
-		return list;				
+		return eQuery;				
 	}
 	
 	///medication in executed step or conduct complementary
@@ -120,62 +115,52 @@ public class QueryMethod {
 		
 		//counting how many medication occurences in complementary conducts/executed steps
 		for( Document doc : medicationComps) {
-			if (carePathway.getConducts().contains(EConduct.MEDICATION)) {
-				
-				List<Document> complementaryConducts = ( List<Document>) doc.get( "complementaryConducts");
+			List<Document> complementaryConducts = ( List<Document>) doc.get( "complementaryConducts");
 
-				if( !complementaryConducts.isEmpty()) {				
-					for( Document complementaryConduct : complementaryConducts) {
-						Document doc2 = ( Document) complementaryConduct.get( "prescribedresource");
-												
-						if( complementaryConduct.getString( "type").equals( "MedicamentoComplementar") &&
-								!doc2.getString( "name").isEmpty()) {
-							
-							String key = doc2.getString( "name");
+			if( !complementaryConducts.isEmpty()) {				
+				for( Document complementaryConduct : complementaryConducts) {
+					Document doc2 = ( Document) complementaryConduct.get( "prescribedresource");
+											
+					if( complementaryConduct.getString( "type").equals( "MedicamentoComplementar") &&
+							!doc2.getString( "name").isEmpty()) {
+						
+						String key = doc2.getString( "name");
 
-							if (medicationTimes.containsKey( doc2.getString( "name"))) {
-								double value = medicationTimes.get(key) + 1;
-								medicationTimes.replace( key, value);
-							}
-							else {
-								medicationTimes.put( key, 1.0);
-							}
-						}	
-					}
-				}	
-			}
-			else {
-				
-				List<Document> executedSteps = ( List<Document>) doc.get( "executedSteps");
-				
-				if( !executedSteps.isEmpty() &&
-					(carePathway.getSteps().contains( EStep.TREATMENT) ||
-					carePathway.getSteps().contains( EStep.PRESCRIPTION)) ) {	
-					
-					for( Document step : executedSteps) {						
-						if (doc.get("step.type").equals(EStep.TREATMENT) || 
-							doc.get("step.type").equals(EStep.PRESCRIPTION)) {
-							
-							List<Document> prescribed = ( List<Document>) doc.get( "prescribedmedication");
-							
-							for (Document document : prescribed) {
-								Document medication = ( Document) document.get( "medication");
-															
-								String key = medication.getString( "name");
-								
-								if (medicationTimes.containsKey( medication.getString( "name"))) {
-									double value = medicationTimes.get(key) + 1;
-									medicationTimes.replace( key, value);
-								}
-								else {
-									medicationTimes.put( key, 1.0);
-								}
-							}
+						if (medicationTimes.containsKey( doc2.getString( "name"))) {
+							double value = medicationTimes.get(key) + 1;
+							medicationTimes.replace( key, value);
 						}
-					}
-				}				
-			}			
-        }
+						else {
+							medicationTimes.put( key, 1.0);
+						}
+					}	
+				}
+			}	
+
+			List<Document> executedSteps = ( List<Document>) doc.get( "executedSteps");
+				
+			for( Document step : executedSteps) {						
+				if (doc.get("step.type").equals("Tratamento") || 
+					doc.get("step.type").equals("Receita")) {
+					
+					List<Document> prescribed = ( List<Document>) doc.get( "prescribedmedication");
+					
+					for (Document document : prescribed) {
+						Document medication = ( Document) document.get( "medication");
+													
+						String key = medication.getString( "name");
+						
+						if (medicationTimes.containsKey( medication.getString( "name"))) {
+							double value = medicationTimes.get(key) + 1;
+							medicationTimes.replace( key, value);
+						}
+						else {
+							medicationTimes.put( key, 1.0);
+						}
+					}					
+				}
+			}				
+		}			
 		
 		List<Entry<String, Double>> list = new LinkedList<>( medicationTimes.entrySet());
 
@@ -202,7 +187,7 @@ public class QueryMethod {
 		//getting the average time
 		double avg = sum / cont;
 		
-		avgMap.put( carePathway.getCarePathways().get(0).getName(), avg / 60);
+		avgMap.put( carePathway.getName().getName(), avg / 60);
 		
 		List<Entry<String, Double>> list = new LinkedList<>(avgMap.entrySet());
 		
@@ -216,22 +201,22 @@ public class QueryMethod {
 		Map<String, Double> occurrenciesMap = new HashMap<>();
 		String field = "name";
 		
-		for (Document document : carePathwayDocs) {
-			for (int i = 0; i < carePathway.getCarePathways().size(); i++) {
-				String literal = carePathway.getCarePathways().get(i).getLiteral();
-				int size = count( field, literal, carePathwayDocs);	
-			
-				String name = carePathway.getCarePathways().get(i).getName();				
-				
-				if (occurrenciesMap.containsKey(name)) {
-					double value = occurrenciesMap.get(name) + 1;
-					occurrenciesMap.replace(name, value);
-				}
-				else {
-					occurrenciesMap.put(name, 1.0);
-				}
-			}
-		}
+//		for (Document document : carePathwayDocs) {
+//			for (int i = 0; i < carePathway.getCarePathways().size(); i++) {
+//				String literal = carePathway.getCarePathways().get(i).getLiteral();
+//				int size = count( field, literal, carePathwayDocs);	
+//			
+//				String name = carePathway.getCarePathways().get(i).getName();				
+//				
+//				if (occurrenciesMap.containsKey(name)) {
+//					double value = occurrenciesMap.get(name) + 1;
+//					occurrenciesMap.replace(name, value);
+//				}
+//				else {
+//					occurrenciesMap.put(name, 1.0);
+//				}
+//			}
+//		}
 		
 		List<Entry<String, Double>> list = new LinkedList<>( occurrenciesMap.entrySet());
 		
@@ -241,14 +226,14 @@ public class QueryMethod {
 		return select( range.getQuantity(), list);		
 	}
 	
-	public List<Entry<String, Double>> occurrencyFlow() {
+	public List<Entry<String, Double>> recurrencyFlow() {
 		
 		//finding all the documents belonging to the same care pathway
 		FindIterable<Document> carePathwayDocs = filterDocuments();
 				
 		//count how many occurrences of same care pathway name 
 		String field = "name";
-		String literal = carePathway.getCarePathways().get(0).getLiteral();
+		String literal = carePathway.getName().getLiteral();
 		int size = count( field, literal, carePathwayDocs);
 		
 		Map<String, Integer> flowMap = new HashMap<>();
@@ -256,7 +241,7 @@ public class QueryMethod {
 		//quering the flows and counting how many flow occurrences
 		for( Document carePathwayDoc : carePathwayDocs) {
 			
-			if ( carePathway.getCarePathways().equals(carePathwayDoc.get("name"))) {
+			if ( carePathway.getName().getLiteral().equals(carePathwayDoc.get("name"))) {
 				
 				List<Document> executedStepDocs = (List<Document>) carePathwayDoc.get( "executedSteps");
 				
@@ -298,47 +283,27 @@ public class QueryMethod {
 	private FindIterable<Document> filterDocuments() {
 		FindIterable<Document> docs = dbConfig.getCollection().find();		
 			
-		if(!carePathway.getCarePathways().isEmpty()) {
-			docs.filter( Filters.eq( "name", 
-										carePathway.getCarePathways().get(0).getLiteral()));
+		if(carePathway.getName() != CarePathway.NONE) {
+			
+			docs = docs.filter( Filters.eq( "name", 
+											carePathway.getName().getLiteral()));
 		}			
 		
-		if (carePathway.getSteps() != null &&
-			carePathway.getConducts() != null) {
-			
-			docs.filter( Filters.and( Filters.all( "executedsteps.step.name", 
-													carePathway.getSteps()),
-									Filters.all( "complementaryconducts.type", 
-													carePathway.getConducts())));
-		}
-		else if (carePathway.getSteps() == null &&
-				carePathway.getConducts() != null) {
-			
-			docs.filter( Filters.all( "complementaryconducts.type", 
-										carePathway.getConducts()));
-		} 
-		else if (carePathway.getSteps() != null &&
-				carePathway.getConducts() == null) {
-			
-			docs.filter( Filters.all( "executedsteps.step.name", 
-										carePathway.getSteps()));
-		}		
-		
-		if (sex != null) {
+		if (sex.getSex() != Gender.ALL) {
 			docs = docs.filter( Filters.eq( "medicalcare.sex", sex.getSex()));
 		}												
 		
-		if (status != null) {
+		if (status.getMessage() != Message.ALL) {
+			System.out.println(status.getMessage().getName());
 			docs = docs.filter( Filters.eq( status.getMessage().getName(), status.isValue()));
-		}
-		
+		}		 
 	
 		if (age.getFrom() > 0 && age.getTo() == 0) {
-			docs.filter( Filters.gte( "medicalcare.age", 
+			docs = docs.filter( Filters.gte( "medicalcare.age", 
 										age.getFrom()));
 		}		
 		else if (age.getFrom() >= 0 && age.getTo() > 0 && age.getTo() >= age.getFrom()) {
-			docs.filter( Filters.and( Filters.gte( "medicalcare.age", 
+			docs = docs.filter( Filters.and( Filters.gte( "medicalcare.age", 
 											age.getFrom()),
 									Filters.lte( "medicalcare.age", 
 											age.getTo())));
@@ -361,6 +326,18 @@ public class QueryMethod {
 	
 		return docs;
 	}	
+	
+	private FindIterable<Document> getService(EQuery eQuery) {
+		dbConfig = new DBConfig();
+		this.carePathway = eQuery.getEAttribute().getCarePathway();
+		this.age = eQuery.getEAttribute().getAge(); 
+		this.date = eQuery.getEAttribute().getDate();
+		this.range = eQuery.getEAttribute().getRange();
+		this.sex = eQuery.getEAttribute().getSex();
+		this.status = eQuery.getEAttribute().getStatus();
+		
+		return filterDocuments();
+	}
 	
 	private List<Entry<String, Double>> select(int quantity, List<Entry<String, Double>> list) {
 		if( list.size() < quantity || quantity == 0) {
@@ -412,16 +389,102 @@ public class QueryMethod {
 			}
 		});
 	}
+
+	public EQuery setAtribbutte( int idPathway, 
+								String[] statusArr,
+								String[] ages, 
+								String sexStr, 
+								String[] dates, 
+								String[] ranges){
+
+		EQuery query = Query_metamodelFactory.eINSTANCE.createEQuery();
+		
+		EAttribute attribute = Query_metamodelFactory.eINSTANCE.createEAttribute();	
+		Sex sex = Query_metamodelFactory.eINSTANCE.createSex();
+		Age age = Query_metamodelFactory.eINSTANCE.createAge();
+		Range range = Query_metamodelFactory.eINSTANCE.createRange();
+		ECarePathway eCarePathway = Query_metamodelFactory.eINSTANCE.createECarePathway();
+		Date date = Query_metamodelFactory.eINSTANCE.createDate();
+		Status status = Query_metamodelFactory.eINSTANCE.createStatus();
+		
+		sex.setSex( Gender.getByName( sexStr));
+		
+		if (ages != null) {
+			age.setFrom( Integer.parseInt(ages[0]));
+			age.setTo( Integer.parseInt(ages[1]));
+		}
+		else {
+			age.setFrom( 0);
+			age.setTo( 0);
+		}
+		
+		if (ranges != null) {
+			range.setQuantity( Integer.parseInt(ranges[0]));	
+			range.setOrder( Order.getByName( ranges[1]));			
+		}
+		else {
+			range.setQuantity(0);	
+		}
+		
+		if ( idPathway > 0) {
+			eCarePathway.setName(CarePathway.get( idPathway));
+		}		
+		
+		if (statusArr != null) {
+			if (statusArr[0] != null && statusArr[1] != null) {
+				status.setMessage( Message.get( Integer.parseInt(statusArr[0])));
+				status.setValue(Boolean.valueOf(statusArr[1]));	
+			}
+		}
+		
+		if (dates != null) {
+		/////////////////////
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSS", Locale.getDefault());	
+		
+			if (dates[0] != null) {
+				try {
+					date.setFrom(dateFormat.parse("2018-05-29T18:36:25.013818-03:00"));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+			else {
+				date.setFrom(null);
+			}
+		
+			if (dates[1] != null) {
+				try {
+					date.setTo(dateFormat.parse("2018-05-29T18:36:25.013818-03:00"));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+			}
+			else {
+				date.setTo(null);
+			}
+			
+			/////////////////////
+		}
+		else {
+			date.setFrom(null);
+			date.setTo(null);
+		}		
+		
+		attribute.setRange( range);
+		attribute.setSex( sex);
+		attribute.setStatus( status);
+		attribute.setAge( age);
+		attribute.setDate( date);
+		attribute.setCarePathway( eCarePathway);
+		
+		query.setEAttribute(attribute);
+		
+		return query;
+	}
 }
 
 /*
  	private String decimalFormat( double number) {
 		return new DecimalFormat("####0").format( number);
-	}
-	
- 	private long countByName( String field, String name) {
-		return dbConfig.getCollection()
-						.count( Filters.eq( field,
-											new BasicDBObject( "$regex", name)));
 	}
 */

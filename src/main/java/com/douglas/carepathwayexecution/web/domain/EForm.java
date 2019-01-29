@@ -1,4 +1,4 @@
-package com.douglas.carepathwayexecution.web.model;
+package com.douglas.carepathwayexecution.web.domain;
 
 public class EForm {
 	private String method;
