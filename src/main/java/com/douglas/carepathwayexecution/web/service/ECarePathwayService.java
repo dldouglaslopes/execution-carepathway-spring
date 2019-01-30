@@ -1,5 +1,6 @@
 package com.douglas.carepathwayexecution.web.service;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -161,61 +162,7 @@ public class ECarePathwayService {
 		sort( list, range.getOrder());
 		
 		return select( range.getQuantity(), list);		
-	}
-	
-	public List<Entry<String, Double>> recurrencyFlow() {
-		
-		//finding all the documents belonging to the same care pathway
-		FindIterable<Document> carePathwayDocs = filterDocuments();
-				
-		//count how many occurrences of same care pathway name 
-		String field = "name";
-		String literal = carePathway.getName().getLiteral();
-		int size = count( field, literal, carePathwayDocs);
-		
-		Map<String, Integer> flowMap = new HashMap<>();
-		
-		//quering the flows and counting how many flow occurrences
-		for( Document carePathwayDoc : carePathwayDocs) {
-			
-			if ( carePathway.getName().getLiteral().equals(carePathwayDoc.get("name"))) {
-				
-				List<Document> executedStepDocs = (List<Document>) carePathwayDoc.get( "executedSteps");
-				
-				String flow = "";
-				
-				for (Document executedStepDoc : executedStepDocs) {
-					Document stepDoc = ( Document) executedStepDoc.get("step");
-					flow += stepDoc.getString("type") + "-" + stepDoc.getInteger("_id") + "/";
-				}
-									
-				if (flowMap.containsKey(flow)) {
-					int value = flowMap.get(flow) + 1;
-					flowMap.replace(flow, value);
-				}
-				else {
-					flowMap.put(flow, 1);
-				}					
-			}				
-		}		
-	
-		Map<String, Double> percentMap = new HashMap<>();
-		
-		//calculating the percent of the flow
-		for ( String key : flowMap.keySet()) {
-			int dividend = flowMap.get(key);
-			int divider = size;
-			double percent = rate( dividend, divider);
-			percentMap.put( key, percent);	
-		}
-		
-		List<Entry<String, Double>> list = new LinkedList<>( percentMap.entrySet());
-		
-		//sorting the list following the order
-		sort( list, range.getOrder());
-		
-		return select( range.getQuantity(), list);
-	}
+	}	
 	
 	private FindIterable<Document> filterDocuments() {
 		FindIterable<Document> docs = dbConfig.getCollection().find();		
@@ -276,7 +223,7 @@ public class ECarePathwayService {
 		return filterDocuments();
 	}
 	
-	private List<Entry<String, Double>> select(int quantity, List<Entry<String, Double>> list) {
+	public List<Entry<String, Double>> select(int quantity, List<Entry<String, Double>> list) {
 		if( list.size() < quantity || quantity == 0) {
 			return list;
 		}		
@@ -284,7 +231,7 @@ public class ECarePathwayService {
 		return list.subList( 0, quantity);
 	}
 	
-	private void sort( List<Entry<String, Double>> list, Order order) {
+	public void sort( List<Entry<String, Double>> list, Order order) {
 		if (order.equals(Order.TOP)) {
 			descending(list);
 		}
@@ -293,23 +240,26 @@ public class ECarePathwayService {
 		}
 	}
 	
-	private double rate( double dividend, double divider) {
+	public double rate( double dividend, double divider) {
 		return ( dividend/ divider) * 100;
 	}
 	
-	private int count( String field, String name, FindIterable<Document> iterable) {
+	public int count( String field, String name, FindIterable<Document> iterable) {
 		int cont = 0;
-		
+						
 		for (Document document : iterable) {
-			if (document.get(field).equals(name)) {
-				cont ++; 
+			if (name == CarePathway.NONE.getLiteral()) {
+				cont ++;
 			}
-		}
+			else if (document.get(field).equals(name)) {
+				cont ++; 
+			}				
+		}		
 		
-		return cont; 
+		return cont;
 	}
 	
-	private void descending(final List<Entry<String, Double>> list) {
+	public void descending(final List<Entry<String, Double>> list) {
 		//sorting the list with a comparator
 		Collections.sort( list, new Comparator<Entry<String, Double>>() {
 			public int compare( final Map.Entry<String, Double> o1, final Map.Entry<String, Double> o2) {
@@ -318,7 +268,7 @@ public class ECarePathwayService {
 		});
 	}
 	
-	private void ascending(final List<Entry<String, Double>> list) {
+	public void ascending(final List<Entry<String, Double>> list) {
 		//sorting the list with a comparator
 		Collections.sort( list, new Comparator<Entry<String, Double>>() {
 			public int compare( final Map.Entry<String, Double> o1, final Map.Entry<String, Double> o2) {
@@ -426,10 +376,9 @@ public class ECarePathwayService {
 		
 		return null;
 	}
+	
+ 	public String decimalFormat( double number) {
+		return new DecimalFormat("####0.00").format( number);
+	}
 }
 
-/*
- 	private String decimalFormat( double number) {
-		return new DecimalFormat("####0").format( number);
-	}
-*/

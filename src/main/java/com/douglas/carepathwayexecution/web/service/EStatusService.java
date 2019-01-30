@@ -45,5 +45,4 @@ public class EStatusService {
 		
 		return eQuery;				
 	}
-
 }
