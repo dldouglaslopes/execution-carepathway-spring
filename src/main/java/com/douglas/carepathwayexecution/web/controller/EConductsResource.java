@@ -13,17 +13,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.douglas.carepathwayexecution.web.domain.EQueryDTO;
-import com.douglas.carepathwayexecution.web.service.ExecutedCarePathwayService;
+import com.douglas.carepathwayexecution.web.service.EConductsService;
+import com.douglas.carepathwayexecution.web.service.ECarePathwayService;
 
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Query_metamodelFactory;
 
 @Controller
-@RequestMapping("/")
-public class ExecutedCarePathwayController {
+public class EConductsResource {
 	@Autowired
-	private ExecutedCarePathwayService service;
-
+	private ECarePathwayService service;
+	@Autowired
+	private EConductsService conductsService;
+	
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/conducts" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
@@ -38,53 +40,44 @@ public class ExecutedCarePathwayController {
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
 		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
-										splitBy( statusStr, ","),
-										splitBy( ageStr, ","),
+										service.splitBy( statusStr, ","),
+										service.splitBy( ageStr, ","),
 										sexStr, 
-										splitBy( dateStr, ","),
-										splitBy( rangeStr, ","));
+										service.splitBy( dateStr, ","),
+										service.splitBy( rangeStr, ","));
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = service.countConducts(eQuery);
+		eQuery = conductsService.countConducts(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
 	}
-	
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/status" }, 
-					method = RequestMethod.GET)
+
+	@RequestMapping(value = { "/medcare/execution/pathways/conducts" }, 
+			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> statusToOnePathway(
-			@PathVariable( value = "id", required=true) String idPathway,
-			@RequestParam( value = "status", required=false) String statusStr,
-			@RequestParam( value = "age", required=false) String ageStr,
-			@RequestParam( value = "sex", required=false) String sexStr,
-			@RequestParam( value = "date", required=false) String dateStr,
-			@RequestParam( value = "range", required=false) String rangeStr,
-			Model model) throws ParseException{			
-	   
-	    EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
-										splitBy( statusStr, ","),
-										splitBy( ageStr, ","),
+	public ResponseEntity<EQueryDTO> conductsToAllPathways(
+		@RequestParam( value = "status", required=false) String statusStr,
+		@RequestParam( value = "age", required=false) String ageStr,
+		@RequestParam( value = "sex", required=false) String sexStr,
+		@RequestParam( value = "date", required=false) String dateStr,
+		@RequestParam( value = "range", required=false) String rangeStr,
+		Model model) throws ParseException{			
+	
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		eQuery = service.setAtribbutte( 0,
+										service.splitBy( statusStr, ","),
+										service.splitBy( ageStr, ","),
 										sexStr, 
-										splitBy( dateStr, ","),
-										splitBy( rangeStr, ","));
-		
+										service.splitBy( dateStr, ","),
+										service.splitBy( rangeStr, ","));
+			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = service.countStatus(eQuery);
+		eQuery = conductsService.countConducts(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
-	}
-	
-	public String[] splitBy( String str, String symbol) {		
-		if (!str.isEmpty()) {
-			return str.split(symbol);
-		}
-		
-		return null;
 	}
 }

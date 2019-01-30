@@ -7,25 +7,16 @@ import QueryMetamodel.EMethod;
 
 @Document
 public class EQueryDTO {
-	
-	private EAttribute attribute;
 	private EMethod method;
+	private EAttribute attribute;
 	
 	public EQueryDTO() {}
 	
-	public EQueryDTO(EAttribute attribute, EMethod method) {
+	public EQueryDTO(EMethod method, EAttribute attribute) {
 		super();
 		this.attribute = attribute;
 		this.method = method;
-	}
-
-	public EAttribute getAttribute() {
-		return attribute;
-	}
-
-	public void setAttribute(EAttribute attribute) {
-		this.attribute = attribute;
-	}
+	}	
 
 	public EMethod getMethod() {
 		return method;
@@ -33,5 +24,13 @@ public class EQueryDTO {
 
 	public void setMethod(EMethod method) {
 		this.method = method;
+	}
+	
+	public EAttribute getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(EAttribute attribute) {
+		this.attribute = attribute;
 	}
 }

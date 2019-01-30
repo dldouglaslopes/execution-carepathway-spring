@@ -23,9 +23,7 @@ import QueryMetamodel.CarePathway;
 import QueryMetamodel.Date;
 import QueryMetamodel.EAttribute;
 import QueryMetamodel.ECarePathway;
-import QueryMetamodel.EConduct;
 import QueryMetamodel.EQuery;
-import QueryMetamodel.EStatus;
 import QueryMetamodel.Gender;
 import QueryMetamodel.Message;
 import QueryMetamodel.Order;
@@ -35,7 +33,7 @@ import QueryMetamodel.Sex;
 import QueryMetamodel.Status;
 
 @Service
-public class ExecutedCarePathwayService {
+public class ECarePathwayService {
 	private DBConfig dbConfig;	
 	private ECarePathway carePathway;
 	private Age age; 
@@ -43,65 +41,7 @@ public class ExecutedCarePathwayService {
 	private Range range;
 	private Sex sex;
 	private Status status;
-	
-	public EQuery countConducts(EQuery eQuery) {
-		//finding all the documents
-		FindIterable<Document> conductsDoc = getService(eQuery);	
-		
-		EConduct conduct = Query_metamodelFactory.eINSTANCE.createEConduct();
-		int withConduct = 0;
-		int noConduct = 0;
-		
-		//counting the occurrences when the care pathway has conducts or not
-		for (Document document : conductsDoc) {
-			List<Document> conducts = (List<Document>) document.get("complementaryConducts");
 			
-			if (!conducts.isEmpty()) {
-				withConduct++;
-			}
-			else {
-				noConduct++;
-			}
-		}
-		
-		conduct.setNoConduct(noConduct);
-		conduct.setWithConduct(withConduct);
-		eQuery.setEMethod(conduct);
-		
-		return eQuery;
-	}
-	
-	public EQuery countStatus(EQuery eQuery) {
-		
-		//finding all the documents
-		FindIterable<Document> status = getService(eQuery);		
-
-		EStatus eStatus = Query_metamodelFactory.eINSTANCE.createEStatus();		
-		int aborted = 0;
-		int completed = 0;
-		int inProgress = 0;
-		
-		//counting the occurrences of each status types
-		for (Document doc : status) {
-			if (doc.getBoolean("aborted")) {
-				aborted++;
-			}
-			else if (doc.getBoolean( "completed")) {
-				completed++;
-			}
-			else{
-				inProgress++;
-			}
-		}
-		
-		eStatus.setAborted(aborted);
-		eStatus.setCompleted(completed);
-		eStatus.setInProgress(inProgress);
-		eQuery.setEMethod(eStatus);
-		
-		return eQuery;				
-	}
-	
 	///medication in executed step or conduct complementary
 	public List<Entry<String, Double>> prescribedMedication() {
 				
@@ -324,7 +264,7 @@ public class ExecutedCarePathwayService {
 		return docs;
 	}	
 	
-	private FindIterable<Document> getService(EQuery eQuery) {
+	public FindIterable<Document> getService(EQuery eQuery) {
 		dbConfig = new DBConfig();
 		this.carePathway = eQuery.getEAttribute().getCarePathway();
 		this.age = eQuery.getEAttribute().getAge(); 
@@ -477,6 +417,14 @@ public class ExecutedCarePathwayService {
 		query.setEAttribute(attribute);
 		
 		return query;
+	}
+	
+	public String[] splitBy( String str, String symbol) {		
+		if (!str.isEmpty()) {
+			return str.split(symbol);
+		}
+		
+		return null;
 	}
 }
 
