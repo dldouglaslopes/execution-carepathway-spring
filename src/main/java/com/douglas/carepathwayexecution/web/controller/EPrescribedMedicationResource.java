@@ -14,22 +14,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.douglas.carepathwayexecution.web.domain.EQueryDTO;
 import com.douglas.carepathwayexecution.web.service.ECarePathwayService;
-import com.douglas.carepathwayexecution.web.service.ERecurrentFlowService;
+import com.douglas.carepathwayexecution.web.service.EPrescribedMedicationService;
 
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Query_metamodelFactory;
 
 @Controller
-public class ERecurrentFlowResource {
+public class EPrescribedMedicationResource {
 	@Autowired
 	private ECarePathwayService service;
 	@Autowired
-	private ERecurrentFlowService flowService;
+	private EPrescribedMedicationService medicationService;
 	
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/recurrentFlow" }, 
-					method = RequestMethod.GET)
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/prescribedMedication" }, 
+			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> recurrentFlowToOnePathway(
+	public ResponseEntity<EQueryDTO> prescribedMedicationToOnePathway(
 		@PathVariable( value = "id", required=true) String idPathway,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -44,20 +44,20 @@ public class ERecurrentFlowResource {
 										service.splitBy( ageStr, ","),
 										sexStr, 
 										service.splitBy( dateStr, ","),
-										null);
+										service.splitBy( rangeStr, ","));
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = medicationService.prescribedMedication(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
-	@RequestMapping(value = { "/medcare/execution/pathways/recurrentFlow" }, 
-					method = RequestMethod.GET)
+	@RequestMapping(value = { "/medcare/execution/pathways/prescribedMedication" }, 
+			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> recurrentFlowToAllPathways(
+	public ResponseEntity<EQueryDTO> prescribedMedicationToAllPathways(
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
 		@RequestParam( value = "sex", required=false) String sexStr,
@@ -71,14 +71,13 @@ public class ERecurrentFlowResource {
 										service.splitBy( ageStr, ","),
 										sexStr, 
 										service.splitBy( dateStr, ","),
-										null);
+										service.splitBy( rangeStr, ","));
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = medicationService.prescribedMedication(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
 	}
-
 }

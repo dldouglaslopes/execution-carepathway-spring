@@ -5,8 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -36,79 +34,19 @@ import QueryMetamodel.Status;
 @Service
 public class ECarePathwayService {
 	private DBConfig dbConfig;	
-	private ECarePathway carePathway;
-	private Age age; 
-	private Date date;
-	private Range range;
-	private Sex sex;
-	private Status status;
-			
-	///medication in executed step or conduct complementary
-	public List<Entry<String, Double>> prescribedMedication() {
-				
-		//finding all the documents
-		FindIterable<Document> medicationComps = filterDocuments();	
 		
-		Map<String, Double> medicationTimes = new HashMap<>();
-		
-		//counting how many medication occurences in complementary conducts/executed steps
-		for( Document doc : medicationComps) {
-			List<Document> complementaryConducts = ( List<Document>) doc.get( "complementaryConducts");
-
-			if( !complementaryConducts.isEmpty()) {				
-				for( Document complementaryConduct : complementaryConducts) {
-					Document doc2 = ( Document) complementaryConduct.get( "prescribedresource");
-											
-					if( complementaryConduct.getString( "type").equals( "MedicamentoComplementar") &&
-							!doc2.getString( "name").isEmpty()) {
-						
-						String key = doc2.getString( "name");
-
-						if (medicationTimes.containsKey( doc2.getString( "name"))) {
-							double value = medicationTimes.get(key) + 1;
-							medicationTimes.replace( key, value);
-						}
-						else {
-							medicationTimes.put( key, 1.0);
-						}
-					}	
-				}
-			}	
-
-			List<Document> executedSteps = ( List<Document>) doc.get( "executedSteps");
-				
-			for( Document step : executedSteps) {						
-				if (doc.get("step.type").equals("Tratamento") || 
-					doc.get("step.type").equals("Receita")) {
-					
-					List<Document> prescribed = ( List<Document>) doc.get( "prescribedmedication");
-					
-					for (Document document : prescribed) {
-						Document medication = ( Document) document.get( "medication");
-													
-						String key = medication.getString( "name");
-						
-						if (medicationTimes.containsKey( medication.getString( "name"))) {
-							double value = medicationTimes.get(key) + 1;
-							medicationTimes.replace( key, value);
-						}
-						else {
-							medicationTimes.put( key, 1.0);
-						}
-					}					
-				}
-			}				
-		}			
-		
-		List<Entry<String, Double>> list = new LinkedList<>( medicationTimes.entrySet());
-
-		//sorting the list with a comparator
-		sort(list, range.getOrder());
-		
-		return select(range.getQuantity(), list);				
+	public FindIterable<Document> getService(EQuery eQuery) {
+		dbConfig = new DBConfig();
+		return filterDocuments(eQuery);
 	}
+			
+	private FindIterable<Document> filterDocuments(EQuery eQuery) {
+		ECarePathway carePathway = eQuery.getEAttribute().getCarePathway();;
+		Age age = eQuery.getEAttribute().getAge(); ; 
+		Date date = eQuery.getEAttribute().getDate();;
+		Sex sex = eQuery.getEAttribute().getSex();;
+		Status status = eQuery.getEAttribute().getStatus();;
 		
-	private FindIterable<Document> filterDocuments() {
 		FindIterable<Document> docs = dbConfig.getCollection().find();		
 			
 		if(carePathway.getName() != CarePathway.NONE) {
@@ -153,19 +91,7 @@ public class ECarePathwayService {
 //		} 
 	
 		return docs;
-	}	
-	
-	public FindIterable<Document> getService(EQuery eQuery) {
-		dbConfig = new DBConfig();
-		this.carePathway = eQuery.getEAttribute().getCarePathway();
-		this.age = eQuery.getEAttribute().getAge(); 
-		this.date = eQuery.getEAttribute().getDate();
-		this.range = eQuery.getEAttribute().getRange();
-		this.sex = eQuery.getEAttribute().getSex();
-		this.status = eQuery.getEAttribute().getStatus();
-		
-		return filterDocuments();
-	}	
+	}		
 	
 	public EQuery setAtribbutte( int idPathway, 
 								String[] statusArr,

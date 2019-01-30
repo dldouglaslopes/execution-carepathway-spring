@@ -26,10 +26,10 @@ public class EAverageTimeResource {
 	@Autowired
 	private EAverageTimeService timeService;
 	
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/avgTime" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/averageTime" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> avgTimeToOnePathway(
+	public ResponseEntity<EQueryDTO> averageTimeToOnePathway(
 		@PathVariable( value = "id", required=true) String idPathway,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -53,10 +53,10 @@ public class EAverageTimeResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
-	@RequestMapping(value = { "/medcare/execution/pathways/avgTime" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/averageTime" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> avgTimeToAllPathways(
+	public ResponseEntity<EQueryDTO> averageTimeToAllPathways(
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
 		@RequestParam( value = "sex", required=false) String sexStr,
