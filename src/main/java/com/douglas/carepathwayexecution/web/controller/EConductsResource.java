@@ -35,7 +35,6 @@ public class EConductsResource {
 		@RequestParam( value = "age", required=false) String ageStr,
 		@RequestParam( value = "sex", required=false) String sexStr,
 		@RequestParam( value = "date", required=false) String dateStr,
-		@RequestParam( value = "range", required=false) String rangeStr,
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
@@ -44,7 +43,7 @@ public class EConductsResource {
 										service.splitBy( ageStr, ","),
 										sexStr, 
 										service.splitBy( dateStr, ","),
-										service.splitBy( rangeStr, ","));
+										null);
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
@@ -62,7 +61,6 @@ public class EConductsResource {
 		@RequestParam( value = "age", required=false) String ageStr,
 		@RequestParam( value = "sex", required=false) String sexStr,
 		@RequestParam( value = "date", required=false) String dateStr,
-		@RequestParam( value = "range", required=false) String rangeStr,
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
@@ -71,7 +69,7 @@ public class EConductsResource {
 										service.splitBy( ageStr, ","),
 										sexStr, 
 										service.splitBy( dateStr, ","),
-										service.splitBy( rangeStr, ","));
+										null);
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());

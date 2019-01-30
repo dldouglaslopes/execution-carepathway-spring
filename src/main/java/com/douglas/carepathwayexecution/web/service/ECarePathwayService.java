@@ -107,63 +107,7 @@ public class ECarePathwayService {
 		
 		return select(range.getQuantity(), list);				
 	}
-	
-	public List<Entry<String, Double>> averageByTime() {	
-		//quering the average time
-		FindIterable<Document> docs = filterDocuments();
 		
-		Map<String, Double> avgMap = new HashMap<>();
-		
-		int cont = 0;
-		double sum = 0; 
-		
-		for (Document document : docs) {
-			cont += 1;
-			sum += document.getDouble("timeExecution");
-		}
-		
-		//getting the average time
-		double avg = sum / cont;
-		
-		avgMap.put( carePathway.getName().getName(), avg / 60);
-		
-		List<Entry<String, Double>> list = new LinkedList<>(avgMap.entrySet());
-		
-		return list;
-	}
-		
-	public List<Entry<String, Double>> occurrencyExecution() {
-		//finding all the documents
-		FindIterable<Document> carePathwayDocs = filterDocuments();	
-				
-		Map<String, Double> occurrenciesMap = new HashMap<>();
-		String field = "name";
-		
-//		for (Document document : carePathwayDocs) {
-//			for (int i = 0; i < carePathway.getCarePathways().size(); i++) {
-//				String literal = carePathway.getCarePathways().get(i).getLiteral();
-//				int size = count( field, literal, carePathwayDocs);	
-//			
-//				String name = carePathway.getCarePathways().get(i).getName();				
-//				
-//				if (occurrenciesMap.containsKey(name)) {
-//					double value = occurrenciesMap.get(name) + 1;
-//					occurrenciesMap.replace(name, value);
-//				}
-//				else {
-//					occurrenciesMap.put(name, 1.0);
-//				}
-//			}
-//		}
-		
-		List<Entry<String, Double>> list = new LinkedList<>( occurrenciesMap.entrySet());
-		
-		//sorting the list following the order
-		sort( list, range.getOrder());
-		
-		return select( range.getQuantity(), list);		
-	}	
-	
 	private FindIterable<Document> filterDocuments() {
 		FindIterable<Document> docs = dbConfig.getCollection().find();		
 			
@@ -221,62 +165,8 @@ public class ECarePathwayService {
 		this.status = eQuery.getEAttribute().getStatus();
 		
 		return filterDocuments();
-	}
+	}	
 	
-	public List<Entry<String, Double>> select(int quantity, List<Entry<String, Double>> list) {
-		if( list.size() < quantity || quantity == 0) {
-			return list;
-		}		
-		
-		return list.subList( 0, quantity);
-	}
-	
-	public void sort( List<Entry<String, Double>> list, Order order) {
-		if (order.equals(Order.TOP)) {
-			descending(list);
-		}
-		if (order.equals(Order.BOTTOM)) {
-			ascending(list);
-		}
-	}
-	
-	public double rate( double dividend, double divider) {
-		return ( dividend/ divider) * 100;
-	}
-	
-	public int count( String field, String name, FindIterable<Document> iterable) {
-		int cont = 0;
-						
-		for (Document document : iterable) {
-			if (name == CarePathway.NONE.getLiteral()) {
-				cont ++;
-			}
-			else if (document.get(field).equals(name)) {
-				cont ++; 
-			}				
-		}		
-		
-		return cont;
-	}
-	
-	public void descending(final List<Entry<String, Double>> list) {
-		//sorting the list with a comparator
-		Collections.sort( list, new Comparator<Entry<String, Double>>() {
-			public int compare( final Map.Entry<String, Double> o1, final Map.Entry<String, Double> o2) {
-				return ( o2.getValue()).compareTo( o1.getValue());
-			}
-		});
-	}
-	
-	public void ascending(final List<Entry<String, Double>> list) {
-		//sorting the list with a comparator
-		Collections.sort( list, new Comparator<Entry<String, Double>>() {
-			public int compare( final Map.Entry<String, Double> o1, final Map.Entry<String, Double> o2) {
-				return ( o1.getValue()).compareTo( o2.getValue());
-			}
-		});
-	}
-
 	public EQuery setAtribbutte( int idPathway, 
 								String[] statusArr,
 								String[] ages, 
@@ -367,6 +257,60 @@ public class ECarePathwayService {
 		query.setEAttribute(attribute);
 		
 		return query;
+	}
+	
+	public List<Entry<String, Double>> select(int quantity, List<Entry<String, Double>> list) {
+		if( list.size() < quantity || quantity == 0) {
+			return list;
+		}		
+		
+		return list.subList( 0, quantity);
+	}
+	
+	public void sort( List<Entry<String, Double>> list, Order order) {
+		if (order.equals(Order.TOP)) {
+			descending(list);
+		}
+		if (order.equals(Order.BOTTOM)) {
+			ascending(list);
+		}
+	}
+	
+	public double rate( double dividend, double divider) {
+		return ( dividend/ divider) * 100;
+	}
+	
+	public int count( String field, String name, FindIterable<Document> iterable) {
+		int cont = 0;
+						
+		for (Document document : iterable) {
+			if (name == CarePathway.NONE.getLiteral()) {
+				cont ++;
+			}
+			else if (document.get(field).equals(name)) {
+				cont ++; 
+			}				
+		}		
+		
+		return cont;
+	}
+	
+	public void descending(final List<Entry<String, Double>> list) {
+		//sorting the list with a comparator
+		Collections.sort( list, new Comparator<Entry<String, Double>>() {
+			public int compare( final Map.Entry<String, Double> o1, final Map.Entry<String, Double> o2) {
+				return ( o2.getValue()).compareTo( o1.getValue());
+			}
+		});
+	}
+	
+	public void ascending(final List<Entry<String, Double>> list) {
+		//sorting the list with a comparator
+		Collections.sort( list, new Comparator<Entry<String, Double>>() {
+			public int compare( final Map.Entry<String, Double> o1, final Map.Entry<String, Double> o2) {
+				return ( o1.getValue()).compareTo( o2.getValue());
+			}
+		});
 	}
 	
 	public String[] splitBy( String str, String symbol) {		
