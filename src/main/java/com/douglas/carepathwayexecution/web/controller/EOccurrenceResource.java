@@ -13,23 +13,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.douglas.carepathwayexecution.web.domain.EQueryDTO;
-import com.douglas.carepathwayexecution.web.service.EStatusService;
 import com.douglas.carepathwayexecution.web.service.ECarePathwayService;
+import com.douglas.carepathwayexecution.web.service.EOccurrenceService;
 
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Query_metamodelFactory;
 
 @Controller
-public class EStatusResource {
+public class EOccurrenceResource {
 	@Autowired
 	private ECarePathwayService service;
 	@Autowired
-	private EStatusService statusService;
+	private EOccurrenceService occurrencesService;
 	
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/status" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/occurrences" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> statusToOnePathway(
+	public ResponseEntity<EQueryDTO> occurrencesToOnePathway(
 		@PathVariable( value = "id", required=true) String idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
@@ -40,25 +40,25 @@ public class EStatusResource {
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
 		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
-										service.splitBy( conductStr, ","),						
+										service.splitBy( conductStr, ","),
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
 										sexStr, 
 										service.splitBy( dateStr, ","),
 										null);
-		
+			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = statusService.countStatus(eQuery);
+		eQuery = occurrencesService.countOccurrences(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
 	}
-	
-	@RequestMapping(value = { "/medcare/execution/pathways/status" }, 
+
+	@RequestMapping(value = { "/medcare/execution/pathways/occurrences" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> statusToAllPathway(
+	public ResponseEntity<EQueryDTO> occurrencesToAllPathways(
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -74,13 +74,12 @@ public class EStatusResource {
 										sexStr, 
 										service.splitBy( dateStr, ","),
 										null);
-		
+			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = statusService.countStatus(eQuery);
+		eQuery = occurrencesService.countOccurrences(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
 	}
-
 }

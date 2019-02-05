@@ -41,9 +41,9 @@ public class ECarePathwayService {
 	}
 			
 	private FindIterable<Document> filterDocuments(EQuery eQuery) {
-		ECarePathway carePathway = eQuery.getEAttribute().getCarePathway();;
+		ECarePathway carePathway = eQuery.getEAttribute().getCarePathway();
 		Age age = eQuery.getEAttribute().getAge(); ; 
-		Date date = eQuery.getEAttribute().getDate();;
+		//Date date = eQuery.getEAttribute().getDate();;
 		Sex sex = eQuery.getEAttribute().getSex();;
 		Status status = eQuery.getEAttribute().getStatus();;
 		
@@ -55,6 +55,11 @@ public class ECarePathwayService {
 											carePathway.getName().getLiteral()));
 		}			
 		
+//		if (carePathway.getName() != CarePathway.NONE) {
+//			docs = docs.filter( Filters.exists( "complementaryConducts", 
+//												carePathway.isConduct()));
+//		}
+				
 		if (sex.getSex() != Gender.ALL) {
 			docs = docs.filter( Filters.eq( "medicalcare.sex", sex.getSex()));
 		}												
@@ -94,6 +99,7 @@ public class ECarePathwayService {
 	}		
 	
 	public EQuery setAtribbutte( int idPathway, 
+								String[] conductArr,
 								String[] statusArr,
 								String[] ages, 
 								String sexStr, 

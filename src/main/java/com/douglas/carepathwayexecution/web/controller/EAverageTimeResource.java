@@ -31,6 +31,7 @@ public class EAverageTimeResource {
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> averageTimeToOnePathway(
 		@PathVariable( value = "id", required=true) String idPathway,
+		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
 		@RequestParam( value = "sex", required=false) String sexStr,
@@ -39,6 +40,7 @@ public class EAverageTimeResource {
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
 		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+										service.splitBy( conductStr, ","),
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
 										sexStr, 
@@ -57,7 +59,8 @@ public class EAverageTimeResource {
 			method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> averageTimeToAllPathways(
-		@RequestParam( value = "status", required=false) String statusStr,
+			@RequestParam( value = "conduct", required=false) String conductStr,
+			@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
 		@RequestParam( value = "sex", required=false) String sexStr,
 		@RequestParam( value = "date", required=false) String dateStr,
@@ -65,6 +68,7 @@ public class EAverageTimeResource {
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
 		eQuery = service.setAtribbutte( 0,
+										service.splitBy( conductStr, ","),
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
 										sexStr, 

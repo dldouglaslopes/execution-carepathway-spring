@@ -1,5 +1,6 @@
 package com.douglas.carepathwayexecution.web.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
@@ -27,7 +28,7 @@ public class EConductsService {
 		
 		//counting the occurrences when the care pathway has conducts or not
 		for (Document document : conductsDoc) {
-			List<Document> conducts = (List<Document>) document.get("complementaryConducts");
+			List<Document> conducts = document.get("complementaryConducts", new ArrayList<Document>());
 			
 			if (!conducts.isEmpty()) {
 				withConduct++;

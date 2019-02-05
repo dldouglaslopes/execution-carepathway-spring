@@ -1,5 +1,6 @@
 package com.douglas.carepathwayexecution.web.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,15 +37,16 @@ public class ERecurrentFlowService {
 		//querying the flows and counting how many flow occurrences
 		for( Document carePathwayDoc : carePathwayDocs) {
 			
-			List<Document> executedStepDocs = (List<Document>) carePathwayDoc.get( "executedSteps");
+			List<Document> executedStepDocs = carePathwayDoc.get( "executedSteps", new ArrayList<Document>());
 			
 			String flow = "";
-				
+			
 			for (Document executedStepDoc : executedStepDocs) {
-				Document stepDoc = ( Document) executedStepDoc.get("step");
-				flow += "type:" + stepDoc.getString("type") + 
-						"-" +
-						"id:" + stepDoc.getInteger("_id") + " / ";
+				Document stepDoc = executedStepDoc.get("step", new Document());
+				
+				flow += stepDoc.getString("type") + 
+						" - " +
+						" id: " + stepDoc.getInteger("_id") + " / ";
 			}
 								
 			if (flowMap.containsKey(flow)) {
@@ -78,7 +80,7 @@ public class ERecurrentFlowService {
 		
 		for (int i = 0; i < list.size(); i++) {
 			String percentage = service.decimalFormat(list.get(i).getValue()) + "%";
-			recurrentFlow.getFlows().add(percentage + " = " + list.get(i).getKey());
+			recurrentFlow.getFlows().add(percentage + ": " + list.get(i).getKey());
 		}
 		
 		eQuery.setEMethod(recurrentFlow);
