@@ -1,10 +1,10 @@
 package com.douglas.carepathwayexecution.web.service;
 
+import java.util.List;
+
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.mongodb.client.FindIterable;
 
 import QueryMetamodel.EQuery;
 import QueryMetamodel.EStatus;
@@ -18,7 +18,7 @@ public class EStatusService {
 	public EQuery countStatus(EQuery eQuery) {
 		
 		//finding all the documents
-		FindIterable<Document> status = service.getService(eQuery);		
+		List<Document> status = service.getService(eQuery);		
 
 		EStatus eStatus = Query_metamodelFactory.eINSTANCE.createEStatus();		
 		int aborted = 0;

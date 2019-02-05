@@ -11,8 +11,6 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mongodb.client.FindIterable;
-
 import QueryMetamodel.EQuery;
 import QueryMetamodel.ERecurrentFlow;
 import QueryMetamodel.Query_metamodelFactory;
@@ -25,7 +23,7 @@ public class ERecurrentFlowService {
 	public EQuery recurrentFlow(EQuery eQuery) {
 		
 		//finding all the documents belonging to the same care pathway
-		FindIterable<Document> carePathwayDocs = service.getService(eQuery);
+		List<Document> carePathwayDocs = service.getService(eQuery);
 				
 		//count how many occurrences of same care pathway name 
 		String field = "name";
@@ -78,7 +76,7 @@ public class ERecurrentFlowService {
 	
 		ERecurrentFlow recurrentFlow = Query_metamodelFactory.eINSTANCE.createERecurrentFlow();		
 		
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 0; i < list.size(); i++) {			
 			String percentage = service.decimalFormat(list.get(i).getValue()) + "%";
 			recurrentFlow.getFlows().add(percentage + ": " + list.get(i).getKey());
 		}

@@ -7,8 +7,6 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mongodb.client.FindIterable;
-
 import QueryMetamodel.EConduct;
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Query_metamodelFactory;
@@ -20,7 +18,7 @@ public class EConductsService {
 	
 	public EQuery countConducts(EQuery eQuery) {
 		//finding all the documents
-		FindIterable<Document> conductsDoc = service.getService(eQuery);	
+		List<Document> conductsDoc = service.getService(eQuery);	
 		
 		EConduct conduct = Query_metamodelFactory.eINSTANCE.createEConduct();
 		int withConduct = 0;

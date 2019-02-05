@@ -1,10 +1,10 @@
 package com.douglas.carepathwayexecution.web.service;
 
+import java.util.List;
+
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.mongodb.client.FindIterable;
 
 import QueryMetamodel.EAverageTime;
 import QueryMetamodel.EQuery;
@@ -17,7 +17,7 @@ public class EAverageTimeService {
 	
 	public EQuery averageByTime(EQuery eQuery) {	
 		//quering the average time
-		FindIterable<Document> docs = service.getService(eQuery);
+		List<Document> docs = service.getService(eQuery);
 				
 		int cont = 0;
 		double sum = 0; 

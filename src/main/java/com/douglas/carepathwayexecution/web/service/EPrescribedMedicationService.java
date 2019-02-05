@@ -11,8 +11,6 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mongodb.client.FindIterable;
-
 import QueryMetamodel.EPrescribedMedication;
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Query_metamodelFactory;
@@ -26,7 +24,7 @@ public class EPrescribedMedicationService {
 	public EQuery prescribedMedication( EQuery eQuery) {
 				
 		//finding all the documents
-		FindIterable<Document> medicationComps = service.getService(eQuery);	
+		List<Document> medicationComps = service.getService(eQuery);	
 		
 		Map<String, Double> medicationTimes = new HashMap<>();
 		

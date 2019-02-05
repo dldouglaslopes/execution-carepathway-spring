@@ -46,7 +46,7 @@ public class ERecurrentFlowResource {
 										service.splitBy( ageStr, ","),
 										sexStr, 
 										service.splitBy( dateStr, ","),
-										null);
+										service.splitBy( rangeStr, ","));
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
@@ -75,7 +75,7 @@ public class ERecurrentFlowResource {
 										service.splitBy( ageStr, ","),
 										sexStr, 
 										service.splitBy( dateStr, ","),
-										null);
+										service.splitBy( rangeStr, ","));
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());

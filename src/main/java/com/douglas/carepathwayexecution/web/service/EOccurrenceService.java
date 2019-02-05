@@ -1,10 +1,10 @@
 package com.douglas.carepathwayexecution.web.service;
 
+import java.util.List;
+
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.mongodb.client.FindIterable;
 
 import QueryMetamodel.CarePathway;
 import QueryMetamodel.EOccurrence;
@@ -18,7 +18,7 @@ public class EOccurrenceService {
 	
 	public EQuery countOccurrences(EQuery eQuery) {
 		//finding all the documents
-		FindIterable<Document> occurrencesDocs = service.getService(eQuery);					
+		List<Document> occurrencesDocs = service.getService(eQuery);					
 		
 		int size = 0;
 		String field = "name";

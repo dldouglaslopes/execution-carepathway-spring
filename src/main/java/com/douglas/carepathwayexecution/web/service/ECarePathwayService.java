@@ -3,6 +3,7 @@ package com.douglas.carepathwayexecution.web.service;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -36,17 +37,17 @@ import QueryMetamodel.Status;
 public class ECarePathwayService {
 	private DBConfig dbConfig;	
 		
-	public FindIterable<Document> getService(EQuery eQuery) {
+	public List<Document> getService(EQuery eQuery) {
 		dbConfig = new DBConfig();
 		return filterDocuments(eQuery);
 	}
 			
-	private FindIterable<Document> filterDocuments(EQuery eQuery) {
+	private List<Document> filterDocuments(EQuery eQuery) {
 		ECarePathway carePathway = eQuery.getEAttribute().getCarePathway();
-		Age age = eQuery.getEAttribute().getAge(); ; 
-		//Date date = eQuery.getEAttribute().getDate();;
-		Sex sex = eQuery.getEAttribute().getSex();;
-		Status status = eQuery.getEAttribute().getStatus();;
+		Age age = eQuery.getEAttribute().getAge();
+		Date date = eQuery.getEAttribute().getDate();
+		Sex sex = eQuery.getEAttribute().getSex();
+		Status status = eQuery.getEAttribute().getStatus();
 		
 		FindIterable<Document> docs = dbConfig.getCollection().find();		
 			
@@ -84,24 +85,38 @@ public class ECarePathwayService {
 											age.getFrom()),
 									Filters.lte( "medicalcare.age", 
 											age.getTo())));
-		}
+		}		
 		
+		List<Document> docList = new ArrayList<>();
 		
-//		List<Document> docList = new ArrayList<>();
-//		
-//		for (Document document : docs) {
-//			
-//			if(document.getDate("creation").after(date.getFrom()) &&
-//					document.getDate("conclusion").before(date.getTo())) {
-//				
-//				docList.add(document);
-//			}	
-//		}	
-//		for (Document document : docList) {
-//			System.err.println(docList.get(0).get("creation"));
-//		} 
+		for (Document document : docs) {		
+			if (date.getFrom() != null && date.getTo() != null) {
+				if(document.getDate("creation").after(date.getFrom())) {
+					if (document.getDate("conclusion") != null) {
+						if (document.getDate("conclusion").before(date.getTo())) {
+							docList.add(document);
+						}						
+					}
+				}					
+			}	
+			else if (date.getFrom() != null && date.getTo() == null) {
+				if(document.getDate("creation").after(date.getFrom())) {
+					docList.add(document);
+				}					
+			}
+			else if (date.getFrom() == null && date.getTo() != null) {
+				if (document.getDate("conclusion") != null) {
+					if (document.getDate("conclusion").before(date.getTo())) {
+						docList.add(document);
+					}						
+				}					
+			}
+			else {
+				docList.add(document);
+			}
+		}	
 	
-		return docs;
+		return docList;
 	}		
 	
 	public EQuery setAtribbutte( int idPathway, 
@@ -157,12 +172,11 @@ public class ECarePathwayService {
 		}
 		
 		if (dates != null) {
-		/////////////////////
-			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSS", Locale.getDefault());	
-		
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());	//yyyy-MM-dd'T'HH:mm:ss.SSSSS
+			
 			if (dates[0] != null) {
 				try {
-					date.setFrom(dateFormat.parse("2018-05-29T18:36:25.013818-03:00"));
+					date.setFrom(dateFormat.parse(dates[0]));
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
@@ -173,7 +187,7 @@ public class ECarePathwayService {
 		
 			if (dates[1] != null) {
 				try {
-					date.setTo(dateFormat.parse("2018-05-29T18:36:25.013818-03:00"));
+					date.setTo(dateFormat.parse(dates[1]));
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
@@ -181,8 +195,6 @@ public class ECarePathwayService {
 			else {
 				date.setTo(null);
 			}
-			
-			/////////////////////
 		}
 		else {
 			date.setFrom(null);
@@ -222,7 +234,7 @@ public class ECarePathwayService {
 		return ( dividend/ divider) * 100;
 	}
 	
-	public int count( String field, String name, FindIterable<Document> iterable) {
+	public int count( String field, String name, List<Document> iterable) {
 		int cont = 0;
 						
 		for (Document document : iterable) {
