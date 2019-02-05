@@ -40,7 +40,7 @@ public class EAverageTimeResource {
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
 		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
-										service.splitBy( conductStr, ","),
+										conductStr,
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
 										sexStr, 
@@ -68,7 +68,7 @@ public class EAverageTimeResource {
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
 		eQuery = service.setAtribbutte( 0,
-										service.splitBy( conductStr, ","),
+										conductStr,
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
 										sexStr, 

@@ -19,6 +19,7 @@ import com.mongodb.client.model.Filters;
 
 import QueryMetamodel.Age;
 import QueryMetamodel.CarePathway;
+import QueryMetamodel.ComplementaryConduct;
 import QueryMetamodel.Date;
 import QueryMetamodel.EAttribute;
 import QueryMetamodel.ECarePathway;
@@ -49,16 +50,21 @@ public class ECarePathwayService {
 		
 		FindIterable<Document> docs = dbConfig.getCollection().find();		
 			
-		if(carePathway.getName() != CarePathway.NONE) {
-			
+		if(carePathway.getName() != CarePathway.NONE) {			
 			docs = docs.filter( Filters.eq( "name", 
 											carePathway.getName().getLiteral()));
 		}			
 		
-//		if (carePathway.getName() != CarePathway.NONE) {
-//			docs = docs.filter( Filters.exists( "complementaryConducts", 
-//												carePathway.isConduct()));
-//		}
+		if (carePathway.getConduct() == QueryMetamodel.ComplementaryConduct.TRUE) {
+			docs = docs.filter( Filters.or( Filters.exists( "complementaryConducts.prescribedresource"), 
+											Filters.exists( "complementaryConducts.procedureprescribedresource"), 
+											Filters.exists( "complementaryConducts.examinationprescribedresource")));
+		}
+		else if (carePathway.getConduct() == QueryMetamodel.ComplementaryConduct.FALSE) {
+			docs = docs.filter( Filters.nor( Filters.exists( "complementaryConducts.prescribedresource"), 
+											Filters.exists( "complementaryConducts.procedureprescribedresource"), 
+											Filters.exists( "complementaryConducts.examinationprescribedresource")));
+		}					
 				
 		if (sex.getSex() != Gender.ALL) {
 			docs = docs.filter( Filters.eq( "medicalcare.sex", sex.getSex()));
@@ -99,7 +105,7 @@ public class ECarePathwayService {
 	}		
 	
 	public EQuery setAtribbutte( int idPathway, 
-								String[] conductArr,
+								String conduct,
 								String[] statusArr,
 								String[] ages, 
 								String sexStr, 
@@ -138,6 +144,10 @@ public class ECarePathwayService {
 		if ( idPathway > 0) {
 			eCarePathway.setName(CarePathway.get( idPathway));
 		}		
+		
+		if (conduct != null) {
+			eCarePathway.setConduct(ComplementaryConduct.getByName(conduct));
+		}
 		
 		if (statusArr != null) {
 			if (statusArr[0] != null && statusArr[1] != null) {
