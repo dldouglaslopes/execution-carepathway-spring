@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="1102" creationDate="2018-05-29T13:42:05.394-0300" conclusionDate="2018-05-29T18:45:27.171-0300" completed="true" name="Fratura Exposta" cid="N30" timeExecution="17930.271777">
+  <eStep xsi:type="MetamodelExecution:EPrescription" id="1322" executed="true" creationDate="2018-05-29T13:43:53.055-0300" modificationDate="2018-05-29T18:45:02.006-0300" executionDate="2018-05-29T18:45:01.857-0300" createdById="181" executedById="181" name="Receita Teste" text="">
+    <step id="1388" type="Receita" name="Receita Teste" description="Teste de receita gerada pelo protocolo." isInitial="true" isTerminal="true">
+      <audit date="2018-05-28T19:01:57.151-0300"/>
+    </step>
+    <pprescription>
+      <prescription id="1722"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="1723"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="1724"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="1725"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="1726"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="1727"/>
+    </pprescription>
+  </eStep>
+  <idsExecutedStep>1322</idsExecutedStep>
+  <justification/>
+  <pathway id="514" code="H001" name="Fratura Exposta" version="6" completed="true">
+    <audit date="2018-05-28T19:01:08.929-0300"/>
+  </pathway>
+  <complementaryconducts xsi:type="MetamodelExecution:ComplementaryMedication" id="622" type="MedicamentoComplementar" pathway="Fratura Exposta" creationDate="2018-05-29T18:31:24.599-0300" resource="DIPIRONA GOTAS FRAS 10 ML">
+    <suspension success="true" requestDate="2018-05-29T18:33:13.423-0300" id="1203" message="Medicamento(s) suspenso  com sucesso"/>
+    <prescribedresource id="1161" idMedication="47" name="" brand="" code="" cycles="1" description="" timeInterval="1" dailyDosage="10" frequency="8" timeTreatement="1" medication="37982: DIPIRONA GOTAS FRAS 10 ML" unit="6,5 mm" access="ORAL"/>
+  </complementaryconducts>
+  <complementaryconducts xsi:type="MetamodelExecution:ComplementaryMedication" id="623" type="MedicamentoComplementar" pathway="Fratura Exposta" creationDate="2018-05-29T18:47:19.687-0300" resource="DEXAMETASONA 4MG AMPL 1 ML">
+    <prescribedresource id="1162" idMedication="230" name="" brand="" code="" cycles="1" description="" timeInterval="1" dailyDosage="5" frequency="6" timeTreatement="1" medication="146890: DEXAMETASONA 4MG AMPL 1 ML" unit="5,5 mm" access="JEJUNOSTOMIA"/>
+  </complementaryconducts>
+  <complementaryconducts xsi:type="MetamodelExecution:ComplementaryProcedure" id="624" type="ProcedimentoComplementar" pathway="Fratura Exposta" creationDate="2018-05-29T18:47:09.682-0300" resource="OBSERVACAO:">
+    <procedureprescribedresource id="441" idProcedure="1753" quantity="1" frequency="1" procedure="30299004: OBSERVACAO:"/>
+  </complementaryconducts>
+  <medicalcare codeMedicalCare="49925059" idProfessional="181" hospitalUnit="ATENDIMED - SERVICOS MEDICOS LTDA - HAL" patientRecord="332172"/>
+</MetamodelExecution:EPathway>

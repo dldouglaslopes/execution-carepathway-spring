@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2615" creationDate="2018-08-14T11:53:37.495-0300" conclusionDate="2018-11-13T15:10:34.971-0200" completed="true" aborted="true" name="ITU - Cistite" cid="N390" timeExecution="7873947.270476">
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="3215" creationDate="2018-08-14T11:53:52.073-0300" modificationDate="2018-08-14T11:53:52.113-0300" createdById="334" name="Informar Sexo do paciente">
+    <step id="101" type="AuxilioConduta" name="Informar Sexo do paciente" description="Informe o sexo do paciente para seguir com o tratamento adequado." isInitial="true"/>
+    <answer id="4040" type="RespostaSimOuNao">
+      <question id="93" text="Masculino">
+        <variable id="170" type="SimOuNao" name="sexo_masculino" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="4041" type="RespostaSimOuNao">
+      <question id="94" text="Feminino">
+        <variable id="171" type="SimOuNao" name="sexo_feminino" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <idsExecutedStep>3215</idsExecutedStep>
+  <justification id="3779" reason="encerramento_de_protocolo" description="Interrupção padrão para ajuste de performance após inicio de implantação de processo.E vamos interromper todos que estão em andamento a mais de 30hs. cod:: 2615-49306500" justifiedById="221"/>
+  <pathway id="23" code="H008" name="ITU - Cistite" version="1" completed="true">
+    <audit/>
+  </pathway>
+  <medicalcare codeMedicalCare="49306500" idProfessional="221" hospitalUnit="HOSPITAL ANTONIO PRUDENTE" patientRecord="8771257"/>
+</MetamodelExecution:EPathway>

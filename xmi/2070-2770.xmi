@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2770" creationDate="2018-08-14T11:56:52.475-0300" conclusionDate="2018-11-13T15:07:27.426-0200" completed="true" aborted="true" name="Diarréia" cid="" timeExecution="7873864.969951">
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="3370" creationDate="2018-08-14T11:57:05.338-0300" modificationDate="2018-08-14T11:57:05.382-0300" createdById="375" name="Avaliar Hipovolemia">
+    <step id="1633" type="AuxilioConduta" name="Avaliar Hipovolemia" description="Verificar se paciente está hipovolêmico" isInitial="true">
+      <audit date="2018-05-29T17:16:30.019-0300"/>
+    </step>
+    <answer id="4374" type="RespostaSimOuNao">
+      <question id="1262" text="Olhos fundos?">
+        <variable id="1922" type="SimOuNao" name="hipovolemia_olhos_fundos" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="4375" type="RespostaSimOuNao">
+      <question id="1263" text="Ausência de lágrimas?">
+        <variable id="1923" type="SimOuNao" name="hipovolemia_ausencia_de_lagrimas" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="4376" type="RespostaSimOuNao">
+      <question id="1264" text="Boca e língua secas?">
+        <variable id="1924" type="SimOuNao" name="hipovolemia_boca_seca" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="4377" type="RespostaSimOuNao">
+      <question id="1265" text="Sede?">
+        <variable id="1925" type="SimOuNao" name="hipovolemia_sede" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="4378" type="RespostaSimOuNao">
+      <question id="1266" text="Turgor da pele reduzido?">
+        <variable id="1926" type="SimOuNao" name="hipovolemia_turgor_reduzido" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <idsExecutedStep>3370</idsExecutedStep>
+  <justification id="3934" reason="encerramento_de_protocolo" description="Interrupção padrão para ajuste de performance após inicio de implantação de processo.E vamos interromper todos que estão em andamento a mais de 30hs. cod:: 2770-46185462" justifiedById="221"/>
+  <pathway id="525" code="H017" name="Diarréia" version="1" completed="true">
+    <audit date="2018-08-08T14:20:24.055-0300"/>
+  </pathway>
+  <medicalcare codeMedicalCare="46185462" idProfessional="221" hospitalUnit="HOSPITAL ANTONIO PRUDENTE" patientRecord="15533177"/>
+</MetamodelExecution:EPathway>

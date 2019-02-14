@@ -26,7 +26,7 @@ public class ERecurrentFlowResource {
 	@Autowired
 	private ERecurrentFlowService flowService;
 	
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/recurrentFlow" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/flow" }, 
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> recurrentFlowToOnePathway(
@@ -56,7 +56,7 @@ public class ERecurrentFlowResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
-	@RequestMapping(value = { "/medcare/execution/pathways/recurrentFlow" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/flow" }, 
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> recurrentFlowToAllPathways(

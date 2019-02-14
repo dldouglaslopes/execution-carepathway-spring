@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2244" creationDate="2018-07-30T13:55:27.266-0300" conclusionDate="2018-11-13T15:04:01.599-0200" completed="true" aborted="true" name="Tratamento de SEPSE" cid="A90" timeExecution="9162916.597333">
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2730" executed="true" creationDate="2018-07-30T13:58:14.110-0300" modificationDate="2018-07-30T13:55:48.222-0300" executionDate="2018-07-30T13:55:31.055-0300" createdById="21" executedById="21" name="Confirmar Suspeia de SEPSE" next="/atendimentos/21/protocolos/2244/passos/2731/">
+    <step id="871" type="AuxilioConduta" name="Confirmar Suspeia de SEPSE" description="Confirmar Suspeia de SEPSE" isInitial="true"/>
+    <answer id="3351" type="RespostaSimOuNao">
+      <question id="691" text="Após reavaliação, é confirmado a possibilidade de sepse?">
+        <variable id="1131" type="SimOuNao" name="trata_sepse_confirma_suspeita" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EInformation" id="2731" creationDate="2018-07-30T13:56:50.155-0300" modificationDate="2018-07-30T13:56:50.195-0300" createdById="21" name="Aviso: Encaminhar para protocolo específico" previous="/atendimentos/21/protocolos/2244/passos/2730/">
+    <step id="872" type="Informacao" name="Aviso: Encaminhar para protocolo específico" description="Paciente com potencial de gravidade maior, em virtude de alterações importantes nos sinais vitais, encaminhar para protocolo específico (TEP, ICC, SCA, Desidratação Importante, Intoxicação Exógena?)&#xA;&#xA;Importante!&#xA;O líder de plantão deve justificar em evolução o que afasta a possibilidade de SEPSE." isTerminal="true"/>
+  </eStep>
+  <idsExecutedStep>2730</idsExecutedStep>
+  <idsExecutedStep>2731</idsExecutedStep>
+  <justification id="3714" reason="encerramento_de_protocolo" description="Interrupção padrão para ajuste de performance após inicio de implantação de processo.E vamos interromper todos que estão em andamento a mais de 30hs. cod:: 2244-2393353" justifiedById="221"/>
+  <pathway id="381" code="H012" name="Tratamento de SEPSE" version="1" completed="true">
+    <audit date="2018-05-15T08:41:47.799-0300"/>
+  </pathway>
+  <medicalcare codeMedicalCare="2393353" idProfessional="221" hospitalUnit="HOSPITAL ANTONIO PRUDENTE" patientRecord="870169"/>
+</MetamodelExecution:EPathway>

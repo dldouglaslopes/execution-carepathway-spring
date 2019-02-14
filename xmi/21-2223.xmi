@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2223" creationDate="2018-07-30T12:01:05.889-0300" conclusionDate="2018-07-30T12:31:57.319-0300" completed="true" name="IVAS" cid="A90" timeExecution="2422.42843">
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2708" reworked="true" executed="true" creationDate="2018-07-30T12:02:38.148-0300" modificationDate="2018-07-30T12:38:20.948-0300" executionDate="2018-07-30T12:36:27.165-0300" createdById="21" executedById="21" name="Avaliar Critérios de Sepse" next="/atendimentos/21/protocolos/2223/passos/2713/">
+    <step id="153" type="AuxilioConduta" name="Avaliar Critérios de Sepse" description="Avaliar Critérios de Sepse" isInitial="true"/>
+    <answer id="3279" type="RespostaSimOuNao">
+      <question id="120" text="Temperatura > 38 ou &lt; 36?">
+        <variable id="218" type="SimOuNao" name="verifica_sepse_temperatura" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3280" type="RespostaSimOuNao">
+      <question id="121" text="Frequência Respiratória > 20?">
+        <variable id="219" type="SimOuNao" name="verifica_sepse_fr" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3281" type="RespostaSimOuNao">
+      <question id="122" text="Frequência cardíaca > 90?">
+        <variable id="220" type="SimOuNao" name="verifica_sepse_freq_card" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3282" type="RespostaSimOuNao">
+      <question id="123" text="Confusão Mental?">
+        <variable id="221" type="SimOuNao" name="verifica_sepse_confusao_mental" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3283" type="RespostaSimOuNao">
+      <question id="124" text="Sat &lt;= 92%?">
+        <variable id="222" type="SimOuNao" name="verifica_sepse_sat" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3284" type="RespostaSimOuNao">
+      <question id="125" text="FC/PAS >= 0,8?">
+        <variable id="223" type="SimOuNao" name="verifica_sepse_FC_PAS" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2713" executed="true" creationDate="2018-07-30T12:24:57.079-0300" modificationDate="2018-07-30T12:33:28.776-0300" executionDate="2018-07-30T12:30:00.902-0300" createdById="21" executedById="21" name="Avaliar Critérios de Pneumonia" previous="/atendimentos/21/protocolos/2223/passos/2708/" next="/atendimentos/21/protocolos/2223/passos/2714/">
+    <step id="155" type="AuxilioConduta" name="Avaliar Critérios de Pneumonia" description="Avaliar Critérios de Pneumonia"/>
+    <answer id="3286" type="RespostaSimOuNao">
+      <question id="126" text="Dispnéia?">
+        <variable id="224" type="SimOuNao" name="criterios_pneumonia_dispneia" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3287" type="RespostaSimOuNao">
+      <question id="127" text="Dor pleurítica?">
+        <variable id="225" type="SimOuNao" name="criterios_pneumonia_dor_pleuritica" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3288" type="RespostaSimOuNao">
+      <question id="128" text="Tosse produtiva?">
+        <variable id="226" type="SimOuNao" name="criterios_pneumonia_tosse_produtiva" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3289" type="RespostaSimOuNao">
+      <question id="129" text="Calafrios?">
+        <variable id="227" type="SimOuNao" name="criterios_pneumonia_calafrios" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3290" type="RespostaSimOuNao">
+      <question id="130" text="Confusão recente?">
+        <variable id="228" type="SimOuNao" name="criterios_pneumonia_confusao_recente" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3291" type="RespostaSimOuNao">
+      <question id="131" text="Estertores Crepantes?">
+        <variable id="229" type="SimOuNao" name="criterios_pneumonia_estertores_crepantes" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3292" type="RespostaSimOuNao">
+      <question id="132" text="Entrada recente?">
+        <variable id="230" type="SimOuNao" name="criterios_pneumonia_entrada_recente" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2714" executed="true" creationDate="2018-07-30T12:35:32.321-0300" modificationDate="2018-07-30T12:33:46.533-0300" executionDate="2018-07-30T12:32:38.828-0300" createdById="21" executedById="21" name="Influenza: Fatores de Risco" previous="/atendimentos/21/protocolos/2223/passos/2713/" next="/atendimentos/21/protocolos/2223/passos/2715/">
+    <step id="157" type="AuxilioConduta" name="Influenza: Fatores de Risco" description="Avaliar presença de fatores de risco para influenza"/>
+    <answer id="3293" type="RespostaSimOuNao">
+      <question id="133" text="Cefaléia?">
+        <variable id="231" type="SimOuNao" name="influenza_riscos_cefaleia" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3294" type="RespostaSimOuNao">
+      <question id="134" text="Mialgia?">
+        <variable id="232" type="SimOuNao" name="influenza_riscos_mialgia" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3295" type="RespostaSimOuNao">
+      <question id="135" text="Artralgia?">
+        <variable id="233" type="SimOuNao" name="influenza_riscos_artralgia" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3296" type="RespostaSimOuNao">
+      <question id="136" text="Diarréia?">
+        <variable id="234" type="SimOuNao" name="influenza_riscos_diarreia" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2715" reworked="true" executed="true" creationDate="2018-07-30T12:35:28.671-0300" modificationDate="2018-07-30T12:34:13.181-0300" executionDate="2018-07-30T12:31:35.995-0300" createdById="21" executedById="21" name="Influenza: Riscos de Complicações" previous="/atendimentos/21/protocolos/2223/passos/2714/" next="/atendimentos/21/protocolos/2223/passos/2717/">
+    <step id="158" type="AuxilioConduta" name="Influenza: Riscos de Complicações" description="Avaliar presença de riscos de complicações para influenza"/>
+    <answer id="3297" type="RespostaSimOuNao">
+      <question id="137" text="Gestante / Puerperas?">
+        <variable id="235" type="SimOuNao" name="influenza_complicacoes_gestante" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3298" type="RespostaSimOuNao">
+      <question id="138" text="Idade > 60 anos?">
+        <variable id="236" type="SimOuNao" name="influenza_complicacoes_idoso" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3299" type="RespostaSimOuNao">
+      <question id="139" text="Pneumopatias?">
+        <variable id="237" type="SimOuNao" name="influenza_complicacoes_pneumopatias" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3300" type="RespostaSimOuNao">
+      <question id="140" text="ICC?">
+        <variable id="238" type="SimOuNao" name="influenza_complicacoes_icc" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3301" type="RespostaSimOuNao">
+      <question id="141" text="Doença renal crônica?">
+        <variable id="239" type="SimOuNao" name="influenza_complicacoes_doenca_renal" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3302" type="RespostaSimOuNao">
+      <question id="142" text="Cirrose Hepática?">
+        <variable id="240" type="SimOuNao" name="influenza_complicacoes_cirrose" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3303" type="RespostaSimOuNao">
+      <question id="143" text="Neoplasias Hematológicas?">
+        <variable id="241" type="SimOuNao" name="influenza_complicacoes_neoplasias" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3304" type="RespostaSimOuNao">
+      <question id="144" text="Diabetes?">
+        <variable id="242" type="SimOuNao" name="influenza_complicacoes_diabetes" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3305" type="RespostaSimOuNao">
+      <question id="145" text="Doenças Neurodegenerativas?">
+        <variable id="243" type="SimOuNao" name="influenza_complicacoes_doencas_neurodegen" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3306" type="RespostaSimOuNao">
+      <question id="146" text="Obesidade Mórbida (IMC > 40)?">
+        <variable id="244" type="SimOuNao" name="influenza_complicacoes_obesidade_morbida" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3307" type="RespostaSimOuNao">
+      <question id="147" text="Imunossupressão?">
+        <variable id="245" type="SimOuNao" name="influenza_complicacoes_imunossupressao" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2717" executed="true" creationDate="2018-07-30T12:36:25.902-0300" modificationDate="2018-07-30T12:43:56.516-0300" executionDate="2018-07-30T12:42:42.548-0300" createdById="21" executedById="21" name="Avaliar Sintomas Específicos" previous="/atendimentos/21/protocolos/2223/passos/2715/" next="/atendimentos/21/protocolos/2223/passos/2718/">
+    <step id="159" type="AuxilioConduta" name="Avaliar Sintomas Específicos" description="Avaliar sintomas apresentados pelo paciente"/>
+    <answer id="3308" type="RespostaSimOuNao">
+      <question id="148" text="Resfriado comum">
+        <variable id="246" type="SimOuNao" name="sintomas_resfriado" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3309" type="RespostaSimOuNao">
+      <question id="149" text="Amigdalite / Tonsilite">
+        <variable id="247" type="SimOuNao" name="sintomas_amigdalite" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3310" type="RespostaSimOuNao">
+      <question id="150" text="Otite">
+        <variable id="248" type="SimOuNao" name="sintomas_otite" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3311" type="RespostaSimOuNao">
+      <question id="151" text="Rinite / Rinossinusites">
+        <variable id="249" type="SimOuNao" name="sintomas_rinite" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3312" type="RespostaSimOuNao">
+      <question id="152" text="Laringite">
+        <variable id="250" type="SimOuNao" name="sintomas_laringite" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EPrescription" id="2718" executed="true" creationDate="2018-07-30T12:29:01.883-0300" modificationDate="2018-07-30T12:31:42.859-0300" executionDate="2018-07-30T12:31:42.695-0300" createdById="21" executedById="21" name="Rinite (Receita)" previous="/atendimentos/21/protocolos/2223/passos/2717/" text="informação complementar">
+    <step id="168" type="Receita" name="Rinite (Receita)" description="Receita para paciente com rinite" isTerminal="true"/>
+    <idsPMedication>3216</idsPMedication>
+    <idsPMedication>3217</idsPMedication>
+    <idsPMedication>3218</idsPMedication>
+    <idsPMedication>3219</idsPMedication>
+    <idsPMedication>3220</idsPMedication>
+    <idsPMedication>3221</idsPMedication>
+    <idsPMedication>3222</idsPMedication>
+    <idsPMedication>3223</idsPMedication>
+    <idsPMedication>3224</idsPMedication>
+    <idsPMedication>3225</idsPMedication>
+    <idsPPrescription>3216</idsPPrescription>
+    <idsPPrescription>3217</idsPPrescription>
+    <idsPPrescription>3218</idsPPrescription>
+    <idsPPrescription>3219</idsPPrescription>
+    <idsPPrescription>3220</idsPPrescription>
+    <idsPPrescription>3221</idsPPrescription>
+    <idsPPrescription>3222</idsPPrescription>
+    <idsPPrescription>3223</idsPPrescription>
+    <idsPPrescription>3224</idsPPrescription>
+    <idsPPrescription>3225</idsPPrescription>
+    <pmedication id="3216">
+      <prescriptionResult success="true" requestDate="2018-07-30T12:29:18.645-0300" id="2219" message="Receita prescrita com sucesso"/>
+    </pmedication>
+    <pmedication id="3217">
+      <prescriptionResult success="true" requestDate="2018-07-30T12:29:26.782-0300" id="2220" message="Receita prescrita com sucesso"/>
+    </pmedication>
+    <pmedication id="3218">
+      <prescriptionResult success="true" requestDate="2018-07-30T12:29:33.053-0300" id="2221" message="Receita prescrita com sucesso"/>
+    </pmedication>
+    <pmedication id="3219">
+      <prescriptionResult success="true" requestDate="2018-07-30T12:29:40.351-0300" id="2222" message="Receita prescrita com sucesso"/>
+    </pmedication>
+    <pmedication id="3220">
+      <prescriptionResult success="true" requestDate="2018-07-30T12:29:48.882-0300" id="2223" message="Receita prescrita com sucesso"/>
+    </pmedication>
+    <pmedication id="3221">
+      <prescriptionResult success="true" requestDate="2018-07-30T12:29:55.744-0300" id="2224" message="Receita prescrita com sucesso"/>
+    </pmedication>
+    <pmedication id="3222">
+      <prescriptionResult success="true" requestDate="2018-07-30T12:30:03.048-0300" id="2225" message="Receita prescrita com sucesso"/>
+    </pmedication>
+    <pmedication id="3223">
+      <prescriptionResult success="true" requestDate="2018-07-30T12:30:10.672-0300" id="2226" message="Receita prescrita com sucesso"/>
+    </pmedication>
+    <pmedication id="3224">
+      <prescriptionResult success="true" requestDate="2018-07-30T12:30:16.601-0300" id="2227" message="Receita prescrita com sucesso"/>
+    </pmedication>
+    <pmedication id="3225">
+      <prescriptionResult success="true" requestDate="2018-07-30T12:30:23.283-0300" id="2228" message="Receita prescrita com sucesso"/>
+    </pmedication>
+  </eStep>
+  <idsExecutedStep>2708</idsExecutedStep>
+  <idsExecutedStep>2713</idsExecutedStep>
+  <idsExecutedStep>2714</idsExecutedStep>
+  <idsExecutedStep>2715</idsExecutedStep>
+  <idsExecutedStep>2717</idsExecutedStep>
+  <idsExecutedStep>2718</idsExecutedStep>
+  <justification/>
+  <pathway id="25" code="H009" name="IVAS" version="1" completed="true">
+    <audit/>
+  </pathway>
+  <complementaryconducts xsi:type="MetamodelExecution:ComplementaryMedication" id="823" type="MedicamentoComplementar" pathway="IVAS" creationDate="2018-07-30T12:27:40.506-0300" resource="ACIDO ACETILSALICILICO 100 MG COMPRIMIDO COMP 1 UD">
+    <suspension success="true" requestDate="2018-07-30T12:38:35.369-0300" id="2217" message="Medicamento(s) suspenso  com sucesso"/>
+    <prescribedresource id="1681" idMedication="1" name="" brand="" code="" cycles="1" description="" timeInterval="1" dailyDosage="1" timeTreatement="1" medication="32670: ACIDO ACETILSALICILICO 100 MG COMPRIMIDO COMP 1 UD" unit="UD" access="ORAL"/>
+  </complementaryconducts>
+  <complementaryconducts xsi:type="MetamodelExecution:ComplementaryProcedure" id="824" type="ProcedimentoComplementar" pathway="IVAS" creationDate="2018-07-30T12:37:21.487-0300" resource="AR COMPRIMIDO">
+    <suspension success="true" requestDate="2018-07-30T12:38:47.455-0300" id="2216" message="Procedimento(s) suspenso  com sucesso"/>
+    <procedureprescribedresource id="821" idProcedure="22254" quantity="1" frequency="1" procedure="75010020: AR COMPRIMIDO"/>
+  </complementaryconducts>
+  <medicalcare codeMedicalCare="2393353" idProfessional="21" hospitalUnit="HOSPITAL ANTONIO PRUDENTE" patientRecord="870169"/>
+</MetamodelExecution:EPathway>

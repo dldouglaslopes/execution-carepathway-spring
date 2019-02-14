@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="1982" creationDate="2018-07-26T11:42:29.445-0300" conclusionDate="2018-07-26T14:13:43.534-0300" completed="true" aborted="true" name="Protocolo completo" cid="A90" timeExecution="8835.239089">
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2304" reworked="true" executed="true" creationDate="2018-07-26T11:43:22.010-0300" modificationDate="2018-07-26T14:05:41.012-0300" executionDate="2018-07-26T14:16:47.458-0300" createdById="21" executedById="21" name="Passo A1" next="/atendimentos/21/protocolos/1982/passos/2343/">
+    <step id="2461" type="AuxilioConduta" name="Passo A1" description="Passo do tipo AUXILIO CONDUTA" isInitial="true"/>
+    <answer id="2804" type="RespostaNumerica">
+      <question id="1861" text="Pergunta sem vinculo do tipo numérica?" category="Exame Físico">
+        <variable id="2881" type="Numerica" name="pergunta_sem_vinculo" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="2805" type="RespostaSimOuNao">
+      <question id="1862" text="Pergunta sem vinculo do tipo sim ou não?" category="Fatores Demográficos">
+        <variable id="2882" type="SimOuNao" name="pergunta_sem_vinculo_sim_ou_nao" weight="2.0"/>
+      </question>
+    </answer>
+    <answer id="2806" type="RespostaSimOuNao">
+      <question id="1863" text="Pergunta com vinculo de comorbidade" category="Comorbidades">
+        <variable id="2883" type="SimOuNao" name="vinculo_comorbidade" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="2807" type="RespostaSimOuNao">
+      <question id="1864" text="Pergunta com vinculo de alergia" category="Exame Físico">
+        <variable id="2884" type="SimOuNao" name="vinculo_de_alergia" weight="2.0"/>
+      </question>
+    </answer>
+    <answer id="2808" type="RespostaNumerica">
+      <question id="1865" text="Pergunta sinal vital com vinculo do tipo numérica" category="Exame Físico">
+        <variable id="2885" type="Numerica" name="15" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="2809" type="RespostaSimOuNao">
+      <question id="1866" text="Pergunta sinal vital com vinculo do tipo sim ou não" category="Exame Físico">
+        <variable id="2886" type="SimOuNao" name="vinculo_com_sinal_vital_sim_ou_nao" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="2810" type="RespostaNumerica">
+      <question id="1867" text="Vinculo com a idade, qual idade do paciente?" category="Fatores Demográficos">
+        <variable id="2887" type="Numerica" name="idade_do_paciente" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="2811" type="RespostaSimOuNao">
+      <question id="1868" text="vinculo com o sexo, paciente é mulher?" category="Fatores Demográficos">
+        <variable id="2888" type="SimOuNao" name="sexo_do_paciente" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="2812" type="RespostaEscolha">
+      <question id="1869" text="Unica Reposta">
+        <variable id="2889" type="Escolha" name="unica_resposta" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="2813" type="RespostaEscolha">
+      <question id="1870" text="Multipla Resposta">
+        <variable id="2890" type="Escolha" name="multipla_resposta" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:ETreatment" id="2343" creationDate="2018-07-26T14:07:12.467-0300" modificationDate="2018-07-26T14:07:12.510-0300" createdById="21" name="Passo B1" previous="/atendimentos/21/protocolos/1982/passos/2304/">
+    <step id="2462" type="Tratamento" name="Passo B1" description="Passo do tipo Tratamento">
+      <audit date="2018-07-26T11:48:24.201-0300"/>
+    </step>
+    <pexamination id="2645" report="">
+      <examination id="1732" sideLimb="1" quantity="1" justification="Teste Teste" clinicalIndication="Teste Teste" description="" code="32030037" memberPeers="true" name="RAIOX COSTELAS - POR HEMITORAX" onlyEmergency="true" idExamination="12248"/>
+      <complement id="1204" sideLimb="" clinicalIndication="" justification=""/>
+      <prescriptionResult requestDate="2018-07-26T14:18:48.872-0300" id="1742" message="Erro não identificado pelo serviço. Favor informar TI"/>
+    </pexamination>
+    <pexamination id="2646" report="">
+      <examination id="1733" sideLimb="1" quantity="1" justification="Teste Teste" clinicalIndication="Teste t" description="" code="32030037" memberPeers="true" name="RAIOX COSTELAS - POR HEMITORAX" onlyEmergency="true" idExamination="12248"/>
+      <complement id="1205" sideLimb="" clinicalIndication="" justification=""/>
+      <prescriptionResult requestDate="2018-07-26T14:06:00.801-0300" id="1743" message="Erro não identificado pelo serviço. Favor informar TI"/>
+    </pexamination>
+    <pexamination id="2647" report="">
+      <examination id="1734" sideLimb="" quantity="1" justification="teste" clinicalIndication="teste" description="" code="99010073" name="CONSULTA C/OU SEM/ PROCEDIMENTO" idExamination="7435"/>
+      <complement id="1206" sideLimb="" clinicalIndication="" justification=""/>
+      <prescriptionResult requestDate="2018-07-26T14:08:42.375-0300" id="1744" message="Erro não identificado pelo serviço. Favor informar TI"/>
+    </pexamination>
+    <idsPExamination>2645</idsPExamination>
+    <idsPExamination>2646</idsPExamination>
+    <idsPExamination>2647</idsPExamination>
+  </eStep>
+  <idsExecutedStep>2304</idsExecutedStep>
+  <idsExecutedStep>2343</idsExecutedStep>
+  <justification id="1422" reason="encerramento_de_protocolo" description="teste" justifiedById="21"/>
+  <pathway id="921" code="PRTCMP" name="Protocolo completo" version="12" completed="true">
+    <audit date="2018-07-26T11:39:39.442-0300"/>
+  </pathway>
+  <medicalcare codeMedicalCare="2393353" idProfessional="21" hospitalUnit="HOSPITAL ANTONIO PRUDENTE" patientRecord="870169"/>
+</MetamodelExecution:EPathway>

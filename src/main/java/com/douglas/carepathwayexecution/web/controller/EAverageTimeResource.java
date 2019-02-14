@@ -26,7 +26,7 @@ public class EAverageTimeResource {
 	@Autowired
 	private EAverageTimeService timeService;
 	
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/averageTime" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/time" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> averageTimeToOnePathway(
@@ -55,7 +55,7 @@ public class EAverageTimeResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
-	@RequestMapping(value = { "/medcare/execution/pathways/averageTime" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/time" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> averageTimeToAllPathways(

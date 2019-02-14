@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="14455" creationDate="2018-11-13T14:44:44.568-0200" conclusionDate="2018-11-13T16:34:11.189-0200" completed="true" aborted="true" name="Asma" cid="N300" timeExecution="6403.163621">
+  <eStep xsi:type="MetamodelExecution:ETreatment" id="15368" creationDate="2018-11-13T14:45:06.073-0200" modificationDate="2018-11-13T14:45:06.116-0200" createdById="654" name="Anamnese + Exame Físico">
+    <step id="5485" type="Tratamento" name="Anamnese + Exame Físico" description="&lt;p>Avalia&amp;ccedil;&amp;atilde;o inicial&lt;/p>&#xA;&#xA;&lt;ul>&#xA;&#x9;&lt;li>Anamnese + exame f&amp;iacute;sico&lt;/li>&#xA;&#x9;&lt;li>Oximetria de pulso&lt;/li>&#xA;&lt;/ul>" isInitial="true"/>
+    <pprocedure/>
+    <idsPProcedure>14755</idsPProcedure>
+  </eStep>
+  <idsExecutedStep>15368</idsExecutedStep>
+  <justification id="6075" reason="encerramento_de_protocolo" description="Interrupção padrão para ajuste de performance após inicio de implantação de processo.E vamos interromper todos que estão em andamento a mais de 30hs. cod:: 14455-49780663" justifiedById="221"/>
+  <pathway id="2204" code="H038" name="Asma" version="1" completed="true">
+    <audit date="2018-10-31T16:29:33.600-0300"/>
+  </pathway>
+  <medicalcare codeMedicalCare="49780663" idProfessional="221" hospitalUnit="SEMED SERVICOS MEDICO HOSP DE CAMACARI LTDA" patientRecord="13175542"/>
+</MetamodelExecution:EPathway>

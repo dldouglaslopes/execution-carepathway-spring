@@ -29,7 +29,7 @@ public class EStatusResource {
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/status" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> statusToOnePathway(
+	public ResponseEntity<EQueryDTO> countStatusToOnePathway(
 		@PathVariable( value = "id", required=true) String idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,

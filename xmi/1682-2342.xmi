@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2342" creationDate="2018-07-31T17:51:44.219-0300" conclusionDate="2018-11-13T15:03:19.448-0200" completed="true" aborted="true" name="Pneumonia &amp; Influenza" cid="J15" timeExecution="9062095.799229">
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2882" executed="true" creationDate="2018-07-31T17:52:14.766-0300" modificationDate="2018-08-01T08:21:49.810-0300" executionDate="2018-08-01T08:20:58.234-0300" createdById="181" executedById="181" name="Verificar Critérios para SEPSE" next="/atendimentos/1682/protocolos/2342/passos/2902/">
+    <step id="1979" type="AuxilioConduta" name="Verificar Critérios para SEPSE" description="Verifique os critérios para SIRS" isInitial="true"/>
+    <answer id="3464" type="RespostaSimOuNao">
+      <question id="1587" text="TAX > 37.8ºc ou &lt; 35ºc?">
+        <variable id="2387" type="SimOuNao" name="ver_sepse_tax" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3465" type="RespostaSimOuNao">
+      <question id="1588" text="FC > 90 bpm?">
+        <variable id="2388" type="SimOuNao" name="ver_sep_fc" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3466" type="RespostaSimOuNao">
+      <question id="1589" text="FR > 20 irpm?">
+        <variable id="2389" type="SimOuNao" name="ver_sep_fr" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2902" reworked="true" executed="true" creationDate="2018-08-01T08:23:41.272-0300" modificationDate="2018-08-01T08:23:25.485-0300" executionDate="2018-08-01T08:22:33.804-0300" createdById="181" executedById="181" name="Verificar Fatores Agravantes Para SEPSE" previous="/atendimentos/1682/protocolos/2342/passos/2882/" next="/atendimentos/1682/protocolos/2342/passos/2904/">
+    <step id="1980" type="AuxilioConduta" name="Verificar Fatores Agravantes Para SEPSE" description="Verifique se o paciente apresenta algum dos fatores a seguir."/>
+    <answer id="3484" type="RespostaSimOuNao">
+      <question id="1590" text="Oligúria / Anúria?">
+        <variable id="2390" type="SimOuNao" name="fat_agra_oliguria" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3485" type="RespostaSimOuNao">
+      <question id="1591" text="PAS &lt; 100 mmHg?">
+        <variable id="2391" type="SimOuNao" name="fat_agra_pas" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3486" type="RespostaSimOuNao">
+      <question id="1592" text="Agitação / Sonolência / Alteração Nível de Consciência?">
+        <variable id="2392" type="SimOuNao" name="fat_agra_agita_sono_cons" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3487" type="RespostaSimOuNao">
+      <question id="1593" text="Dispneia ou SatO2 &lt; 93%?">
+        <variable id="2393" type="SimOuNao" name="fat_risc_disp_sat" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2904" executed="true" creationDate="2018-08-01T08:24:59.172-0300" modificationDate="2018-08-01T08:19:28.919-0300" executionDate="2018-08-01T08:19:02.808-0300" createdById="181" executedById="181" name="Verificar Idade do Paciente" previous="/atendimentos/1682/protocolos/2342/passos/2902/" next="/atendimentos/1682/protocolos/2342/passos/2905/">
+    <step id="1963" type="AuxilioConduta" name="Verificar Idade do Paciente" description="Verifique a idade do paciente"/>
+    <answer id="3488" type="RespostaNumerica">
+      <question id="1521" text="Idade:">
+        <variable id="2321" type="Numerica" name="idade" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:ETreatment" id="2905" executed="true" creationDate="2018-08-01T08:21:08.269-0300" modificationDate="2018-08-01T08:11:28.087-0300" executionDate="2018-08-01T08:11:13.623-0300" createdById="181" executedById="181" name="Raio X + Pacote de Exames Laboratoriais" previous="/atendimentos/1682/protocolos/2342/passos/2904/" next="/atendimentos/1682/protocolos/2342/passos/2906/">
+    <justification id="1822" reason="ausencia_de_prescricao" description="apenas teste" justifiedById="181"/>
+    <step id="1966" type="Tratamento" name="Raio X + Pacote de Exames Laboratoriais" description="Paciente apresenta fatores complicadores para o tratamento, idade avançada ou presença de comorbidades, recomenda-se solicitar além do raio X do tórax o pacote de exames laboratoriais a seguir:"/>
+    <pexamination id="3422" report="">
+      <examination id="1503" sideLimb="" quantity="1" justification="Suspeita de Influenza" clinicalIndication="Nenhuma" description="" code="28040481" name="HEMOGRAMA COMPLETO (ERITROGRAMA + LEUCOGRAMA + AVALIACAO DE PLAQUETAS)" onlyEmergency="true" idExamination="8644"/>
+      <complement/>
+      <prescriptionResult/>
+    </pexamination>
+    <pexamination id="3423" report="">
+      <examination id="1504" sideLimb="" quantity="1" justification="protocolo de pneumonia" clinicalIndication="tratamento de pneumonia" description="" code="28090209" name="LACTATO" onlyEmergency="true" idExamination="9295"/>
+      <complement/>
+      <prescriptionResult/>
+    </pexamination>
+    <pexamination id="3424" report="">
+      <examination id="1505" sideLimb="" quantity="1" justification="protocolo de pneumonia" clinicalIndication="tratamento de pneumonia" description="" code="28011279" name="SODIO ( SANGUE )" onlyEmergency="true" idExamination="8460"/>
+      <complement/>
+      <prescriptionResult/>
+    </pexamination>
+    <pexamination id="3425" report="">
+      <examination id="1506" sideLimb="" quantity="1" justification="protocolo de pneumonia" clinicalIndication="tratamento de pneumonia" description="" code="28011210" name="POTASSIO" onlyEmergency="true" idExamination="8452"/>
+      <complement/>
+      <prescriptionResult/>
+    </pexamination>
+    <pexamination id="3426" report="">
+      <examination id="1507" sideLimb="" quantity="1" justification="protocolo pneumonia" clinicalIndication="tratamento de pneumonia" description="" code="28010973" name="GLICOSE (SANGUE)" onlyEmergency="true" idExamination="8429"/>
+      <complement/>
+      <prescriptionResult/>
+    </pexamination>
+    <pexamination id="3427" report="">
+      <examination id="1508" sideLimb="" quantity="1" justification="protocolo pneumonia" clinicalIndication="tratamento de pneumonia" description="" code="28011414" name="UREIA ( SANGUE )" onlyEmergency="true" idExamination="8471"/>
+      <complement/>
+      <prescriptionResult/>
+    </pexamination>
+    <pexamination id="3428" report="">
+      <examination id="1509" sideLimb="" quantity="1" justification="Protocolo de Pneumonia" clinicalIndication="Protocolo de Pneumonia" description="" code="28060865" name="PROTEINA C REATIVA, DETERMINACAO QUANTITATIVA DA" onlyEmergency="true" idExamination="8944"/>
+      <complement/>
+      <prescriptionResult/>
+    </pexamination>
+    <pexamination id="3429" report="">
+      <examination id="1510" sideLimb="" quantity="1" justification="Protocolo de Pneumonia" clinicalIndication="Protocolo de Pneumonia" description="" code="28010540" name="CREATININA" onlyEmergency="true" idExamination="8384"/>
+      <complement/>
+      <prescriptionResult/>
+    </pexamination>
+    <pexamination id="3430" report="">
+      <examination id="1511" sideLimb="" quantity="1" justification="Protocolo de Pneumonia" clinicalIndication="Protocolo de Pneumonia" description="" code="28010965" name="GASOMETRIA (PH,PC02,P02,BIC,SA 02,EXCESSO BASE)" onlyEmergency="true" idExamination="8424"/>
+      <complement/>
+      <prescriptionResult/>
+    </pexamination>
+    <pexamination id="3431" report="">
+      <examination id="1512" sideLimb="" quantity="1" justification="Protocolo de Pneumonia" clinicalIndication="Protocolo de Pneumonia" description="" code="32050054" name="RAIOX TORAX: P.A - LAT" onlyEmergency="true" idExamination="12277"/>
+      <complement/>
+      <prescriptionResult/>
+    </pexamination>
+    <idsPExamination>3422</idsPExamination>
+    <idsPExamination>3423</idsPExamination>
+    <idsPExamination>3424</idsPExamination>
+    <idsPExamination>3425</idsPExamination>
+    <idsPExamination>3426</idsPExamination>
+    <idsPExamination>3427</idsPExamination>
+    <idsPExamination>3428</idsPExamination>
+    <idsPExamination>3429</idsPExamination>
+    <idsPExamination>3430</idsPExamination>
+    <idsPExamination>3431</idsPExamination>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2906" reworked="true" executed="true" creationDate="2018-08-01T08:12:52.905-0300" modificationDate="2018-08-01T08:17:34.356-0300" executionDate="2018-08-01T08:17:19.401-0300" createdById="181" executedById="181" name="Verificar Resultados Exames Laboratoriais" previous="/atendimentos/1682/protocolos/2342/passos/2905/" next="/atendimentos/1682/protocolos/2342/passos/2908/">
+    <step id="1983" type="AuxilioConduta" name="Verificar Resultados Exames Laboratoriais" description="Avalie o resultado dos exames para seguir com o tratamento adequado."/>
+    <answer id="3489" type="RespostaSimOuNao">
+      <question id="1594" text="Raio-x  e exames laboratoriais sugerem quadro de pneumonia?">
+        <variable id="2394" type="SimOuNao" name="result_exames_lab" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2908" executed="true" creationDate="2018-08-01T08:19:00.624-0300" modificationDate="2018-08-01T08:13:22.151-0300" executionDate="2018-08-01T08:24:25.807-0300" createdById="181" executedById="181" name="Cálculo do Port" previous="/atendimentos/1682/protocolos/2342/passos/2906/" next="/atendimentos/1682/protocolos/2342/passos/2909/">
+    <step id="1973" type="AuxilioConduta" name="Cálculo do Port" description="Verifique os exames do paciente e preencha a tabela a seguir para calcular o PORT e seguir com o tratamento mais adequado."/>
+    <answer id="3490" type="RespostaSimOuNao">
+      <question id="1549" text="Paciente mulher?" category="Fatores Demográficos">
+        <variable id="2349" type="SimOuNao" name="port_mulher" weight="10.0"/>
+      </question>
+    </answer>
+    <answer id="3491" type="RespostaSimOuNao">
+      <question id="1550" text="Procedente de Asilo?" category="Fatores Demográficos">
+        <variable id="2350" type="SimOuNao" name="port_asilo" weight="10.0"/>
+      </question>
+    </answer>
+    <answer id="3492" type="RespostaSimOuNao">
+      <question id="1551" text="Neoplasia?" category="Comorbidades">
+        <variable id="2351" type="SimOuNao" name="port_neoplasia" weight="30.0"/>
+      </question>
+    </answer>
+    <answer id="3493" type="RespostaSimOuNao">
+      <question id="1552" text="Doença Hepática?" category="Comorbidades">
+        <variable id="2352" type="SimOuNao" name="port_doenca_hepatica" weight="10.0"/>
+      </question>
+    </answer>
+    <answer id="3494" type="RespostaSimOuNao">
+      <question id="1553" text="ICC?" category="Comorbidades">
+        <variable id="2353" type="SimOuNao" name="port_icc" weight="10.0"/>
+      </question>
+    </answer>
+    <answer id="3495" type="RespostaSimOuNao">
+      <question id="1554" text="Doença Cerebrovascular?" category="Comorbidades">
+        <variable id="2354" type="SimOuNao" name="port_doenca_cerebrovasc" weight="10.0"/>
+      </question>
+    </answer>
+    <answer id="3496" type="RespostaSimOuNao">
+      <question id="1555" text="Doença Renal?" category="Comorbidades">
+        <variable id="2355" type="SimOuNao" name="port_doenca_renal" weight="10.0"/>
+      </question>
+    </answer>
+    <answer id="3497" type="RespostaSimOuNao">
+      <question id="1556" text="ph &lt; 7,35?" category="Achados Laboratoriais">
+        <variable id="2356" type="SimOuNao" name="port_ph" weight="30.0"/>
+      </question>
+    </answer>
+    <answer id="3498" type="RespostaSimOuNao">
+      <question id="1557" text="Ureia > 65 mg/dl?" category="Achados Laboratoriais">
+        <variable id="2357" type="SimOuNao" name="port_ureia" weight="20.0"/>
+      </question>
+    </answer>
+    <answer id="3499" type="RespostaSimOuNao">
+      <question id="1558" text="Sódio &lt; 130 meq/dl?" category="Achados Laboratoriais">
+        <variable id="2358" type="SimOuNao" name="port_sodio" weight="20.0"/>
+      </question>
+    </answer>
+    <answer id="3500" type="RespostaSimOuNao">
+      <question id="1559" text="Glicose > 250 mg/dl?" category="Achados Laboratoriais">
+        <variable id="2359" type="SimOuNao" name="port_glicose" weight="10.0"/>
+      </question>
+    </answer>
+    <answer id="3501" type="RespostaSimOuNao">
+      <question id="1560" text="Hematócritos &lt; 30%?" category="Achados Laboratoriais">
+        <variable id="2360" type="SimOuNao" name="port_hematocrito" weight="10.0"/>
+      </question>
+    </answer>
+    <answer id="3502" type="RespostaSimOuNao">
+      <question id="1561" text="PO2 &lt; 60 mmhg?" category="Achados Laboratoriais">
+        <variable id="2361" type="SimOuNao" name="port_po2" weight="10.0"/>
+      </question>
+    </answer>
+    <answer id="3503" type="RespostaSimOuNao">
+      <question id="1562" text="Derrame pleural?" category="Achados Laboratoriais">
+        <variable id="2362" type="SimOuNao" name="port_derrame_pleural" weight="10.0"/>
+      </question>
+    </answer>
+    <answer id="3504" type="RespostaSimOuNao">
+      <question id="1563" text="Alteração do estado mental?" category="Exame Físico">
+        <variable id="2363" type="SimOuNao" name="port_alteracao_mental" weight="20.0"/>
+      </question>
+    </answer>
+    <answer id="3505" type="RespostaSimOuNao">
+      <question id="1564" text="F. Respiratória > 30 ciclos?" category="Exame Físico">
+        <variable id="2364" type="SimOuNao" name="port_freq_esp" weight="20.0"/>
+      </question>
+    </answer>
+    <answer id="3506" type="RespostaSimOuNao">
+      <question id="1565" text="PA sistólica &lt; 90 mmHg?" category="Exame Físico">
+        <variable id="2365" type="SimOuNao" name="port_pa_sistolica" weight="20.0"/>
+      </question>
+    </answer>
+    <answer id="3507" type="RespostaSimOuNao">
+      <question id="1566" text="Temperatura &lt; 35 ou > 40?" category="Exame Físico">
+        <variable id="2366" type="SimOuNao" name="port_temperatura" weight="15.0"/>
+      </question>
+    </answer>
+    <answer id="3508" type="RespostaSimOuNao">
+      <question id="1567" text="Pulso >= 125 bvm?" category="Exame Físico">
+        <variable id="2367" type="SimOuNao" name="port_pulso" weight="10.0"/>
+      </question>
+    </answer>
+    <answer id="3509" type="RespostaNumerica">
+      <question id="1568" text="Idade:" category="Fatores Demográficos">
+        <variable id="2368" type="Numerica" name="port_idade" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2909" executed="true" creationDate="2018-08-01T08:19:16.623-0300" modificationDate="2018-08-01T08:26:40.114-0300" executionDate="2018-08-01T08:26:00.463-0300" createdById="181" executedById="181" name="[Port 3] Avaliar Fatores de Risco Para Influenza" previous="/atendimentos/1682/protocolos/2342/passos/2908/" next="/atendimentos/1682/protocolos/2342/passos/2910/">
+    <step id="1974" type="AuxilioConduta" name="[Port 3] Avaliar Fatores de Risco Para Influenza" description="Avalie se o paciente apresenta fatores que indicam risco de Influenza."/>
+    <answer id="3510" type="RespostaSimOuNao">
+      <question id="1569" text="Tosse?">
+        <variable id="2369" type="SimOuNao" name="port3_fatores_risco_tosse" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3511" type="RespostaSimOuNao">
+      <question id="1570" text="Dor de garganta?">
+        <variable id="2370" type="SimOuNao" name="port3_fatores_risco_dor" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3512" type="RespostaSimOuNao">
+      <question id="1571" text="Febre?">
+        <variable id="2371" type="SimOuNao" name="port3_fatores_risco_febre" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EPrescription" id="2910" creationDate="2018-08-01T08:14:16.268-0300" modificationDate="2018-08-01T08:14:16.321-0300" createdById="181" name="[Port 2/3] Receita Padrão - Escolha um antibiótico e as opções de medicamentos sintomáticos" previous="/atendimentos/1682/protocolos/2342/passos/2909/" text="">
+    <step id="1977" type="Receita" name="[Port 2/3] Receita Padrão - Escolha um antibiótico e as opções de medicamentos sintomáticos" description="Atenção! Caso apresente alguns dos sintomas a seguir retornar imediatamente a emergência. &#xA;Sintomas: Falta de ar; Dor no peito; Febre por mais de 3 dias após início das medicações;  Desorientação; Sonolência excessiva; Sangramentos; Desmaio; Palpitação (Coração acelerado); Diminuição ou ausência de urina." isTerminal="true"/>
+    <pprescription>
+      <prescription id="3432"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="3433"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="3434"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="3435"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="3436"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="3437"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="3438"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="3439"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="3440"/>
+    </pprescription>
+  </eStep>
+  <idsExecutedStep>2882</idsExecutedStep>
+  <idsExecutedStep>2902</idsExecutedStep>
+  <idsExecutedStep>2904</idsExecutedStep>
+  <idsExecutedStep>2905</idsExecutedStep>
+  <idsExecutedStep>2906</idsExecutedStep>
+  <idsExecutedStep>2908</idsExecutedStep>
+  <idsExecutedStep>2909</idsExecutedStep>
+  <idsExecutedStep>2910</idsExecutedStep>
+  <justification id="3717" reason="encerramento_de_protocolo" description="Interrupção padrão para ajuste de performance após inicio de implantação de processo.E vamos interromper todos que estão em andamento a mais de 30hs. cod:: 2342-49937762" justifiedById="221"/>
+  <pathway id="661" code="H002" name="Pneumonia &amp; Influenza" version="4" completed="true">
+    <audit date="2018-07-31T15:43:16.224-0300"/>
+  </pathway>
+  <medicalcare codeMedicalCare="49937762" idProfessional="221" hospitalUnit="ATENDIMED - SERVICOS MEDICOS LTDA - HAL" patientRecord="342490"/>
+</MetamodelExecution:EPathway>

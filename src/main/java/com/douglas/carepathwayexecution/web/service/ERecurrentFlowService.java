@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import QueryMetamodel.EQuery;
 import QueryMetamodel.ERecurrentFlow;
+import QueryMetamodel.Flow;
 import QueryMetamodel.Query_metamodelFactory;
+import QueryMetamodel.Sequence;
 
 @Service
 public class ERecurrentFlowService {
@@ -43,8 +45,7 @@ public class ERecurrentFlowService {
 				Document stepDoc = executedStepDoc.get("step", new Document());
 				
 				flow += stepDoc.getString("type") + 
-						" - " +
-						" id: " + stepDoc.getInteger("_id") + " / ";
+						"-" + stepDoc.getInteger("_id") + "/";
 			}
 								
 			if (flowMap.containsKey(flow)) {
@@ -77,13 +78,28 @@ public class ERecurrentFlowService {
 		ERecurrentFlow recurrentFlow = Query_metamodelFactory.eINSTANCE.createERecurrentFlow();		
 		
 		for (int i = 0; i < list.size(); i++) {			
-			String percentage = service.decimalFormat(list.get(i).getValue()) + "%";
-			recurrentFlow.getFlows().add(percentage + ": " + list.get(i).getKey());
+			Flow flow = Query_metamodelFactory.eINSTANCE.createFlow();
+			flow.setPercentage( service.decimalFormat(list.get(i).getValue()) + "%");
+			flow.setQuantity( flowMap.get( list.get(i).getKey()));
+			
+			String flowStr = list.get(i).getKey();
+			String[] flowArr = flowStr.split("/");
+			
+			for (int j = 0; j < flowArr.length; j++) {
+				String[] oneFlow = flowArr[j].split("-");
+				
+				Sequence sequence = Query_metamodelFactory.eINSTANCE.createSequence();
+				sequence.setType( oneFlow[0]);
+				sequence.setId( oneFlow[1]);				
+				
+				flow.getSequences().add(sequence);
+			}
+			
+			recurrentFlow.getFlows().add(flow);
 		}
 		
 		eQuery.setEMethod(recurrentFlow);
 		
 		return eQuery;
-	}
-	
+	}	
 }

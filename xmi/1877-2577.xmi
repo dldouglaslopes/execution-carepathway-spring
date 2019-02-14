@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2577" creationDate="2018-08-14T11:51:20.230-0300" conclusionDate="2018-11-13T15:02:03.384-0200" completed="true" aborted="true" name="Pneumonia &amp; Influenza" cid="N390" timeExecution="7874092.750154">
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="3177" creationDate="2018-08-14T11:51:33.132-0300" modificationDate="2018-08-14T11:51:33.163-0300" createdById="315" name="Verificar Critérios para SEPSE">
+    <step id="2987" type="AuxilioConduta" name="Verificar Critérios para SEPSE" description="Verifique os critérios para SIRS" isInitial="true"/>
+    <answer id="3929" type="RespostaSimOuNao">
+      <question id="2445" text="TAX > 37.8ºc ou &lt; 35ºc?">
+        <variable id="3707" type="SimOuNao" name="ver_sepse_tax" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3930" type="RespostaSimOuNao">
+      <question id="2446" text="FC > 90 bpm?">
+        <variable id="3708" type="SimOuNao" name="ver_sep_fc" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3931" type="RespostaSimOuNao">
+      <question id="2447" text="FR > 20 irpm?">
+        <variable id="3709" type="SimOuNao" name="ver_sep_fr" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <idsExecutedStep>3177</idsExecutedStep>
+  <justification id="3741" reason="encerramento_de_protocolo" description="Interrupção padrão para ajuste de performance após inicio de implantação de processo.E vamos interromper todos que estão em andamento a mais de 30hs. cod:: 2577-49044702" justifiedById="221"/>
+  <pathway id="1124" code="H002" name="Pneumonia &amp; Influenza" version="5" completed="true">
+    <audit date="2018-08-08T15:03:31.074-0300"/>
+  </pathway>
+  <medicalcare codeMedicalCare="49044702" idProfessional="221" hospitalUnit="HOSPITAL ANTONIO PRUDENTE" patientRecord="4075833"/>
+</MetamodelExecution:EPathway>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2282" creationDate="2018-07-30T16:14:11.067-0300" conclusionDate="2018-08-29T08:46:52.920-0300" completed="true" name="Pneumonia &amp; Influenza" cid="J15" timeExecution="2564955.206853">
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2794" executed="true" creationDate="2018-07-30T16:15:15.715-0300" modificationDate="2018-08-29T08:47:05.865-0300" executionDate="2018-08-29T08:46:00.582-0300" createdById="181" executedById="21" name="Verificar Critérios para SEPSE" next="/atendimentos/1662/protocolos/2282/passos/13102/">
+    <step id="1124" type="AuxilioConduta" name="Verificar Critérios para SEPSE" description="Verifique os critérios para SIRS" isInitial="true"/>
+    <answer id="3389" type="RespostaSimOuNao">
+      <question id="887" text="TAX > 37.8ºc ou &lt; 35ºc?">
+        <variable id="1407" type="SimOuNao" name="ver_sepse_tax" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3390" type="RespostaSimOuNao">
+      <question id="888" text="FC > 90 bpm?">
+        <variable id="1408" type="SimOuNao" name="ver_sep_fc" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3391" type="RespostaSimOuNao">
+      <question id="889" text="FR > 20 irpm?">
+        <variable id="1409" type="SimOuNao" name="ver_sep_fr" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="13102" executed="true" creationDate="2018-08-29T08:48:52.106-0300" modificationDate="2018-08-29T08:53:06.394-0300" executionDate="2018-08-29T08:52:03.410-0300" createdById="21" executedById="21" name="Verificar Fatores Agravantes Para SEPSE" previous="/atendimentos/1662/protocolos/2282/passos/2794/" next="/atendimentos/1662/protocolos/2282/passos/13103/">
+    <step id="1125" type="AuxilioConduta" name="Verificar Fatores Agravantes Para SEPSE" description="Verifique se o paciente apresenta algum dos fatores a seguir."/>
+    <answer id="39104" type="RespostaSimOuNao">
+      <question id="890" text="Oligúria / Anúria?">
+        <variable id="1410" type="SimOuNao" name="fat_agra_oliguria" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="39105" type="RespostaSimOuNao">
+      <question id="891" text="PAS &lt; 100 mmHg?">
+        <variable id="1411" type="SimOuNao" name="fat_agra_pas" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="39106" type="RespostaSimOuNao">
+      <question id="892" text="Agitação / Sonolência / Alteração Nível de Consciência?">
+        <variable id="1412" type="SimOuNao" name="fat_agra_agita_sono_cons" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="39107" type="RespostaSimOuNao">
+      <question id="893" text="Dispneia ou SatO2 &lt; 93%?">
+        <variable id="1413" type="SimOuNao" name="fat_risc_disp_sat" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EInformation" id="13103" executed="true" creationDate="2018-08-29T08:54:57.833-0300" modificationDate="2018-08-29T08:46:32.453-0300" executionDate="2018-08-29T08:46:32.280-0300" createdById="21" executedById="21" name="Encaminhar Paciente ao Eixo Vermelho" previous="/atendimentos/1662/protocolos/2282/passos/13102/">
+    <step id="1126" type="Informacao" name="Encaminhar Paciente ao Eixo Vermelho" description="Encaminhar o paciente ao eixo vermelho para condução junto ao líder local." isTerminal="true"/>
+  </eStep>
+  <idsExecutedStep>2794</idsExecutedStep>
+  <idsExecutedStep>13102</idsExecutedStep>
+  <idsExecutedStep>13103</idsExecutedStep>
+  <justification/>
+  <pathway id="482" code="H002" name="Pneumonia &amp; Influenza" version="3" completed="true">
+    <audit date="2018-05-25T18:06:08.705-0300"/>
+  </pathway>
+  <medicalcare codeMedicalCare="49937753" idProfessional="21" hospitalUnit="ATENDIMED - SERVICOS MEDICOS LTDA - HAL" patientRecord="340795"/>
+</MetamodelExecution:EPathway>

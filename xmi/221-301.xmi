@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="301" creationDate="2018-04-05T17:22:06.806-0300" conclusionDate="2018-07-26T11:20:50.655-0300" completed="true" name="Pneumonia &amp; Influenza" cid="" timeExecution="9655021.102849">
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="361" executed="true" creationDate="2018-04-05T17:15:00.692-0300" modificationDate="2018-04-05T17:28:31.748-0300" executionDate="2018-04-05T17:32:06.104-0300" createdById="41" executedById="41" name="Verificar Critérios para SEPSE" next="/atendimentos/221/protocolos/301/passos/362/">
+    <step id="486" type="AuxilioConduta" name="Verificar Critérios para SEPSE" description="Verifique os critérios para SIRS" isInitial="true"/>
+    <answer id="381" type="RespostaSimOuNao">
+      <question id="490" text="TAX > 37.8ºc ou &lt; 35ºc?">
+        <variable id="796" type="SimOuNao" name="ver_sepse_tax" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="382" type="RespostaSimOuNao">
+      <question id="491" text="FC > 90 bpm?">
+        <variable id="797" type="SimOuNao" name="ver_sep_fc" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="383" type="RespostaSimOuNao">
+      <question id="492" text="FR > 20 irpm?">
+        <variable id="798" type="SimOuNao" name="ver_sep_fr" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="362" executed="true" creationDate="2018-04-05T17:22:45.018-0300" modificationDate="2018-04-05T17:21:12.644-0300" executionDate="2018-04-05T17:30:35.131-0300" createdById="41" executedById="41" name="Verificar Fatores Agravantes Para SEPSE" previous="/atendimentos/221/protocolos/301/passos/361/" next="/atendimentos/221/protocolos/301/passos/363/">
+    <step id="487" type="AuxilioConduta" name="Verificar Fatores Agravantes Para SEPSE" description="Verifique se o paciente apresenta algum dos fatores a seguir."/>
+    <answer id="384" type="RespostaSimOuNao">
+      <question id="493" text="Oligúria / Anúria?">
+        <variable id="799" type="SimOuNao" name="fat_agra_oliguria" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="385" type="RespostaSimOuNao">
+      <question id="494" text="PAS &lt; 100 mmHg?">
+        <variable id="800" type="SimOuNao" name="fat_agra_pas" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="386" type="RespostaSimOuNao">
+      <question id="495" text="Agitação / Sonolência / Alteração Nível de Consciência?">
+        <variable id="801" type="SimOuNao" name="fat_agra_agita_sono_cons" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="387" type="RespostaSimOuNao">
+      <question id="496" text="Dispneia ou SatO2 &lt; 93%?">
+        <variable id="802" type="SimOuNao" name="fat_risc_disp_sat" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="363" executed="true" creationDate="2018-04-05T17:32:26.910-0300" modificationDate="2018-04-06T11:54:55.454-0300" executionDate="2018-04-06T11:54:14.972-0300" createdById="41" executedById="21" name="Verificar Idade do Paciente" previous="/atendimentos/221/protocolos/301/passos/362/" next="/atendimentos/221/protocolos/301/passos/381/">
+    <step id="469" type="AuxilioConduta" name="Verificar Idade do Paciente" description="Verifique a idade do paciente"/>
+    <answer id="388" type="RespostaNumerica">
+      <question id="424" text="Idade:">
+        <variable id="730" type="Numerica" name="idade" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="381" executed="true" creationDate="2018-04-06T11:56:08.704-0300" modificationDate="2018-04-06T11:55:05.322-0300" executionDate="2018-04-06T11:51:47.367-0300" createdById="21" executedById="21" name="Verificar Comorbidades" previous="/atendimentos/221/protocolos/301/passos/363/" next="/atendimentos/221/protocolos/301/passos/382/">
+    <step id="470" type="AuxilioConduta" name="Verificar Comorbidades" description="Verifique se o paciente possui alguma comorbidade."/>
+    <answer id="401" type="RespostaSimOuNao">
+      <question id="425" text="DPOC?">
+        <variable id="731" type="SimOuNao" name="comorbidades_dpoc" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="402" type="RespostaSimOuNao">
+      <question id="426" text="ICC?">
+        <variable id="732" type="SimOuNao" name="comorbidades_ICC" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="403" type="RespostaSimOuNao">
+      <question id="427" text="IRC?">
+        <variable id="733" type="SimOuNao" name="comorbidades_IRC" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="404" type="RespostaSimOuNao">
+      <question id="428" text="Doença Hepática Crônica?">
+        <variable id="734" type="SimOuNao" name="comorbidades_doenca_hepatica" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="405" type="RespostaSimOuNao">
+      <question id="429" text="Doenças Neurodegenerativas?">
+        <variable id="735" type="SimOuNao" name="comorbidades_doenca_neurodegen" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="406" type="RespostaSimOuNao">
+      <question id="430" text="Doença Neoplásica?">
+        <variable id="736" type="SimOuNao" name="comorbidades_doenca_neoplasica" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="407" type="RespostaSimOuNao">
+      <question id="431" text="Imunossupressão?">
+        <variable id="737" type="SimOuNao" name="comorbidades_imunossupressao" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="408" type="RespostaSimOuNao">
+      <question id="432" text="Internamento Recente (útimos 30 dias)?">
+        <variable id="738" type="SimOuNao" name="comorbidades_internamento" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:ETreatment" id="382" executed="true" creationDate="2018-04-06T11:56:59.153-0300" modificationDate="2018-04-06T11:57:07.763-0300" executionDate="2018-04-06T11:56:54.767-0300" createdById="21" executedById="21" name="Raio X de Tórax" previous="/atendimentos/221/protocolos/301/passos/381/" next="/atendimentos/221/protocolos/301/passos/383/">
+    <justification id="101" reason="ausencia_de_prescricao" description="tESTE" justifiedById="21"/>
+    <step id="471" type="Tratamento" name="Raio X de Tórax" description="Solicite o raio X de tórax para verificar presença de infiltrados no paciente."/>
+    <pexamination id="381" report="">
+      <examination id="281" sideLimb="" quantity="1" justification="Protocolo de Pneumonia" clinicalIndication="Protocolo de Pneumonia" description="" code="32010010" name="RAIOX CRANIO: P.A. - LAT" onlyEmergency="true" idExamination="12208"/>
+      <complement/>
+      <prescriptionResult/>
+    </pexamination>
+    <idsPExamination>381</idsPExamination>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="383" executed="true" creationDate="2018-04-06T11:57:38.884-0300" modificationDate="2018-04-06T11:47:56.442-0300" executionDate="2018-04-06T11:47:37.403-0300" createdById="21" executedById="21" name="Avaliar Resultados" previous="/atendimentos/221/protocolos/301/passos/382/" next="/atendimentos/221/protocolos/301/passos/384/">
+    <step id="473" type="AuxilioConduta" name="Avaliar Resultados" description="Avalie o resultado do exame do paciente. Verifique a presença de infiltrados no resultado do exame."/>
+    <answer id="409" type="RespostaSimOuNao">
+      <question id="433" text="Há infiltrado?">
+        <variable id="739" type="SimOuNao" name="ha_infiltrado" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EInformation" id="384" reworked="true" executed="true" creationDate="2018-04-06T11:48:53.892-0300" modificationDate="2018-07-26T11:12:49.993-0300" executionDate="2018-07-26T11:12:49.819-0300" createdById="21" executedById="21" name="Aviso: Alterações Importantes" previous="/atendimentos/221/protocolos/301/passos/383/" next="/atendimentos/221/protocolos/301/passos/2285/">
+    <step id="475" type="Informacao" name="Aviso: Alterações Importantes" description="Aviso: Quaisquer outras alterações importantes como derrame pleural, abscesso, nódulos, massas, devem ser individualizadas. Sugere-se discutir com  o líder local para definição do procedimento mais adequado."/>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2285" executed="true" creationDate="2018-07-26T11:13:53.675-0300" modificationDate="2018-07-26T11:14:18.152-0300" executionDate="2018-07-26T11:12:15.952-0300" createdById="21" executedById="21" name="[Port 2] Avaliar Fatores de Risco Para Influenza" previous="/atendimentos/221/protocolos/301/passos/384/" next="/atendimentos/221/protocolos/301/passos/2286/">
+    <step id="476" type="AuxilioConduta" name="[Port 2] Avaliar Fatores de Risco Para Influenza" description="Avalie se o paciente apresenta fatores que indicam risco de Influenza."/>
+    <answer id="2794" type="RespostaSimOuNao">
+      <question id="434" text="Tosse?">
+        <variable id="740" type="SimOuNao" name="port2_fatores_risco_tosse" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="2795" type="RespostaSimOuNao">
+      <question id="435" text="Febre?">
+        <variable id="741" type="SimOuNao" name="port2_fatores_risco_febre" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="2796" type="RespostaSimOuNao">
+      <question id="436" text="Dor de garganta?">
+        <variable id="742" type="SimOuNao" name="port2_fatores_risco_dor" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EPrescription" id="2286" executed="true" creationDate="2018-07-26T11:16:26.106-0300" modificationDate="2018-07-26T11:19:07.113-0300" executionDate="2018-07-26T11:13:51.071-0300" createdById="21" executedById="21" name="[Port 2] Receita Padrão - Escolha um antibiótico e as opções de medicamentos sintomáticos" previous="/atendimentos/221/protocolos/301/passos/2285/" text="">
+    <justification id="1384" reason="ausencia_de_prescricao" description="teste" justifiedById="21"/>
+    <step id="484" type="Receita" name="[Port 2] Receita Padrão - Escolha um antibiótico e as opções de medicamentos sintomáticos" description="Atenção! Caso apresente alguns dos sintomas a seguir retornar imediatamente a emergência. &#xA;Sintomas: Falta de ar; Dor no peito; Febre por mais de 3 dias após início das medicações;  Desorientação; Sonolência excessiva; Sangramentos; Desmaio; Palpitação (Coração acelerado); Diminuição ou ausência de urina." isTerminal="true"/>
+    <idsPMedication>2552</idsPMedication>
+    <idsPMedication>2553</idsPMedication>
+    <idsPMedication>2554</idsPMedication>
+    <idsPMedication>2555</idsPMedication>
+    <idsPMedication>2556</idsPMedication>
+    <idsPMedication>2557</idsPMedication>
+    <idsPPrescription>2552</idsPPrescription>
+    <idsPPrescription>2553</idsPPrescription>
+    <idsPPrescription>2554</idsPPrescription>
+    <idsPPrescription>2555</idsPPrescription>
+    <idsPPrescription>2556</idsPPrescription>
+    <idsPPrescription>2557</idsPPrescription>
+    <pmedication id="2552">
+      <prescriptionResult/>
+    </pmedication>
+    <pmedication id="2553">
+      <prescriptionResult/>
+    </pmedication>
+    <pmedication id="2554">
+      <prescriptionResult/>
+    </pmedication>
+    <pmedication id="2555">
+      <prescriptionResult/>
+    </pmedication>
+    <pmedication id="2556">
+      <prescriptionResult/>
+    </pmedication>
+    <pmedication id="2557">
+      <prescriptionResult/>
+    </pmedication>
+  </eStep>
+  <idsExecutedStep>361</idsExecutedStep>
+  <idsExecutedStep>362</idsExecutedStep>
+  <idsExecutedStep>363</idsExecutedStep>
+  <idsExecutedStep>381</idsExecutedStep>
+  <idsExecutedStep>382</idsExecutedStep>
+  <idsExecutedStep>383</idsExecutedStep>
+  <idsExecutedStep>384</idsExecutedStep>
+  <idsExecutedStep>2285</idsExecutedStep>
+  <idsExecutedStep>2286</idsExecutedStep>
+  <justification/>
+  <pathway id="202" code="H002" name="Pneumonia &amp; Influenza" version="2" completed="true">
+    <audit/>
+  </pathway>
+  <medicalcare codeMedicalCare="40683587" idProfessional="21" hospitalUnit="FUNDACAO ANA LIMA - CM PARANGABA" patientRecord="14346047"/>
+</MetamodelExecution:EPathway>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="1082" creationDate="2018-05-29T09:24:31.526-0300" conclusionDate="2018-06-13T14:45:33.115-0300" completed="true" name="Fratura Exposta" cid="A030" timeExecution="1315247.014589">
+  <eStep xsi:type="MetamodelExecution:EPrescription" id="1302" executed="true" creationDate="2018-05-29T09:26:41.006-0300" modificationDate="2018-06-13T14:39:35.535-0300" executionDate="2018-06-13T14:39:35.355-0300" createdById="21" executedById="21" name="Receita Teste" text="">
+    <step id="1388" type="Receita" name="Receita Teste" description="Teste de receita gerada pelo protocolo." isInitial="true" isTerminal="true">
+      <audit date="2018-05-28T19:01:57.151-0300"/>
+    </step>
+    <pprescription>
+      <prescription id="1702"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="1703"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="1704"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="1705"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="1706"/>
+    </pprescription>
+    <pprescription>
+      <prescription id="1707"/>
+    </pprescription>
+  </eStep>
+  <idsExecutedStep>1302</idsExecutedStep>
+  <justification/>
+  <pathway id="514" code="H001" name="Fratura Exposta" version="6" completed="true">
+    <audit date="2018-05-28T19:01:08.929-0300"/>
+  </pathway>
+  <medicalcare codeMedicalCare="2393353" idProfessional="21" hospitalUnit="HOSPITAL ANTONIO PRUDENTE" patientRecord="870169"/>
+</MetamodelExecution:EPathway>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2462" creationDate="2018-08-08T10:47:23.433-0300" conclusionDate="2018-08-17T17:28:43.431-0300" completed="true" aborted="true" name="Lombalgia" cid="A90" timeExecution="802032.646998">
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="3062" creationDate="2018-08-08T10:36:51.186-0300" modificationDate="2018-08-08T10:36:51.232-0300" createdById="21" name="Dor mecânica relacionada a coluna">
+    <step id="2621" type="AuxilioConduta" name="Dor mecânica relacionada a coluna" description="&lt;p>Realizar Anamnese completa + exame f&amp;iacute;sico do local da dor&lt;/p>" isInitial="true"/>
+    <answer id="3724" type="RespostaSimOuNao">
+      <question id="1981" text="Dor mecânica relacionada a coluna?">
+        <variable id="3101" type="SimOuNao" name="dor_coluna" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <idsExecutedStep>3062</idsExecutedStep>
+  <justification id="1982" reason="encerramento_de_protocolo" description="Justificativa" justifiedById="21"/>
+  <pathway id="1061" code="H019" name="Lombalgia" version="1" completed="true">
+    <audit date="2018-07-31T10:59:09.213-0300"/>
+  </pathway>
+  <complementaryconducts xsi:type="MetamodelExecution:ComplementaryMedication" id="1102" type="MedicamentoComplementar" pathway="Lombalgia" creationDate="2018-08-17T16:59:39.084-0300" resource="ACIDO ACETILSALICILICO 100 MG COMPRIMIDO COMP 1 UD">
+    <prescribedresource id="2001" idMedication="1" name="" brand="" code="" cycles="1" description="" timeInterval="1" dailyDosage="1" frequency="1" timeTreatement="1" medication="32670: ACIDO ACETILSALICILICO 100 MG COMPRIMIDO COMP 1 UD" unit="5,5 mm" access="GASTROSTOMIA"/>
+  </complementaryconducts>
+  <medicalcare codeMedicalCare="2393353" idProfessional="21" hospitalUnit="HOSPITAL ANTONIO PRUDENTE" patientRecord="870169"/>
+</MetamodelExecution:EPathway>

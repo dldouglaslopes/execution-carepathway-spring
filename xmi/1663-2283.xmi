@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2283" creationDate="2018-07-30T16:33:12.129-0300" conclusionDate="2018-11-13T15:11:25.879-0200" completed="true" aborted="true" name="Pneumonia &amp; Influenza" cid="J15" timeExecution="9153574.91875">
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2795" reworked="true" executed="true" creationDate="2018-07-30T16:35:46.308-0300" modificationDate="2018-07-31T15:30:10.562-0300" executionDate="2018-07-31T15:16:43.396-0300" createdById="81" executedById="81" name="Verificar Critérios para SEPSE" next="/atendimentos/1663/protocolos/2283/passos/2846/">
+    <step id="1124" type="AuxilioConduta" name="Verificar Critérios para SEPSE" description="Verifique os critérios para SIRS" isInitial="true"/>
+    <answer id="3392" type="RespostaSimOuNao">
+      <question id="887" text="TAX > 37.8ºc ou &lt; 35ºc?">
+        <variable id="1407" type="SimOuNao" name="ver_sepse_tax" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3393" type="RespostaSimOuNao">
+      <question id="888" text="FC > 90 bpm?">
+        <variable id="1408" type="SimOuNao" name="ver_sep_fc" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3394" type="RespostaSimOuNao">
+      <question id="889" text="FR > 20 irpm?">
+        <variable id="1409" type="SimOuNao" name="ver_sep_fr" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <eStep xsi:type="MetamodelExecution:EInformation" id="2846" creationDate="2018-07-31T15:31:08.396-0300" modificationDate="2018-07-31T15:31:08.396-0300" createdById="81" name="Encaminhar Paciente ao Eixo Vermelho" previous="/atendimentos/1663/protocolos/2283/passos/2795/">
+    <step id="1126" type="Informacao" name="Encaminhar Paciente ao Eixo Vermelho" description="Encaminhar o paciente ao eixo vermelho para condução junto ao líder local." isTerminal="true"/>
+  </eStep>
+  <idsExecutedStep>2795</idsExecutedStep>
+  <idsExecutedStep>2846</idsExecutedStep>
+  <justification id="3715" reason="encerramento_de_protocolo" description="Interrupção padrão para ajuste de performance após inicio de implantação de processo.E vamos interromper todos que estão em andamento a mais de 30hs. cod:: 2283-49937758" justifiedById="221"/>
+  <pathway id="482" code="H002" name="Pneumonia &amp; Influenza" version="3" completed="true">
+    <audit date="2018-05-25T18:06:08.705-0300"/>
+  </pathway>
+  <medicalcare codeMedicalCare="49937758" idProfessional="221" hospitalUnit="ATENDIMED - SERVICOS MEDICOS LTDA - HAL" patientRecord="4048429"/>
+</MetamodelExecution:EPathway>

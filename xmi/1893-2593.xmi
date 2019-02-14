@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2593" creationDate="2018-08-14T12:03:10.429-0300" conclusionDate="2018-11-13T15:10:22.132-0200" completed="true" aborted="true" name="Pneumonia &amp; Influenza" cid="N390" timeExecution="7874081.549703">
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="3193" creationDate="2018-08-14T12:03:23.696-0300" modificationDate="2018-08-14T12:03:23.735-0300" createdById="314" name="Verificar Critérios para SEPSE">
+    <step id="2987" type="AuxilioConduta" name="Verificar Critérios para SEPSE" description="Verifique os critérios para SIRS" isInitial="true"/>
+    <answer id="3977" type="RespostaSimOuNao">
+      <question id="2445" text="TAX > 37.8ºc ou &lt; 35ºc?">
+        <variable id="3707" type="SimOuNao" name="ver_sepse_tax" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3978" type="RespostaSimOuNao">
+      <question id="2446" text="FC > 90 bpm?">
+        <variable id="3708" type="SimOuNao" name="ver_sep_fc" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3979" type="RespostaSimOuNao">
+      <question id="2447" text="FR > 20 irpm?">
+        <variable id="3709" type="SimOuNao" name="ver_sep_fr" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <idsExecutedStep>3193</idsExecutedStep>
+  <justification id="3757" reason="encerramento_de_protocolo" description="Interrupção padrão para ajuste de performance após inicio de implantação de processo.E vamos interromper todos que estão em andamento a mais de 30hs. cod:: 2593-49042504" justifiedById="221"/>
+  <pathway id="1124" code="H002" name="Pneumonia &amp; Influenza" version="5" completed="true">
+    <audit date="2018-08-08T15:03:31.074-0300"/>
+  </pathway>
+  <medicalcare codeMedicalCare="49042504" idProfessional="221" hospitalUnit="HOSPITAL ANTONIO PRUDENTE" patientRecord="13611781"/>
+</MetamodelExecution:EPathway>

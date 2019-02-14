@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2578" creationDate="2018-08-14T11:55:55.447-0300" conclusionDate="2018-11-13T15:12:25.944-0200" completed="true" aborted="true" name="Pneumonia &amp; Influenza" cid="J15" timeExecution="7874092.098497">
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="3178" creationDate="2018-08-14T11:56:08.519-0300" modificationDate="2018-08-14T11:56:08.566-0300" createdById="316" name="Verificar Critérios para SEPSE">
+    <step id="2987" type="AuxilioConduta" name="Verificar Critérios para SEPSE" description="Verifique os critérios para SIRS" isInitial="true"/>
+    <answer id="3932" type="RespostaSimOuNao">
+      <question id="2445" text="TAX > 37.8ºc ou &lt; 35ºc?">
+        <variable id="3707" type="SimOuNao" name="ver_sepse_tax" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3933" type="RespostaSimOuNao">
+      <question id="2446" text="FC > 90 bpm?">
+        <variable id="3708" type="SimOuNao" name="ver_sep_fc" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3934" type="RespostaSimOuNao">
+      <question id="2447" text="FR > 20 irpm?">
+        <variable id="3709" type="SimOuNao" name="ver_sep_fr" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <idsExecutedStep>3178</idsExecutedStep>
+  <justification id="3742" reason="encerramento_de_protocolo" description="Interrupção padrão para ajuste de performance após inicio de implantação de processo.E vamos interromper todos que estão em andamento a mais de 30hs. cod:: 2578-49029301" justifiedById="221"/>
+  <pathway id="1124" code="H002" name="Pneumonia &amp; Influenza" version="5" completed="true">
+    <audit date="2018-08-08T15:03:31.074-0300"/>
+  </pathway>
+  <medicalcare codeMedicalCare="49029301" idProfessional="221" hospitalUnit="HOSPITAL ANTONIO PRUDENTE" patientRecord="7056231"/>
+</MetamodelExecution:EPathway>

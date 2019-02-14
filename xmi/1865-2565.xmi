@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2565" creationDate="2018-08-14T11:52:31.691-0300" conclusionDate="2018-11-13T15:04:39.479-0200" completed="true" aborted="true" name="Pneumonia &amp; Influenza" cid="J11" timeExecution="7874100.826788">
+  <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="3165" creationDate="2018-08-14T11:52:44.659-0300" modificationDate="2018-08-14T11:52:44.693-0300" createdById="304" name="Verificar Critérios para SEPSE">
+    <step id="2987" type="AuxilioConduta" name="Verificar Critérios para SEPSE" description="Verifique os critérios para SIRS" isInitial="true"/>
+    <answer id="3893" type="RespostaSimOuNao">
+      <question id="2445" text="TAX > 37.8ºc ou &lt; 35ºc?">
+        <variable id="3707" type="SimOuNao" name="ver_sepse_tax" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3894" type="RespostaSimOuNao">
+      <question id="2446" text="FC > 90 bpm?">
+        <variable id="3708" type="SimOuNao" name="ver_sep_fc" weight="1.0"/>
+      </question>
+    </answer>
+    <answer id="3895" type="RespostaSimOuNao">
+      <question id="2447" text="FR > 20 irpm?">
+        <variable id="3709" type="SimOuNao" name="ver_sep_fr" weight="1.0"/>
+      </question>
+    </answer>
+  </eStep>
+  <idsExecutedStep>3165</idsExecutedStep>
+  <justification id="3729" reason="encerramento_de_protocolo" description="Interrupção padrão para ajuste de performance após inicio de implantação de processo.E vamos interromper todos que estão em andamento a mais de 30hs. cod:: 2565-49029680" justifiedById="221"/>
+  <pathway id="1124" code="H002" name="Pneumonia &amp; Influenza" version="5" completed="true">
+    <audit date="2018-08-08T15:03:31.074-0300"/>
+  </pathway>
+  <medicalcare codeMedicalCare="49029680" idProfessional="221" hospitalUnit="ULTRA SOM SERV MED LTDA - PA PARANGAB" patientRecord="10208173"/>
+</MetamodelExecution:EPathway>
