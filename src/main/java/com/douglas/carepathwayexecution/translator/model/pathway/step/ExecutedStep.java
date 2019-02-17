@@ -199,30 +199,33 @@ public class ExecutedStep {
 		//set prescribed examination
 		JSONArray idsPExaminationJson = json.getJSONArray("exames_prescritos_ids");		
 		for (int i = 0; i < idsPExaminationJson.length(); i++) {
-			//save prescribed examination
 			eTreatment.getIdsPExamination().add(idsPExaminationJson.optInt(i));
 		}
 		
 		//set prescribed  procedure
 		JSONArray idsPProceduresJson = json.getJSONArray("procedimentos_prescritos_ids");		
 		for (int i = 0; i < idsPProceduresJson.length(); i++) {
-			//save prescribed  procedure
 			eTreatment.getIdsPProcedure().add(idsPProceduresJson.optInt(i));
 		}
 		
 		//set prescribed internment
 		JSONArray idsPInternmentJson = json.getJSONArray("internamentos_prescritos_ids");		
 		for (int i = 0; i < idsPInternmentJson.length(); i++) {
-			//save prescribed internment
 			eTreatment.getIdsPInternment().add(idsPInternmentJson.optInt(i));
 		}
 		
 		//set prescribed medication 
 		JSONArray idsPMedicationJson = json.getJSONArray("medicamentos_prescritos_ids");		
 		for (int i = 0; i < idsPMedicationJson.length(); i++) {
-			//save prescribed medication 
 			eTreatment.getIdsPMedication().add(idsPMedicationJson.optInt(i));
-		}	
+		}
+		
+		//set prescribed paediatric medication 
+//		JSONArray idsPPaediatricMedicationJson = json.getJSONArray("medicamentos_pediatricos_prescritos_ids");		
+//		for (int i = 0; i < idsPPaediatricMedicationJson.length(); i++) {
+//			System.out.println("PEDIATRICO");
+//			eTreatment.getIdsPPaediatricMedication().add(idsPPaediatricMedicationJson.optInt(i));
+//		}
 		
 		//save prescribed medication
 		eTreatment.getPmedication().addAll(createPMedication(json));
@@ -469,6 +472,10 @@ public class ExecutedStep {
 		EDischarge eDischarge = Execution_metamodelFactory.eINSTANCE.createEDischarge();
 		eDischarge = (EDischarge) createEElement(json, eDischarge);
 		
+		if (!json.isNull("prescricao")) {
+			eDischarge.setPrescriptionResult(createPrescriptionResult(json));
+		}
+		
 		return eDischarge;
 	}
 	
@@ -478,6 +485,7 @@ public class ExecutedStep {
 		List<PMedication> pMedications = new ArrayList<PMedication>();
 		
 		for (int i = 0; i < pMedicationsJson.length(); i++) {
+			System.out.println(pMedicationsJson.length());
 			PMedication pMedication = Execution_metamodelFactory.eINSTANCE.createPMedication();
 			JSONObject pMedicationJson = pMedicationsJson.getJSONObject(i);
 			
