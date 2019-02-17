@@ -73,24 +73,55 @@ public class EMedicationService {
 					if ( prescribedResource.getString("type").equals("Tratamento") || 
 						 prescribedResource.getString("type").equals("Receita")) {
 						
-						List<Document> prescribedMedication = step.get( "prescribedmedication", new ArrayList<Document>());
+						List<Document> prescribedMedication = step.get( "pmedication", new ArrayList<Document>());
 						
 						for (Document document : prescribedMedication) {
 							Document medication = document.get( "medication", new Document());
-														
 							String key = medication.getString( "name");
 							
 							if ( key != null && !key.isEmpty()) {
 								if (medicationTimes.containsKey( key)) {
 									int value = medicationTimes.get(key) + 1;
 									medicationTimes.replace( key, value);
+									List<String> pathways = medicationPathway.get(key);
+									pathways.add(pathway.getString("name") + "/" + pathway.getInteger("_id"));
+									medicationPathway.replace( key, pathways);
 								}
 								else {
 									medicationIds.put( key, prescribedResource.getInteger("_id"));
 									medicationTimes.put( key, 1);
+									List<String> pathways = new ArrayList<>();
+									pathways.add( pathway.getString("name") + "/" + pathway.getInteger("_id"));
+									medicationPathway.put( key, pathways);
 								}
 							}							
 						}					
+					}
+					
+					if (prescribedResource.getString("type").equals("Receita")) {
+						List<Document> prescribedPrescription = step.get( "pprescription", new ArrayList<Document>());
+						
+						for (Document document : prescribedPrescription) {
+							Document prescription = document.get( "prescription", new Document());
+							String key = prescription.getString( "medication");
+							
+							if ( key != null && !key.isEmpty()) {
+								if (medicationTimes.containsKey( key)) {
+									int value = medicationTimes.get(key) + 1;
+									medicationTimes.replace( key, value);
+									List<String> pathways = medicationPathway.get(key);
+									pathways.add(pathway.getString("name") + "/" + pathway.getInteger("_id"));
+									medicationPathway.replace( key, pathways);
+								}
+								else {
+									medicationIds.put( key, prescribedResource.getInteger("_id"));
+									medicationTimes.put( key, 1);
+									List<String> pathways = new ArrayList<>();
+									pathways.add( pathway.getString("name") + "/" + pathway.getInteger("_id"));
+									medicationPathway.put( key, pathways);
+								}
+							}							
+						}
 					}
 				}
 			}							
@@ -117,7 +148,7 @@ public class EMedicationService {
 			
 			Medication medication = Query_metamodelFactory.eINSTANCE.createMedication();
 			medication.setName( key);
-			medication.setPercentage( list.get(i).getValue() + "%");
+			medication.setPercentage( service.decimalFormat(list.get(i).getValue()) + "%");
 			medication.setQuantity( medicationTimes.get(key));							
 			
 			List<String> idPathwaysList = medicationPathway.get(key);

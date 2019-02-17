@@ -72,7 +72,6 @@ public class ECarePathwayService {
 		}												
 		
 		if (status.getMessage() != Message.ALL) {
-			System.out.println(status.getMessage().getName());
 			docs = docs.filter( Filters.eq( status.getMessage().getName(), status.isValue()));
 		}		 
 	
@@ -160,14 +159,22 @@ public class ECarePathwayService {
 			eCarePathway.setName(CarePathway.get( idPathway));
 		}		
 		
-		if (conduct != null) {
-			eCarePathway.setConduct(ComplementaryConduct.getByName(conduct));
+		if (conduct != null && !conduct.isEmpty()) {
+			if (Integer.parseInt(conduct) == 0) {
+				eCarePathway.setConduct(ComplementaryConduct.FALSE);
+			}
+			if (Integer.parseInt(conduct) == 1) {
+				eCarePathway.setConduct(ComplementaryConduct.TRUE);
+			}
 		}
 		
 		if (statusArr != null) {
 			if (statusArr[0] != null && statusArr[1] != null) {
 				status.setMessage( Message.get( Integer.parseInt(statusArr[0])));
-				status.setValue(Boolean.valueOf(statusArr[1]));	
+				
+				if (Integer.parseInt(statusArr[1]) == 1 && !statusArr[1].isEmpty()) {
+					status.setValue(true);
+				}
 			}
 		}
 		
