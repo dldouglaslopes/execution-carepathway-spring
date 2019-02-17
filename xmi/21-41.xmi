@@ -231,24 +231,31 @@
     <idsPPrescription>706</idsPPrescription>
     <idsPPrescription>707</idsPPrescription>
     <pmedication id="701">
+      <medication id="21" name="Azitromicina" code="" description="" brand="" dailyDosage="500" cycles="1" frequency="24" timeTreatment="5" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="MG" unit="mg"/>
       <prescriptionResult requestDate="2018-04-16T17:43:24.562-0300" id="522" message="ORA-01157: cannot identify/lock data file 401 - see DBWR trace file&#xA;ORA-01110: data file 401: '/db1_hosp/oradata/hospital/tempfile/temp2.622.962332385'"/>
     </pmedication>
     <pmedication id="702">
+      <medication id="22" name="Amoxicilina + Clavulanato 875/125" code="" description="" brand="" dailyDosage="875" cycles="1" frequency="12" timeTreatment="7" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="MG" unit="mg"/>
       <prescriptionResult requestDate="2018-04-16T17:43:57.614-0300" id="523" message="ORA-01157: cannot identify/lock data file 401 - see DBWR trace file&#xA;ORA-01110: data file 401: '/db1_hosp/oradata/hospital/tempfile/temp2.622.962332385'"/>
     </pmedication>
     <pmedication id="703">
+      <medication id="23" name="TAMIFLU 75MG COMP 1 UD" code="149641" description="" brand="" dailyDosage="75" cycles="1" frequency="12" timeTreatment="5" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="MG" unit="mg"/>
       <prescriptionResult requestDate="2018-04-16T17:44:05.085-0300" id="524" message="ORA-01157: cannot identify/lock data file 401 - see DBWR trace file&#xA;ORA-01110: data file 401: '/db1_hosp/oradata/hospital/tempfile/temp2.622.962332385'"/>
     </pmedication>
     <pmedication id="704">
+      <medication id="24" name="Predsim 20Mg" code="" description="" brand="" dailyDosage="40" cycles="1" frequency="24" timeTreatment="5" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="MG" unit="mg"/>
       <prescriptionResult requestDate="2018-04-16T17:44:18.277-0300" id="525" message="ORA-01157: cannot identify/lock data file 401 - see DBWR trace file&#xA;ORA-01110: data file 401: '/db1_hosp/oradata/hospital/tempfile/temp2.622.962332385'"/>
     </pmedication>
     <pmedication id="705">
+      <medication id="25" name="Dipirona 1G" code="" description="" brand="" dailyDosage="1" cycles="1" frequency="6" timeTreatment="1" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="GR" unit="g"/>
       <prescriptionResult requestDate="2018-04-16T17:44:25.913-0300" id="526" message="ORA-01157: cannot identify/lock data file 401 - see DBWR trace file&#xA;ORA-01110: data file 401: '/db1_hosp/oradata/hospital/tempfile/temp2.622.962332385'"/>
     </pmedication>
     <pmedication id="706">
+      <medication id="26" name="Alenia 6/200" code="" description="" brand="" dailyDosage="6" cycles="1" frequency="8" timeTreatment="3" timeInterval="1" codeAccess="20" access="INALATÓRIO" codeUnit="MG" unit="mg"/>
       <prescriptionResult requestDate="2018-04-16T17:44:39.183-0300" id="527" message="ORA-01157: cannot identify/lock data file 401 - see DBWR trace file&#xA;ORA-01110: data file 401: '/db1_hosp/oradata/hospital/tempfile/temp2.622.962332385'"/>
     </pmedication>
     <pmedication id="707">
+      <medication id="27" name="PARACETAMOL 750MG COMP 1 UD" code="108545" description="" brand="TEUTO" outpatient="true" dailyDosage="750" cycles="1" frequency="6" timeTreatment="5" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="MG" unit="mg"/>
       <prescriptionResult requestDate="2018-04-16T17:44:45.748-0300" id="528" message="ORA-01157: cannot identify/lock data file 401 - see DBWR trace file&#xA;ORA-01110: data file 401: '/db1_hosp/oradata/hospital/tempfile/temp2.622.962332385'"/>
     </pmedication>
   </eStep>

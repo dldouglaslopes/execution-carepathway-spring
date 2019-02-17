@@ -2,9 +2,7 @@ package com.douglas.carepathwayexecution.translator.model.pathway.step;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import org.json.JSONArray;
@@ -228,7 +226,11 @@ public class ExecutedStep {
 //		}
 		
 		//save prescribed medication
-		eTreatment.getPmedication().addAll(createPMedication(json));
+		JSONArray pMedicationsJson = json.getJSONArray("medicamentos_prescritos");
+		for (int j = 0; j < pMedicationsJson.length(); j++) {
+			PMedication pMedication = Execution_metamodelFactory.eINSTANCE.createPMedication();
+			eTreatment.getPmedication().add( setPMedication( pMedicationsJson.getJSONObject(j), pMedication));
+		}
 		
 		//set prescribed examination
 		JSONArray pExaminations = json.getJSONArray("exames_prescritos");			
@@ -404,8 +406,12 @@ public class ExecutedStep {
 			ePrescription.getIdsPPrescription().add(idsPPrescriptionJson.optInt(i));
 		}
 		
-		//save prescription medication
-		ePrescription.getPmedication().addAll(createPMedication(json));					
+		//save prescribed medication
+		JSONArray pMedicationsJson = json.getJSONArray("medicamentos_prescritos");
+		for (int j = 0; j < pMedicationsJson.length(); j++) {
+			PMedication pMedication = Execution_metamodelFactory.eINSTANCE.createPMedication();
+			ePrescription.getPmedication().add( setPMedication( pMedicationsJson.getJSONObject(j), pMedication));
+		}
 		
 		//set prescription prescription item
 		JSONArray pPrescriptionJson = json.getJSONArray("itens_receita_prescritos");
@@ -480,60 +486,52 @@ public class ExecutedStep {
 	}
 	
 	//set prescribed medication
-	private List<PMedication> createPMedication(JSONObject json) throws ParseException, JSONException {
-		JSONArray pMedicationsJson = json.getJSONArray("medicamentos_prescritos");
-		List<PMedication> pMedications = new ArrayList<PMedication>();
-		
-		for (int i = 0; i < pMedicationsJson.length(); i++) {
-			System.out.println(pMedicationsJson.length());
-			PMedication pMedication = Execution_metamodelFactory.eINSTANCE.createPMedication();
-			JSONObject pMedicationJson = pMedicationsJson.getJSONObject(i);
-			
-			pMedication.setId(pMedicationJson.getInt("id"));
-			if (!pMedicationJson.isNull("resultado")) {
-				pMedication.setResult(createResult(pMedicationJson));
-			}
-			
-			if (!pMedicationJson.isNull("prescricao")) {
-				pMedication.setPrescriptionResult(createPrescriptionResult(pMedicationJson));
-			}
-			
-			//set medicament
-			Medication medicament = Execution_metamodelFactory.eINSTANCE.createMedication();
-			JSONObject medicamentJson = pMedicationJson.getJSONObject("medicamento");
-			medicament.setId(medicamentJson.getInt("id"));
-			medicament.setName(medicamentJson.getString("nome"));
-			medicament.setCode(medicamentJson.getString("codigo"));
-			medicament.setDescription(medicamentJson.getString("descricao"));
-			medicament.setBrand(medicamentJson.getString("marca"));
-			medicament.setDailyDosage(medicamentJson.getInt("dose_diaria"));
-			medicament.setCycles(medicamentJson.getInt("ciclos"));
-			medicament.setFrequency(medicamentJson.getInt("frequencia"));
-			medicament.setTimeInterval(medicamentJson.getInt("dias_intervalo"));
-			medicament.setTimeTreatement(medicamentJson.getInt("dias_tratamento"));
-			
-			if (!medicamentJson.isNull("ambulatorial")) {
-				medicament.setOutpatient(medicamentJson.getBoolean("ambulatorial"));
-			}
-			
-			if (!medicamentJson.isNull("padrao")) {
-				medicament.setStandard(medicamentJson.getString("padrao"));
-			}	
-			
-			JSONObject unitJson = medicamentJson.getJSONObject("unidade");
-			medicament.setName(unitJson.getString("nome"));
-			medicament.setCode(unitJson.getString("codigo"));
-			medicament.setUnit(unitJson.getString("unidade"));
+	private PMedication setPMedication(JSONObject json, PMedication pMedication) throws ParseException, JSONException {
+		JSONObject medicationJson = json.getJSONObject("medicamento");
+		JSONObject unitJson = medicationJson.getJSONObject("unidade");
+		JSONObject accessJson = medicationJson.getJSONObject("via_acesso");
 
-			JSONObject accessJson = medicamentJson.getJSONObject("via_acesso");
-			medicament.setNameAcess(accessJson.getString("nome"));
-			medicament.setCodeAccess(accessJson.getInt("codigo"));
-			
-			//add prescribedMedication
-			pMedications.add(pMedication);
-		}		
+		//set medicament
+		Medication medication = Execution_metamodelFactory.eINSTANCE.createMedication();
+		medication.setId(medicationJson.getInt("id"));
+		medication.setName(medicationJson.getString("nome"));
+		medication.setCode(medicationJson.getString("codigo"));
+		medication.setDescription(medicationJson.getString("descricao"));
+		medication.setBrand(medicationJson.getString("marca"));
+		medication.setDailyDosage(medicationJson.getInt("dose_diaria"));
+		medication.setCycles(medicationJson.getInt("ciclos"));
+		medication.setFrequency(medicationJson.getInt("frequencia"));
+		medication.setTimeInterval(medicationJson.getInt("dias_intervalo"));
+		medication.setTimeTreatment(medicationJson.getInt("dias_tratamento"));
+		medication.setCodeUnit(unitJson.getString("codigo"));
+		medication.setUnit(unitJson.getString("unidade"));
+		medication.setAccess(accessJson.getString("nome"));
+		medication.setCodeAccess(accessJson.getInt("codigo"));
 		
-		return pMedications;
+		if (!medicationJson.isNull("ambulatorial")) {
+			medication.setOutpatient(medicationJson.getBoolean("ambulatorial"));
+		}
+		
+		if (!medicationJson.isNull("padrao")) {
+			medication.setStandard(medicationJson.getString("padrao"));
+		}			
+		
+		if (!medicationJson.isNull("categoria")) {
+			medication.setCategory(medicationJson.getString("categoria"));
+		}
+		
+		pMedication.setId(json.getInt("id"));
+		pMedication.setMedication(medication);
+		
+		if (!json.isNull("resultado")) {
+			pMedication.setResult(createResult(json));
+		}
+		
+		if (!json.isNull("prescricao")) {
+			pMedication.setPrescriptionResult(createPrescriptionResult(json));
+		}			
+		
+		return pMedication;
 	}
 	
 	//set prescription result

@@ -71,7 +71,9 @@
   </eStep>
   <eStep xsi:type="MetamodelExecution:ETreatment" id="2044" creationDate="2018-07-17T15:34:14.707-0300" modificationDate="2018-07-17T15:34:14.745-0300" createdById="241" name="Tratamento Medicamento" previous="/atendimentos/745/protocolos/1722/passos/2043/">
     <step id="2307" type="Tratamento" name="Tratamento Medicamento" description="Tratamento Medicamento"/>
-    <pmedication id="2324"/>
+    <pmedication id="2324">
+      <medication id="1481" name="" code="" description="" brand="" dailyDosage="1" cycles="1" timeTreatment="1" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="UD" unit="UD"/>
+    </pmedication>
     <idsPMedication>2324</idsPMedication>
   </eStep>
   <idsExecutedStep>2042</idsExecutedStep>

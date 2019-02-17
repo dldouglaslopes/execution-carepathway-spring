@@ -145,12 +145,24 @@
     <idsPPrescription>2555</idsPPrescription>
     <idsPPrescription>2556</idsPPrescription>
     <idsPPrescription>2557</idsPPrescription>
-    <pmedication id="2552"/>
-    <pmedication id="2553"/>
-    <pmedication id="2554"/>
-    <pmedication id="2555"/>
-    <pmedication id="2556"/>
-    <pmedication id="2557"/>
+    <pmedication id="2552">
+      <medication id="295" name="Azitromicina" code="" description="" brand="" dailyDosage="500" cycles="1" frequency="24" timeTreatment="5" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="MG" unit="mg"/>
+    </pmedication>
+    <pmedication id="2553">
+      <medication id="296" name="Amoxicilina + Clavulanato 875/125" code="" description="" brand="" dailyDosage="875" cycles="1" frequency="12" timeTreatment="7" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="MG" unit="mg"/>
+    </pmedication>
+    <pmedication id="2554">
+      <medication id="297" name="Dipirona 1G" code="" description="" brand="" dailyDosage="1" cycles="1" frequency="6" timeTreatment="1" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="GR" unit="g"/>
+    </pmedication>
+    <pmedication id="2555">
+      <medication id="298" name="Predsim 20Mg" code="" description="" brand="" dailyDosage="40" cycles="1" frequency="24" timeTreatment="5" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="MG" unit="mg"/>
+    </pmedication>
+    <pmedication id="2556">
+      <medication id="299" name="Alenia 6/200" code="" description="" brand="" dailyDosage="6" cycles="1" frequency="8" timeTreatment="3" timeInterval="1" codeAccess="20" access="INALATÓRIO" codeUnit="MG" unit="mg"/>
+    </pmedication>
+    <pmedication id="2557">
+      <medication id="300" name="PARACETAMOL 750MG COMP 1 UD" code="108545" description="" brand="TEUTO" outpatient="true" dailyDosage="750" cycles="1" frequency="6" timeTreatment="5" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="MG" unit="mg"/>
+    </pmedication>
   </eStep>
   <idsExecutedStep>361</idsExecutedStep>
   <idsExecutedStep>362</idsExecutedStep>

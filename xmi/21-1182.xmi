@@ -89,10 +89,18 @@
     <pinternment id="1830">
       <internment id="101" justification="investigar inflamação" clinicalIndication="investigar inflamação" quantity="1" typeName="" code="24050024" idInternment="1262" name="COLOCACAO DE CATETER PARA BRAQUITERAPIA ENDOBRONQUICA" description=""/>
     </pinternment>
-    <pmedication id="1831"/>
-    <pmedication id="1832"/>
-    <pmedication id="1833"/>
-    <pmedication id="1834"/>
+    <pmedication id="1831">
+      <medication id="1181" name="" code="" description="" brand="" dailyDosage="1" cycles="1" frequency="2" timeTreatment="1" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="GR" unit="g"/>
+    </pmedication>
+    <pmedication id="1832">
+      <medication id="1182" name="" code="" description="" brand="" dailyDosage="1" cycles="1" frequency="3" timeTreatment="3" timeInterval="1" codeAccess="3" access="RETAL" codeUnit="31" unit="ml/dia"/>
+    </pmedication>
+    <pmedication id="1833">
+      <medication id="1183" name="" code="" description="" brand="" dailyDosage="2" cycles="1" frequency="1" timeTreatment="3" timeInterval="1" codeAccess="8" access="SONDA NASOGASTRICA" codeUnit="UD" unit="UD"/>
+    </pmedication>
+    <pmedication id="1834">
+      <medication id="1184" name="" code="" description="" brand="" dailyDosage="2" cycles="1" frequency="1" timeTreatment="3" timeInterval="1" codeAccess="8" access="SONDA NASOGASTRICA" codeUnit="UD" unit="UD"/>
+    </pmedication>
     <idsPExamination>1822</idsPExamination>
     <idsPExamination>1823</idsPExamination>
     <idsPExamination>1824</idsPExamination>

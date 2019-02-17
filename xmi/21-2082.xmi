@@ -100,7 +100,9 @@
       <examination id="1788" sideLimb="" quantity="1" justification="teste" clinicalIndication="teste" description="" code="15020100" name="TESTE CLINIDINA" idExamination="7521"/>
       <complement/>
     </pexamination>
-    <pmedication id="3464"/>
+    <pmedication id="3464">
+      <medication id="1601" name="" code="" description="" brand="" dailyDosage="1" cycles="1" timeTreatment="1" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="UD" unit="UD"/>
+    </pmedication>
     <idsPExamination>3462</idsPExamination>
     <idsPExamination>3463</idsPExamination>
     <idsPMedication>3464</idsPMedication>

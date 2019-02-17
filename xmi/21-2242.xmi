@@ -137,21 +137,27 @@
     <idsPPrescription>3236</idsPPrescription>
     <idsPPrescription>3237</idsPPrescription>
     <pmedication id="3232">
+      <medication id="65" name="DIPIRONA GOTAS FRAS 10 ML" code="37982" description="" brand="BIOCHIMICO/ARISTON" outpatient="true" dailyDosage="40" cycles="1" frequency="6" timeTreatment="1" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="GT" unit="GT"/>
       <prescriptionResult success="true" requestDate="2018-07-30T13:32:50.253-0300" id="2237" message="Receita prescrita com sucesso"/>
     </pmedication>
     <pmedication id="3233">
+      <medication id="66" name="PARACETAMOL 750MG COMP 1 UD" code="108545" description="" brand="TEUTO" outpatient="true" dailyDosage="1" cycles="1" frequency="12" timeTreatment="1" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="UD" unit="UD"/>
       <prescriptionResult success="true" requestDate="2018-07-30T13:33:39.410-0300" id="2238" message="Receita prescrita com sucesso"/>
     </pmedication>
     <pmedication id="3234">
+      <medication id="67" name="FEXOFENADINA 120MG" code="" description="" brand="" dailyDosage="1" cycles="1" frequency="12" timeTreatment="1" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="UD" unit="UD"/>
       <prescriptionResult success="true" requestDate="2018-07-30T13:33:45.704-0300" id="2239" message="Receita prescrita com sucesso"/>
     </pmedication>
     <pmedication id="3235">
+      <medication id="68" name="LORATADINA 10MG" code="" description="" brand="" dailyDosage="1" cycles="1" frequency="1" timeTreatment="1" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="UD" unit="UD"/>
       <prescriptionResult success="true" requestDate="2018-07-30T13:33:51.393-0300" id="2240" message="Receita prescrita com sucesso"/>
     </pmedication>
     <pmedication id="3236">
+      <medication id="69" name="LEVODROPROPIZINA XAROPE" code="" description="" brand="" dailyDosage="10" cycles="1" frequency="8" timeTreatment="1" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="ML" unit="ml"/>
       <prescriptionResult success="true" requestDate="2018-07-30T13:33:57.379-0300" id="2241" message="Receita prescrita com sucesso"/>
     </pmedication>
     <pmedication id="3237">
+      <medication id="70" name="SOLUCAO SALINA BSS BLP 1 UD" code="78310" description="" brand="" dailyDosage="1" cycles="1" frequency="4" timeTreatment="1" timeInterval="1" codeAccess="2" access="NASAL" codeUnit="UD" unit="UD"/>
       <prescriptionResult success="true" requestDate="2018-07-30T13:34:04.617-0300" id="2242" message="Receita prescrita com sucesso"/>
     </pmedication>
   </eStep>

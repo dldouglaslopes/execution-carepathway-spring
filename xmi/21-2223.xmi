@@ -203,33 +203,43 @@
     <idsPPrescription>3224</idsPPrescription>
     <idsPPrescription>3225</idsPPrescription>
     <pmedication id="3216">
+      <medication id="91" name="DIPIRONA GOTAS FRAS 10 ML" code="37982" description="" brand="BIOCHIMICO/ARISTON" outpatient="true" dailyDosage="40" cycles="1" frequency="6" timeTreatment="1" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="UD" unit="UD"/>
       <prescriptionResult success="true" requestDate="2018-07-30T12:29:18.645-0300" id="2219" message="Receita prescrita com sucesso"/>
     </pmedication>
     <pmedication id="3217">
+      <medication id="92" name="PARACETAMOL 750MG COMP 1 UD" code="108545" description="" brand="TEUTO" outpatient="true" dailyDosage="1" cycles="1" frequency="6" timeTreatment="1" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="UD" unit="UD"/>
       <prescriptionResult success="true" requestDate="2018-07-30T12:29:26.782-0300" id="2220" message="Receita prescrita com sucesso"/>
     </pmedication>
     <pmedication id="3218">
+      <medication id="93" name="NIMESULIDA 100MG" code="" description="" brand="" dailyDosage="1" cycles="1" frequency="12" timeTreatment="5" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="UD" unit="UD"/>
       <prescriptionResult success="true" requestDate="2018-07-30T12:29:33.053-0300" id="2221" message="Receita prescrita com sucesso"/>
     </pmedication>
     <pmedication id="3219">
+      <medication id="94" name="PREDSIM 20MG" code="" description="" brand="" dailyDosage="1" cycles="1" frequency="12" timeTreatment="5" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="UD" unit="UD"/>
       <prescriptionResult success="true" requestDate="2018-07-30T12:29:40.351-0300" id="2222" message="Receita prescrita com sucesso"/>
     </pmedication>
     <pmedication id="3220">
+      <medication id="95" name="FEXOFENADINA 60MG" code="" description="" brand="" dailyDosage="1" cycles="1" frequency="24" timeTreatment="5" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="UD" unit="UD"/>
       <prescriptionResult success="true" requestDate="2018-07-30T12:29:48.882-0300" id="2223" message="Receita prescrita com sucesso"/>
     </pmedication>
     <pmedication id="3221">
+      <medication id="96" name="PSEUDOEFEDRINA 120MG" code="" description="" brand="" dailyDosage="1" cycles="1" frequency="24" timeTreatment="5" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="UD" unit="UD"/>
       <prescriptionResult success="true" requestDate="2018-07-30T12:29:55.744-0300" id="2224" message="Receita prescrita com sucesso"/>
     </pmedication>
     <pmedication id="3222">
+      <medication id="97" name="AUMENTO DA INGESTÃO HIDRICA" code="" description="" brand="" dailyDosage="1" cycles="1" frequency="24" timeTreatment="1" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="UD" unit="UD"/>
       <prescriptionResult success="true" requestDate="2018-07-30T12:30:03.048-0300" id="2225" message="Receita prescrita com sucesso"/>
     </pmedication>
     <pmedication id="3223">
+      <medication id="98" name="SOLUCAO SALINA BSS BLP 1 UD" code="78310" description="" brand="" dailyDosage="1" cycles="1" frequency="4" timeTreatment="1" timeInterval="1" codeAccess="2" access="NASAL" codeUnit="UD" unit="UD"/>
       <prescriptionResult success="true" requestDate="2018-07-30T12:30:10.672-0300" id="2226" message="Receita prescrita com sucesso"/>
     </pmedication>
     <pmedication id="3224">
+      <medication id="99" name="AMOXICILINA 875" code="" description="" brand="" dailyDosage="1" cycles="1" frequency="12" timeTreatment="14" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="UD" unit="UD"/>
       <prescriptionResult success="true" requestDate="2018-07-30T12:30:16.601-0300" id="2227" message="Receita prescrita com sucesso"/>
     </pmedication>
     <pmedication id="3225">
+      <medication id="100" name="CLAVULONATO 125MG" code="" description="" brand="" dailyDosage="1" cycles="1" frequency="12" timeTreatment="14" timeInterval="1" codeAccess="1" access="ORAL" codeUnit="UD" unit="UD"/>
       <prescriptionResult success="true" requestDate="2018-07-30T12:30:23.283-0300" id="2228" message="Receita prescrita com sucesso"/>
     </pmedication>
   </eStep>
