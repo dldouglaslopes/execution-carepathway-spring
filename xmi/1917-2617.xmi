@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2617" creationDate="2018-08-14T11:55:45.548-0300" conclusionDate="2018-11-13T15:13:55.170-0200" completed="true" aborted="true" name="ITU - Cistite" cid="N10" timeExecution="7873944.345622">
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2617" creationDate="2018-08-14T11:55:45.548-0300" conclusionDate="2018-11-13T15:13:55.170-0300" completed="true" aborted="true" name="ITU - Cistite" cid="N10" timeExecution="7873944.345622">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="3217" creationDate="2018-08-14T11:55:58.634-0300" modificationDate="2018-08-14T11:55:58.669-0300" createdById="335" name="Informar Sexo do paciente">
     <step id="101" type="AuxilioConduta" name="Informar Sexo do paciente" description="Informe o sexo do paciente para seguir com o tratamento adequado." isInitial="true"/>
     <answer id="4044" type="RespostaSimOuNao">

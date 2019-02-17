@@ -243,11 +243,13 @@
   </eStep>
   <eStep xsi:type="MetamodelExecution:EPrescription" id="2693" executed="true" creationDate="2018-07-30T11:37:56.123-0300" modificationDate="2018-07-30T11:34:23.914-0300" executionDate="2018-07-30T11:34:23.774-0300" createdById="181" executedById="181" name="[Port 3] Receita Padrão - Escolha um antibiótico e as opções de medicamentos sintomáticos" previous="/atendimentos/1642/protocolos/2203/passos/2692/" text="">
     <step id="1121" type="Receita" name="[Port 3] Receita Padrão - Escolha um antibiótico e as opções de medicamentos sintomáticos" description="Atenção! Caso apresente alguns dos sintomas a seguir retornar imediatamente a emergência. &#xA;Sintomas: Falta de ar; Dor no peito; Febre por mais de 3 dias após início das medicações;  Desorientação; Sonolência excessiva; Sangramentos; Desmaio; Palpitação (Coração acelerado); Diminuição ou ausência de urina." isTerminal="true"/>
-    <pprescription>
-      <prescription id="3190"/>
+    <pprescription id="3190">
+      <prescription id="81" name="Norofloxacino 400mg cx 12 comprimidos" frequency="2" medication="Norofloxacino 400mg cx 12 comprimidos" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="14" unitDuration="Dia" unitFrequency="Dia" complement="Tomar um complemento de 12/12 horas" order="1"/>
+      <prescriptionResult success="true" requestDate="2018-07-30T11:35:17.563-0300" id="2171" message="Receita prescrita com sucesso"/>
     </pprescription>
-    <pprescription>
-      <prescription id="3191"/>
+    <pprescription id="3191">
+      <prescription id="82" name="Dipirona 1G" frequency="3" medication="Dipirona 1G" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="5" unitDuration="Dia" unitFrequency="Dia" complement="Tomar um comprimido 8/8 horas se febre" order="2"/>
+      <prescriptionResult success="true" requestDate="2018-07-30T11:35:26.795-0300" id="2172" message="Receita prescrita com sucesso"/>
     </pprescription>
   </eStep>
   <idsExecutedStep>2686</idsExecutedStep>

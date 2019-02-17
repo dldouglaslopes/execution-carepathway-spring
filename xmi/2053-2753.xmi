@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2753" creationDate="2018-08-14T12:05:50.050-0300" conclusionDate="2018-11-13T15:18:49.591-0200" completed="true" aborted="true" name="Aminiorrexe Prematura" cid="N13" timeExecution="7873944.035541">
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2753" creationDate="2018-08-14T12:05:50.050-0300" conclusionDate="2018-11-13T15:18:49.591-0300" completed="true" aborted="true" name="Aminiorrexe Prematura" cid="N13" timeExecution="7873944.035541">
   <eStep xsi:type="MetamodelExecution:ETreatment" id="3353" creationDate="2018-08-14T12:06:04.552-0300" modificationDate="2018-08-14T12:06:04.583-0300" createdById="320" name="Tratamento Inicial">
     <step id="1402" type="Tratamento" name="Tratamento Inicial" description="Solicite os exames para iniciar o tratamento do paciente" isInitial="true">
       <audit date="2018-05-29T16:49:19.475-0300"/>
@@ -7,47 +7,38 @@
     <pexamination id="4071" report="">
       <examination id="1262" sideLimb="" quantity="1" justification="Protocolo de Aminiorrexe Prematura" clinicalIndication="Protocolo de Aminiorrexe Prematura" description="" code="10071" name="CONSULTA EM PRONTO SOCORRO" idExamination="7434"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="4072" report="">
       <examination id="1263" sideLimb="" quantity="1" justification="Protocolo de Aminiorrexe Prematura" clinicalIndication="Protocolo de Aminiorrexe Prematura" description="" code="28100549" name="URINOCULTURA" onlyEmergency="true" idExamination="9354"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="4073" report="">
       <examination id="1264" sideLimb="" quantity="1" justification="amniorexe  prematura" clinicalIndication="amniorexe  prematura" description="" code="28060865" name="PROTEINA C REATIVA, DETERMINACAO QUANTITATIVA DA" onlyEmergency="true" idExamination="8944"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="4074" report="">
       <examination id="1265" sideLimb="" quantity="1" justification="teste" clinicalIndication="teste" description="" code="40304922" name="COAGULOGRAMA (TS,TC,PROVA DO LACO,RETRACAO DO COAGULO,CONTAGEM DE PLAQUETAS,TEMPO DE PROTOMBINA,TEMPO DE TROMBOPLASTINA,PARCIAL ATIVADO)4ªEDICAO" onlyEmergency="true" idExamination="13033"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="4075" report="">
       <examination id="1266" sideLimb="" quantity="1" justification="teste" clinicalIndication="teste" description="" code="28040732" name="TEMPO DE PROTROMBINA" onlyEmergency="true" idExamination="8668"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="4076" report="">
       <examination id="1267" sideLimb="" quantity="1" justification="teste" clinicalIndication="teste" description="" code="28040791" name="TEMPO DE TROMBOPLASTINA ATIVADO" onlyEmergency="true" idExamination="8674"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="4077" report="">
       <examination id="1268" sideLimb="" quantity="1" justification="teste" clinicalIndication="teste" description="" code="33010021" name="US ABDOMEN TOTAL(ABDOMEN SUP-RINS-RETROP URINARIO RINS E BEXIGA" onlyEmergency="true" idExamination="12464"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="4078" report="">
       <examination id="1269" sideLimb="" quantity="1" justification="Aminiorrexe Prematura" clinicalIndication="n/a" description="" code="99130367" name="SUMARIO DE URINA" idExamination="16586"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="4079" report="">
       <examination id="1270" sideLimb="" quantity="1" justification="Aminiorrexe Prematura" clinicalIndication="n/a" description="" code="33020019" name="ULTRASSOM OBSTETRICA CONVENCIONAL COM DOPPLER COLORIDO" idExamination="12547"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <idsPExamination>4071</idsPExamination>
     <idsPExamination>4072</idsPExamination>

@@ -4,23 +4,26 @@
     <step id="1388" type="Receita" name="Receita Teste" description="Teste de receita gerada pelo protocolo." isInitial="true" isTerminal="true">
       <audit date="2018-05-28T19:01:57.151-0300"/>
     </step>
-    <pprescription>
-      <prescription id="1691"/>
+    <pprescription id="1691">
+      <prescription id="116" name="Dipirona 1G..............1cx" frequency="4" medication="Dipirona 1G..............1cx" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="7" unitDuration="Dia" unitFrequency="Dia" complement="Tomar um comprimido de 6/6 horas se febre." order="1"/>
+      <prescriptionResult success="true" requestDate="2018-05-28T19:05:43.271-0300" id="1130" message="Receita prescrita com sucesso"/>
     </pprescription>
-    <pprescription>
-      <prescription id="1692"/>
+    <pprescription id="1692">
+      <prescription id="117" name="Azitromicina 500MG ......... 5cp" frequency="1" medication="Azitromicina 500MG ......... 5cp" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="5" unitDuration="Dia" unitFrequency="Dia" complement="Tomar um comprimido ao deitar." order="2"/>
+      <prescriptionResult success="true" requestDate="2018-05-28T19:05:49.717-0300" id="1131" message="Receita prescrita com sucesso"/>
     </pprescription>
-    <pprescription>
-      <prescription id="1693"/>
+    <pprescription id="1693">
+      <prescription id="118" name="Koid D ........ 1fr" frequency="3" medication="Koid D ........ 1fr" qtdPrescription="1" presentation="FRASCO" access="ORAL" qtdDuration="3" unitDuration="Dia" unitFrequency="Dia" complement="Tomar 10ml de 8/8 horas" order="3"/>
+      <prescriptionResult success="true" requestDate="2018-05-28T19:06:10.734-0300" id="1132" message="Receita prescrita com sucesso"/>
     </pprescription>
-    <pprescription>
-      <prescription id="1694"/>
+    <pprescription id="1694">
+      <prescription id="119" name="Benzetacil.......1200000ui" frequency="1" medication="Benzetacil.......1200000ui" qtdPrescription="1" presentation="FRASCO AMPOLA LÍQUIDO" access="INTRAMUSCULAR" qtdDuration="1" unitDuration="Dia" unitFrequency="Dia" complement="Aplicar injeção em dose única." order="4"/>
     </pprescription>
-    <pprescription>
-      <prescription id="1695"/>
+    <pprescription id="1695">
+      <prescription id="120" name="Koid D ....... 1fr" frequency="1" medication="Koid D ....... 1fr" qtdPrescription="1" presentation="SEM APRESENTACAO" access="ORAL" qtdDuration="1" unitDuration="Dia" unitFrequency="Dia" complement="Teste de medicamento sem apresentação" order="5"/>
     </pprescription>
-    <pprescription>
-      <prescription id="1696"/>
+    <pprescription id="1696">
+      <prescription id="121" name="Medicamento" frequency="1" medication="Medicamento" presentation="SEM APRESENTACAO" access="ORAL" qtdDuration="2" unitDuration="Dia" unitFrequency="Dia" complement="" order="6"/>
     </pprescription>
   </eStep>
   <idsExecutedStep>1295</idsExecutedStep>

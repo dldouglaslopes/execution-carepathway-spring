@@ -61,7 +61,6 @@
     <pexamination id="2403" report="">
       <examination id="32" sideLimb="" quantity="1" justification="Paciente com suspeita de cistite" clinicalIndication="n/a" description="" code="99130367" name="SUMARIO DE URINA" idExamination="16586"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <idsPExamination>2402</idsPExamination>
     <idsPExamination>2403</idsPExamination>

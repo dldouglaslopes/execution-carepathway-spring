@@ -243,32 +243,41 @@
   </eStep>
   <eStep xsi:type="MetamodelExecution:EPrescription" id="2989" executed="true" creationDate="2018-08-03T15:18:23.516-0300" modificationDate="2018-08-03T15:18:31.799-0300" executionDate="2018-08-03T15:18:31.656-0300" createdById="121" executedById="121" name="[Port 2/3] Receita Padrão - Escolha um antibiótico e as opções de medicamentos sintomáticos" previous="/atendimentos/1742/protocolos/2402/passos/2988/" text="">
     <step id="1977" type="Receita" name="[Port 2/3] Receita Padrão - Escolha um antibiótico e as opções de medicamentos sintomáticos" description="Atenção! Caso apresente alguns dos sintomas a seguir retornar imediatamente a emergência. &#xA;Sintomas: Falta de ar; Dor no peito; Febre por mais de 3 dias após início das medicações;  Desorientação; Sonolência excessiva; Sangramentos; Desmaio; Palpitação (Coração acelerado); Diminuição ou ausência de urina." isTerminal="true"/>
-    <pprescription>
-      <prescription id="3554"/>
+    <pprescription id="3554">
+      <prescription id="241" name="Azitromicina 500Mg ...... 7cp" frequency="1" medication="Azitromicina 500Mg ...... 7cp" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="7" unitDuration="Dia" unitFrequency="Dia" complement="" order="1"/>
+      <prescriptionResult success="true" requestDate="2018-08-03T15:09:08.465-0300" id="2475" message="Receita prescrita com sucesso"/>
     </pprescription>
-    <pprescription>
-      <prescription id="3555"/>
+    <pprescription id="3555">
+      <prescription id="242" name="Levofloxacino 500Mg ...... 7cp" frequency="1" medication="Levofloxacino 500Mg ...... 7cp" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="7" unitDuration="Dia" unitFrequency="Dia" complement="" order="2"/>
+      <prescriptionResult success="true" requestDate="2018-08-03T15:09:34.519-0300" id="2476" message="Receita prescrita com sucesso"/>
     </pprescription>
-    <pprescription>
-      <prescription id="3556"/>
+    <pprescription id="3556">
+      <prescription id="243" name="Koide D Xarope ...... 1fr" frequency="3" medication="Koide D Xarope ...... 1fr" presentation="SEM APRESENTACAO" access="ORAL" qtdDuration="5" unitDuration="Dia" unitFrequency="Dia" complement="Tomar 10ml de 8/8h" order="3"/>
+      <prescriptionResult success="true" requestDate="2018-08-03T15:09:41.589-0300" id="2477" message="Receita prescrita com sucesso"/>
     </pprescription>
-    <pprescription>
-      <prescription id="3557"/>
+    <pprescription id="3557">
+      <prescription id="244" name="Amoxicilina/Clavulanato 875/125 ...... 14cp" frequency="2" medication="Amoxicilina/Clavulanato 875/125 ...... 14cp" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="7" unitDuration="Dia" unitFrequency="Dia" complement="Tomar um comprimido de 12/12h" order="4"/>
+      <prescriptionResult success="true" requestDate="2018-08-03T15:09:52.860-0300" id="2478" message="Receita prescrita com sucesso"/>
     </pprescription>
-    <pprescription>
-      <prescription id="3558"/>
+    <pprescription id="3558">
+      <prescription id="245" name="Prednisona 20Mg ...... 1cx" frequency="1" medication="Prednisona 20Mg ...... 1cx" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="5" unitDuration="Dia" unitFrequency="Dia" complement="Tomar 2 comprimidos pela manhã" order="5"/>
+      <prescriptionResult success="true" requestDate="2018-08-03T15:09:59.279-0300" id="2479" message="Receita prescrita com sucesso"/>
     </pprescription>
-    <pprescription>
-      <prescription id="3559"/>
+    <pprescription id="3559">
+      <prescription id="246" name="Dipirona 1G ......1cx" frequency="4" medication="Dipirona 1G ......1cx" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="5" unitDuration="Dia" unitFrequency="Dia" complement="Tomar um comprimido de 6/6h se dor ou febre" order="6"/>
+      <prescriptionResult success="true" requestDate="2018-08-03T15:10:06.823-0300" id="2480" message="Receita prescrita com sucesso"/>
     </pprescription>
-    <pprescription>
-      <prescription id="3560"/>
+    <pprescription id="3560">
+      <prescription id="247" name="Paracetamol 750Mg ...... 1cx" frequency="4" medication="Paracetamol 750Mg ...... 1cx" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="5" unitDuration="Dia" unitFrequency="Dia" complement="Tomar um comprimido de 6/6h se dor ou febre" order="7"/>
+      <prescriptionResult success="true" requestDate="2018-08-03T15:10:12.648-0300" id="2481" message="Receita prescrita com sucesso"/>
     </pprescription>
-    <pprescription>
-      <prescription id="3561"/>
+    <pprescription id="3561">
+      <prescription id="248" name="Alenia 6/200mcg ...... 1cx" frequency="2" medication="Alenia 6/200mcg ...... 1cx" qtdPrescription="1" presentation="CAPSULA" access="INALATÓRIO" qtdDuration="5" unitDuration="Dia" unitFrequency="Dia" complement="Aplicar uma capsula via inalador" order="8"/>
+      <prescriptionResult success="true" requestDate="2018-08-03T15:10:19.473-0300" id="2482" message="Receita prescrita com sucesso"/>
     </pprescription>
-    <pprescription>
-      <prescription id="3562"/>
+    <pprescription id="3562">
+      <prescription id="249" name="Aerolin Nebules 2,5mg ...... 1cx" frequency="4" medication="Aerolin Nebules 2,5mg ...... 1cx" qtdPrescription="1" presentation="FLACONETE" access="INALATÓRIO" qtdDuration="3" unitDuration="Dia" unitFrequency="Dia" complement="Nebulizar um flaconete de 6/6h" order="9"/>
+      <prescriptionResult success="true" requestDate="2018-08-03T15:10:27.409-0300" id="2483" message="Receita prescrita com sucesso"/>
     </pprescription>
   </eStep>
   <idsExecutedStep>2982</idsExecutedStep>

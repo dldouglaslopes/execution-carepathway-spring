@@ -95,16 +95,12 @@
     <pexamination id="3462" report="">
       <examination id="1787" sideLimb="" quantity="1" justification="teste" clinicalIndication="teste" description="" code="99010073" name="CONSULTA C/OU SEM/ PROCEDIMENTO" idExamination="7435"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="3463" report="">
       <examination id="1788" sideLimb="" quantity="1" justification="teste" clinicalIndication="teste" description="" code="15020100" name="TESTE CLINIDINA" idExamination="7521"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
-    <pmedication id="3464">
-      <prescriptionResult/>
-    </pmedication>
+    <pmedication id="3464"/>
     <idsPExamination>3462</idsPExamination>
     <idsPExamination>3463</idsPExamination>
     <idsPMedication>3464</idsPMedication>
@@ -112,23 +108,25 @@
   <eStep xsi:type="MetamodelExecution:ETreatment" id="2925" executed="true" creationDate="2018-08-01T16:14:12.480-0300" modificationDate="2018-08-01T16:04:05.808-0300" executionDate="2018-08-01T16:04:01.713-0300" createdById="21" executedById="21" name="Tratamento Procedimentos" previous="/atendimentos/21/protocolos/2082/passos/2924/" next="/atendimentos/21/protocolos/2082/passos/2926/">
     <justification id="1864" reason="ausencia_de_prescricao" description="fdfsd" justifiedById="21"/>
     <step id="2528" type="Tratamento" name="Tratamento Procedimentos" description="Tratamento Procedimentos"/>
-    <pprocedure/>
+    <pprocedure id="3465">
+      <procedure id="781" frequency="1" quantity="1" idProcedure="22444" code="75010013" name="O2 C/MASCARA FACIAL" description="" typeCode="4" typeName="" outpatient="true"/>
+    </pprocedure>
     <idsPProcedure>3465</idsPProcedure>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EPrescription" id="2926" executed="true" creationDate="2018-08-01T16:05:50.962-0300" modificationDate="2018-08-01T16:04:58.052-0300" executionDate="2018-08-01T16:04:52.185-0300" createdById="21" executedById="21" name="Passo C2" previous="/atendimentos/21/protocolos/2082/passos/2925/" next="/atendimentos/21/protocolos/2082/passos/2927/" text="">
     <justification id="1865" reason="ausencia_de_prescricao" description="fdsfd" justifiedById="21"/>
     <step id="2523" type="Receita" name="Passo C2" description="Passo C1 do tipo Receita"/>
-    <pprescription>
-      <prescription id="3466"/>
+    <pprescription id="3466">
+      <prescription id="441" name="" frequency="1" idMedication="67" medication="DOLANTINA AMPL 2 ML" qtdPrescription="1" presentation="AMPOLA" access="GOTAS" qtdDuration="1" unitDuration="Dia" unitFrequency="Dia" complement="Tomar durante a noite" order="1"/>
     </pprescription>
-    <pprescription>
-      <prescription id="3467"/>
+    <pprescription id="3467">
+      <prescription id="442" name="" frequency="1" idMedication="71" medication="GENUXAL 200 MG FRAP 1 UD" qtdPrescription="1" presentation="FRASCO" access="ORAL" qtdDuration="1" unitDuration="Dia" unitFrequency="Dia" complement="Tomar durante a noite" order="2"/>
     </pprescription>
-    <pprescription>
-      <prescription id="3468"/>
+    <pprescription id="3468">
+      <prescription id="443" name="" frequency="1" idMedication="49" medication="DIPIRONA 1 G AMPL 2 ML" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="4" unitDuration="Dia" unitFrequency="Semana" complement="Tomar 1 comprimido de 6/6 hrs se dor ou febre" order="3"/>
     </pprescription>
-    <pprescription>
-      <prescription id="3469"/>
+    <pprescription id="3469">
+      <prescription id="444" name="ABC" frequency="1" medication="ABC" qtdPrescription="1" presentation="GOTAS" access="ORAL" qtdDuration="1" unitDuration="Semana" unitFrequency="Dia" complement="ac" order="4"/>
     </pprescription>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EDischarge" id="2927" reworked="true" executed="true" creationDate="2018-08-01T16:06:33.629-0300" modificationDate="2018-08-02T13:43:51.028-0300" executionDate="2018-08-02T13:43:42.282-0300" createdById="21" executedById="61" name="Passo D1" previous="/atendimentos/21/protocolos/2082/passos/2926/" next="/atendimentos/21/protocolos/2082/passos/2952/">

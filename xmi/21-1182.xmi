@@ -59,48 +59,40 @@
     <pexamination id="1822" report="">
       <examination id="1382" sideLimb="" quantity="1" justification="Verificar inflamação" clinicalIndication="Verificar inflamação" description="" code="10071" name="CONSULTA EM PRONTO SOCORRO" idExamination="7434"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="1823" report="">
       <examination id="1383" sideLimb="" quantity="1" justification="verificar alterações" clinicalIndication="verificar alterações" description="" code="23010096" name="MANOMETRIA ANORRETAL" idExamination="7874"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="1824" report="">
       <examination id="1384" sideLimb="" quantity="1" justification="verificar imagens" clinicalIndication="verificar imagens" description="" code="23010134" name="ANUSCOPIA (INTERNA E EXTERNA) " idExamination="7877"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="1825" report="">
       <examination id="1385" sideLimb="1" quantity="1" justification="Teste Teste" clinicalIndication="Teste Teste" description="" code="32030037" memberPeers="true" name="RAIOX COSTELAS - POR HEMITORAX" onlyEmergency="true" idExamination="12248"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="1826" report="">
       <examination id="1386" sideLimb="" quantity="1" justification="Teste Teste" clinicalIndication="Teste Teste" description="" code="26020017" name="CARIOTIPO SIMPLES (SANGUE/MEDULA)" idExamination="8082"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="1827" report="">
       <examination id="1387" sideLimb="1" quantity="1" justification="Teste Teste" clinicalIndication="Teste t" description="" code="32030037" memberPeers="true" name="RAIOX COSTELAS - POR HEMITORAX" onlyEmergency="true" idExamination="12248"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
-    <pprocedure/>
-    <pprocedure/>
-    <pinternment/>
-    <pmedication id="1831">
-      <prescriptionResult/>
-    </pmedication>
-    <pmedication id="1832">
-      <prescriptionResult/>
-    </pmedication>
-    <pmedication id="1833">
-      <prescriptionResult/>
-    </pmedication>
-    <pmedication id="1834">
-      <prescriptionResult/>
-    </pmedication>
+    <pprocedure id="1828">
+      <procedure id="461" frequency="1" quantity="1" idProcedure="840" code="10308" name="CONSULTA EM PRONTO SOCORRO (12H + MEDICAÇAO)" description="" typeName=""/>
+    </pprocedure>
+    <pprocedure id="1829">
+      <procedure id="462" frequency="1" quantity="1" idProcedure="937" code="15010040" name="PUNCAO BIOPSIA RENAL PER CUTANEA" description="" typeName=""/>
+    </pprocedure>
+    <pinternment id="1830">
+      <internment id="101" justification="investigar inflamação" clinicalIndication="investigar inflamação" quantity="1" typeName="" code="24050024" idInternment="1262" name="COLOCACAO DE CATETER PARA BRAQUITERAPIA ENDOBRONQUICA" description=""/>
+    </pinternment>
+    <pmedication id="1831"/>
+    <pmedication id="1832"/>
+    <pmedication id="1833"/>
+    <pmedication id="1834"/>
     <idsPExamination>1822</idsPExamination>
     <idsPExamination>1823</idsPExamination>
     <idsPExamination>1824</idsPExamination>
@@ -118,17 +110,17 @@
   <eStep xsi:type="MetamodelExecution:EPrescription" id="1424" executed="true" creationDate="2018-05-30T15:31:00.885-0300" modificationDate="2018-05-30T15:36:46.671-0300" executionDate="2018-05-30T15:36:41.357-0300" createdById="21" executedById="21" name="Passo C1" previous="/atendimentos/21/protocolos/1182/passos/1423/" next="/atendimentos/21/protocolos/1182/passos/1425/" text="">
     <justification id="725" reason="ausencia_de_prescricao" description="fgdsgfsd" justifiedById="21"/>
     <step id="1707" type="Receita" name="Passo C1" description="Passo C1 do tipo Receita"/>
-    <pprescription>
-      <prescription id="1835"/>
+    <pprescription id="1835">
+      <prescription id="181" name="" frequency="1" idMedication="67" medication="DOLANTINA AMPL 2 ML" qtdPrescription="1" presentation="AMPOLA" access="GOTAS" qtdDuration="1" unitDuration="Dia" unitFrequency="Dia" complement="Tomar durante a noite" order="1"/>
     </pprescription>
-    <pprescription>
-      <prescription id="1836"/>
+    <pprescription id="1836">
+      <prescription id="182" name="" frequency="1" idMedication="71" medication="GENUXAL 200 MG FRAP 1 UD" qtdPrescription="1" presentation="FRASCO" access="ORAL" qtdDuration="1" unitDuration="Dia" unitFrequency="Dia" complement="Tomar durante a noite" order="2"/>
     </pprescription>
-    <pprescription>
-      <prescription id="1837"/>
+    <pprescription id="1837">
+      <prescription id="183" name="" frequency="1" idMedication="49" medication="DIPIRONA 1 G AMPL 2 ML" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="4" unitDuration="Dia" unitFrequency="Semana" complement="Tomar 1 comprimido de 6/6 hrs se dor ou febre" order="3"/>
     </pprescription>
-    <pprescription>
-      <prescription id="1838"/>
+    <pprescription id="1838">
+      <prescription id="184" name="ABC" frequency="1" medication="ABC" qtdPrescription="1" presentation="GOTAS" access="ORAL" qtdDuration="1" unitDuration="Semana" unitFrequency="Dia" complement="ac" order="4"/>
     </pprescription>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EDischarge" id="1425" executed="true" creationDate="2018-05-30T15:37:44.456-0300" modificationDate="2018-05-30T15:26:27.419-0300" executionDate="2018-05-30T15:26:22.340-0300" createdById="21" executedById="21" name="Passo D1" previous="/atendimentos/21/protocolos/1182/passos/1424/" next="/atendimentos/21/protocolos/1182/passos/1426/">

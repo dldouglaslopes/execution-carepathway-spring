@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2775" creationDate="2018-08-14T12:10:19.071-0300" conclusionDate="2018-11-13T15:20:39.454-0200" completed="true" aborted="true" name="Diarréia" cid="" timeExecution="7873862.957383">
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2775" creationDate="2018-08-14T12:10:19.071-0300" conclusionDate="2018-11-13T15:20:39.454-0300" completed="true" aborted="true" name="Diarréia" cid="" timeExecution="7873862.957383">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="3375" creationDate="2018-08-14T12:10:33.028-0300" modificationDate="2018-08-14T12:10:33.074-0300" createdById="387" name="Avaliar Hipovolemia">
     <step id="1633" type="AuxilioConduta" name="Avaliar Hipovolemia" description="Verificar se paciente está hipovolêmico" isInitial="true">
       <audit date="2018-05-29T17:16:30.019-0300"/>

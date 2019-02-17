@@ -65,22 +65,18 @@
     <pexamination id="2908" report="">
       <examination id="1783" sideLimb="1" quantity="1" justification="Teste Teste" clinicalIndication="Teste t" description="" code="32030037" memberPeers="true" name="RAIOX COSTELAS - POR HEMITORAX" onlyEmergency="true" idExamination="12248"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="2909" report="">
       <examination id="1784" sideLimb="" quantity="1" justification="teste" clinicalIndication="teste" description="" code="99010073" name="CONSULTA C/OU SEM/ PROCEDIMENTO" idExamination="7435"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="2910" report="">
       <examination id="1785" sideLimb="" quantity="1" justification="teste" clinicalIndication="teste" description="" code="10066" name="CONSULTA EM HOSPITAL (PACIENTE INTERNADO)" idExamination="7439"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="2911" report="">
       <examination id="1786" sideLimb="" quantity="1" justification="teste" clinicalIndication="teste" description="" code="10057" name="VISITA HOSPITALAR COM NEUROLOGISTA (PACIENTE INTERNO)" idExamination="7438"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <idsPExamination>2907</idsPExamination>
     <idsPExamination>2908</idsPExamination>

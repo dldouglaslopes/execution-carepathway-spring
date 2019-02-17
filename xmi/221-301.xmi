@@ -98,7 +98,6 @@
     <pexamination id="381" report="">
       <examination id="281" sideLimb="" quantity="1" justification="Protocolo de Pneumonia" clinicalIndication="Protocolo de Pneumonia" description="" code="32010010" name="RAIOX CRANIO: P.A. - LAT" onlyEmergency="true" idExamination="12208"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <idsPExamination>381</idsPExamination>
   </eStep>
@@ -146,24 +145,12 @@
     <idsPPrescription>2555</idsPPrescription>
     <idsPPrescription>2556</idsPPrescription>
     <idsPPrescription>2557</idsPPrescription>
-    <pmedication id="2552">
-      <prescriptionResult/>
-    </pmedication>
-    <pmedication id="2553">
-      <prescriptionResult/>
-    </pmedication>
-    <pmedication id="2554">
-      <prescriptionResult/>
-    </pmedication>
-    <pmedication id="2555">
-      <prescriptionResult/>
-    </pmedication>
-    <pmedication id="2556">
-      <prescriptionResult/>
-    </pmedication>
-    <pmedication id="2557">
-      <prescriptionResult/>
-    </pmedication>
+    <pmedication id="2552"/>
+    <pmedication id="2553"/>
+    <pmedication id="2554"/>
+    <pmedication id="2555"/>
+    <pmedication id="2556"/>
+    <pmedication id="2557"/>
   </eStep>
   <idsExecutedStep>361</idsExecutedStep>
   <idsExecutedStep>362</idsExecutedStep>

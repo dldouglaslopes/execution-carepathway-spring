@@ -98,7 +98,6 @@
     <pexamination id="28" report="">
       <examination id="1" sideLimb="" quantity="1" justification="Protocolo de Pneumonia" clinicalIndication="Protocolo de Pneumonia" description="" code="32010010" name="RAIOX CRANIO: P.A. - LAT" onlyEmergency="true" idExamination="12208"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <idsPExamination>28</idsPExamination>
   </eStep>

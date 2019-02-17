@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2244" creationDate="2018-07-30T13:55:27.266-0300" conclusionDate="2018-11-13T15:04:01.599-0200" completed="true" aborted="true" name="Tratamento de SEPSE" cid="A90" timeExecution="9162916.597333">
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2244" creationDate="2018-07-30T13:55:27.266-0300" conclusionDate="2018-11-13T15:04:01.599-0300" completed="true" aborted="true" name="Tratamento de SEPSE" cid="A90" timeExecution="9162916.597333">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2730" executed="true" creationDate="2018-07-30T13:58:14.110-0300" modificationDate="2018-07-30T13:55:48.222-0300" executionDate="2018-07-30T13:55:31.055-0300" createdById="21" executedById="21" name="Confirmar Suspeia de SEPSE" next="/atendimentos/21/protocolos/2244/passos/2731/">
     <step id="871" type="AuxilioConduta" name="Confirmar Suspeia de SEPSE" description="Confirmar Suspeia de SEPSE" isInitial="true"/>
     <answer id="3351" type="RespostaSimOuNao">

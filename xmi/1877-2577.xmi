@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2577" creationDate="2018-08-14T11:51:20.230-0300" conclusionDate="2018-11-13T15:02:03.384-0200" completed="true" aborted="true" name="Pneumonia &amp; Influenza" cid="N390" timeExecution="7874092.750154">
+<MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2577" creationDate="2018-08-14T11:51:20.230-0300" conclusionDate="2018-11-13T15:02:03.384-0300" completed="true" aborted="true" name="Pneumonia &amp; Influenza" cid="N390" timeExecution="7874092.750154">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="3177" creationDate="2018-08-14T11:51:33.132-0300" modificationDate="2018-08-14T11:51:33.163-0300" createdById="315" name="Verificar Critérios para SEPSE">
     <step id="2987" type="AuxilioConduta" name="Verificar Critérios para SEPSE" description="Verifique os critérios para SIRS" isInitial="true"/>
     <answer id="3929" type="RespostaSimOuNao">

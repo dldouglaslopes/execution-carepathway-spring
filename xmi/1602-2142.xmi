@@ -55,52 +55,42 @@
     <pexamination id="3042" report="">
       <examination id="1124" sideLimb="" quantity="1" justification="Suspeita de Influenza" clinicalIndication="Nenhuma" description="" code="28040481" name="HEMOGRAMA COMPLETO (ERITROGRAMA + LEUCOGRAMA + AVALIACAO DE PLAQUETAS)" onlyEmergency="true" idExamination="8644"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="3043" report="">
       <examination id="1125" sideLimb="" quantity="1" justification="protocolo de pneumonia" clinicalIndication="tratamento de pneumonia" description="" code="28090209" name="LACTATO" onlyEmergency="true" idExamination="9295"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="3044" report="">
       <examination id="1126" sideLimb="" quantity="1" justification="protocolo de pneumonia" clinicalIndication="tratamento de pneumonia" description="" code="28011279" name="SODIO ( SANGUE )" onlyEmergency="true" idExamination="8460"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="3045" report="">
       <examination id="1127" sideLimb="" quantity="1" justification="protocolo de pneumonia" clinicalIndication="tratamento de pneumonia" description="" code="28011210" name="POTASSIO" onlyEmergency="true" idExamination="8452"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="3046" report="">
       <examination id="1128" sideLimb="" quantity="1" justification="protocolo pneumonia" clinicalIndication="tratamento de pneumonia" description="" code="28010973" name="GLICOSE (SANGUE)" onlyEmergency="true" idExamination="8429"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="3047" report="">
       <examination id="1129" sideLimb="" quantity="1" justification="protocolo pneumonia" clinicalIndication="tratamento de pneumonia" description="" code="28011414" name="UREIA ( SANGUE )" onlyEmergency="true" idExamination="8471"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="3048" report="">
       <examination id="1130" sideLimb="" quantity="1" justification="Protocolo de Pneumonia" clinicalIndication="Protocolo de Pneumonia" description="" code="28060865" name="PROTEINA C REATIVA, DETERMINACAO QUANTITATIVA DA" onlyEmergency="true" idExamination="8944"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="3049" report="">
       <examination id="1131" sideLimb="" quantity="1" justification="Protocolo de Pneumonia" clinicalIndication="Protocolo de Pneumonia" description="" code="28010540" name="CREATININA" onlyEmergency="true" idExamination="8384"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="3050" report="">
       <examination id="1132" sideLimb="" quantity="1" justification="Protocolo de Pneumonia" clinicalIndication="Protocolo de Pneumonia" description="" code="28010965" name="GASOMETRIA (PH,PC02,P02,BIC,SA 02,EXCESSO BASE)" onlyEmergency="true" idExamination="8424"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="3051" report="">
       <examination id="1133" sideLimb="" quantity="1" justification="Protocolo de Pneumonia" clinicalIndication="Protocolo de Pneumonia" description="" code="32050054" name="RAIOX TORAX: P.A - LAT" onlyEmergency="true" idExamination="12277"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <idsPExamination>3042</idsPExamination>
     <idsPExamination>3043</idsPExamination>
@@ -325,11 +315,12 @@
   </eStep>
   <eStep xsi:type="MetamodelExecution:EPrescription" id="2571" executed="true" creationDate="2018-07-27T15:14:36.733-0300" modificationDate="2018-07-27T15:38:16.084-0300" executionDate="2018-07-27T15:38:15.919-0300" createdById="281" executedById="281" name="[Port 3] Receita Padrão - Escolha um antibiótico e as opções de medicamentos sintomáticos" previous="/atendimentos/1602/protocolos/2142/passos/2570/" text="">
     <step id="1121" type="Receita" name="[Port 3] Receita Padrão - Escolha um antibiótico e as opções de medicamentos sintomáticos" description="Atenção! Caso apresente alguns dos sintomas a seguir retornar imediatamente a emergência. &#xA;Sintomas: Falta de ar; Dor no peito; Febre por mais de 3 dias após início das medicações;  Desorientação; Sonolência excessiva; Sangramentos; Desmaio; Palpitação (Coração acelerado); Diminuição ou ausência de urina." isTerminal="true"/>
-    <pprescription>
-      <prescription id="3052"/>
+    <pprescription id="3052">
+      <prescription id="81" name="Norofloxacino 400mg cx 12 comprimidos" frequency="2" medication="Norofloxacino 400mg cx 12 comprimidos" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="14" unitDuration="Dia" unitFrequency="Dia" complement="Tomar um complemento de 12/12 horas" order="1"/>
+      <prescriptionResult success="true" requestDate="2018-07-27T15:04:04.049-0300" id="2063" message="Receita prescrita com sucesso"/>
     </pprescription>
-    <pprescription>
-      <prescription id="3053"/>
+    <pprescription id="3053">
+      <prescription id="82" name="Dipirona 1G" frequency="3" medication="Dipirona 1G" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="5" unitDuration="Dia" unitFrequency="Dia" complement="Tomar um comprimido 8/8 horas se febre" order="2"/>
     </pprescription>
   </eStep>
   <idsExecutedStep>2562</idsExecutedStep>

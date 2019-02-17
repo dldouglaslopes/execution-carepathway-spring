@@ -61,21 +61,17 @@
     <pexamination id="2322" report="">
       <examination id="1625" sideLimb="1" quantity="1" justification="Teste Teste" clinicalIndication="Teste Teste" description="" code="32030037" memberPeers="true" name="RAIOX COSTELAS - POR HEMITORAX" onlyEmergency="true" idExamination="12248"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <pexamination id="2323" report="">
       <examination id="1627" sideLimb="1" quantity="1" justification="Teste Teste" clinicalIndication="Teste t" description="" code="32030037" memberPeers="true" name="RAIOX COSTELAS - POR HEMITORAX" onlyEmergency="true" idExamination="12248"/>
       <complement/>
-      <prescriptionResult/>
     </pexamination>
     <idsPExamination>2322</idsPExamination>
     <idsPExamination>2323</idsPExamination>
   </eStep>
   <eStep xsi:type="MetamodelExecution:ETreatment" id="2044" creationDate="2018-07-17T15:34:14.707-0300" modificationDate="2018-07-17T15:34:14.745-0300" createdById="241" name="Tratamento Medicamento" previous="/atendimentos/745/protocolos/1722/passos/2043/">
     <step id="2307" type="Tratamento" name="Tratamento Medicamento" description="Tratamento Medicamento"/>
-    <pmedication id="2324">
-      <prescriptionResult/>
-    </pmedication>
+    <pmedication id="2324"/>
     <idsPMedication>2324</idsPMedication>
   </eStep>
   <idsExecutedStep>2042</idsExecutedStep>

@@ -4,23 +4,24 @@
     <step id="1379" type="Receita" name="Receita Teste" description="Teste de receita gerada pelo protocolo." isInitial="true" isTerminal="true">
       <audit date="2018-05-28T18:57:25.504-0300"/>
     </step>
-    <pprescription>
-      <prescription id="1685"/>
+    <pprescription id="1685">
+      <prescription id="110" name="Dipirona 1G..............1cx" frequency="4" medication="Dipirona 1G..............1cx" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="7" unitDuration="Dia" unitFrequency="Dia" complement="Tomar um comprimido de 6/6 horas se febre." order="1"/>
     </pprescription>
-    <pprescription>
-      <prescription id="1686"/>
+    <pprescription id="1686">
+      <prescription id="111" name="Azitromicina 500MG ......... 5cp" frequency="1" medication="Azitromicina 500MG ......... 5cp" qtdPrescription="1" presentation="COMPRIMIDO" access="ORAL" qtdDuration="5" unitDuration="Dia" unitFrequency="Dia" complement="Tomar um comprimido ao deitar." order="2"/>
     </pprescription>
-    <pprescription>
-      <prescription id="1687"/>
+    <pprescription id="1687">
+      <prescription id="112" name="Koid D ........ 1fr" frequency="3" medication="Koid D ........ 1fr" qtdPrescription="1" presentation="FRASCO" access="ORAL" qtdDuration="3" unitDuration="Dia" unitFrequency="Dia" complement="Tomar 10ml de 8/8 horas" order="3"/>
     </pprescription>
-    <pprescription>
-      <prescription id="1688"/>
+    <pprescription id="1688">
+      <prescription id="113" name="Benzetacil.......1200000ui" frequency="1" medication="Benzetacil.......1200000ui" qtdPrescription="1" presentation="FRASCO AMPOLA LÍQUIDO" access="INTRAMUSCULAR" qtdDuration="1" unitDuration="Dia" unitFrequency="Dia" complement="Aplicar injeção em dose única." order="4"/>
     </pprescription>
-    <pprescription>
-      <prescription id="1689"/>
+    <pprescription id="1689">
+      <prescription id="114" name="Koid D ....... 1fr" frequency="1" medication="Koid D ....... 1fr" qtdPrescription="1" presentation="SEM APRESENTACAO" access="ORAL" qtdDuration="1" unitDuration="Dia" unitFrequency="Dia" complement="Teste de medicamento sem apresentação" order="5"/>
     </pprescription>
-    <pprescription>
-      <prescription id="1690"/>
+    <pprescription id="1690">
+      <prescription id="115" name="Medicamento" frequency="1" medication="Medicamento" presentation="SEM APRESENTACAO" access="ORAL" qtdDuration="2" unitDuration="Dia" unitFrequency="Dia" complement="" order="6"/>
+      <prescriptionResult success="true" requestDate="2018-05-28T18:47:26.451-0300" id="1128" message="Receita prescrita com sucesso"/>
     </pprescription>
   </eStep>
   <idsExecutedStep>1294</idsExecutedStep>
