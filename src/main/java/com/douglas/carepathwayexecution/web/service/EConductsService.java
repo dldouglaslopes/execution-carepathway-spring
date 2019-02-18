@@ -7,8 +7,8 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import QueryMetamodel.EConduct;
 import QueryMetamodel.EQuery;
+import QueryMetamodel.QConduct;
 import QueryMetamodel.Query_metamodelFactory;
 
 @Service
@@ -20,7 +20,7 @@ public class EConductsService {
 		//finding all the documents
 		List<Document> conductsDoc = service.getService(eQuery);	
 		
-		EConduct conduct = Query_metamodelFactory.eINSTANCE.createEConduct();
+		QConduct conduct = Query_metamodelFactory.eINSTANCE.createQConduct();
 		int withConduct = 0;
 		int noConduct = 0;
 		
@@ -35,9 +35,9 @@ public class EConductsService {
 				noConduct++;
 			}
 		}
-		
-		conduct.setNoConduct(noConduct);
-		conduct.setWithConduct(withConduct);
+//		
+//		conduct.setNoConduct(noConduct);
+//		conduct.setWithConduct(withConduct);
 		eQuery.setEMethod(conduct);
 		
 		return eQuery;

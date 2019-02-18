@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import QueryMetamodel.EQuery;
-import QueryMetamodel.EStatus;
+import QueryMetamodel.QStatus;
 import QueryMetamodel.Query_metamodelFactory;
 
 @Service
@@ -20,7 +20,7 @@ public class EStatusService {
 		//finding all the documents
 		List<Document> status = service.getService(eQuery);		
 
-		EStatus eStatus = Query_metamodelFactory.eINSTANCE.createEStatus();		
+		QStatus eStatus = Query_metamodelFactory.eINSTANCE.createQStatus();		
 		int aborted = 0;
 		int completed = 0;
 		int inProgress = 0;
@@ -38,9 +38,9 @@ public class EStatusService {
 			}
 		}
 		
-		eStatus.setAborted(aborted);
-		eStatus.setCompleted(completed);
-		eStatus.setInProgress(inProgress);
+//		eStatus.setAborted(aborted);
+//		eStatus.setCompleted(completed);
+//		eStatus.setInProgress(inProgress);
 		eQuery.setEMethod(eStatus);
 		
 		return eQuery;				

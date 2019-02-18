@@ -18,20 +18,20 @@ import com.douglas.carepathwayexecution.query.DBConfig;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.Filters;
 
-import QueryMetamodel.Age;
+import QueryMetamodel.AAge;
+import QueryMetamodel.ACarePathway;
+import QueryMetamodel.ADate;
+import QueryMetamodel.ARange;
+import QueryMetamodel.ASex;
+import QueryMetamodel.AStatus;
+import QueryMetamodel.BooleanConduct;
 import QueryMetamodel.CarePathway;
-import QueryMetamodel.ComplementaryConduct;
-import QueryMetamodel.Date;
 import QueryMetamodel.EAttribute;
-import QueryMetamodel.ECarePathway;
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Gender;
 import QueryMetamodel.Message;
 import QueryMetamodel.Order;
 import QueryMetamodel.Query_metamodelFactory;
-import QueryMetamodel.Range;
-import QueryMetamodel.Sex;
-import QueryMetamodel.Status;
 
 @Service
 public class ECarePathwayService {
@@ -43,11 +43,11 @@ public class ECarePathwayService {
 	}
 			
 	private List<Document> filterDocuments(EQuery eQuery) {
-		ECarePathway carePathway = eQuery.getEAttribute().getCarePathway();
-		Age age = eQuery.getEAttribute().getAge();
-		Date date = eQuery.getEAttribute().getDate();
-		Sex sex = eQuery.getEAttribute().getSex();
-		Status status = eQuery.getEAttribute().getStatus();
+		ACarePathway carePathway = eQuery.getEAttribute().getCarePathway();
+		AAge age = eQuery.getEAttribute().getAge();
+		ADate date = eQuery.getEAttribute().getDate();
+		ASex sex = eQuery.getEAttribute().getSex();
+		AStatus status = eQuery.getEAttribute().getStatus();
 		
 		FindIterable<Document> docs = dbConfig.getCollection().find();		
 			
@@ -56,12 +56,12 @@ public class ECarePathwayService {
 											carePathway.getName().getLiteral()));
 		}			
 		
-		if (carePathway.getConduct() == QueryMetamodel.ComplementaryConduct.TRUE) {
+		if (carePathway.getConduct() == BooleanConduct.TRUE) {
 			docs = docs.filter( Filters.or( Filters.exists( "complementaryConducts.prescribedresource"), 
 											Filters.exists( "complementaryConducts.procedureprescribedresource"), 
 											Filters.exists( "complementaryConducts.examinationprescribedresource")));
 		}
-		else if (carePathway.getConduct() == QueryMetamodel.ComplementaryConduct.FALSE) {
+		else if (carePathway.getConduct() == BooleanConduct.FALSE) {
 			docs = docs.filter( Filters.nor( Filters.exists( "complementaryConducts.prescribedresource"), 
 											Filters.exists( "complementaryConducts.procedureprescribedresource"), 
 											Filters.exists( "complementaryConducts.examinationprescribedresource")));
@@ -129,12 +129,12 @@ public class ECarePathwayService {
 		EQuery query = Query_metamodelFactory.eINSTANCE.createEQuery();
 		
 		EAttribute attribute = Query_metamodelFactory.eINSTANCE.createEAttribute();	
-		Sex sex = Query_metamodelFactory.eINSTANCE.createSex();
-		Age age = Query_metamodelFactory.eINSTANCE.createAge();
-		Range range = Query_metamodelFactory.eINSTANCE.createRange();
-		ECarePathway eCarePathway = Query_metamodelFactory.eINSTANCE.createECarePathway();
-		Date date = Query_metamodelFactory.eINSTANCE.createDate();
-		Status status = Query_metamodelFactory.eINSTANCE.createStatus();
+		ASex sex = Query_metamodelFactory.eINSTANCE.createASex();
+		AAge age = Query_metamodelFactory.eINSTANCE.createAAge();
+		ARange range = Query_metamodelFactory.eINSTANCE.createARange();
+		ACarePathway eCarePathway = Query_metamodelFactory.eINSTANCE.createACarePathway();
+		ADate date = Query_metamodelFactory.eINSTANCE.createADate();
+		AStatus status = Query_metamodelFactory.eINSTANCE.createAStatus();
 		
 		sex.setSex( Gender.getByName( sexStr));
 		
@@ -161,10 +161,10 @@ public class ECarePathwayService {
 		
 		if (conduct != null && !conduct.isEmpty()) {
 			if (Integer.parseInt(conduct) == 0) {
-				eCarePathway.setConduct(ComplementaryConduct.FALSE);
+				eCarePathway.setConduct(BooleanConduct.FALSE);
 			}
 			if (Integer.parseInt(conduct) == 1) {
-				eCarePathway.setConduct(ComplementaryConduct.TRUE);
+				eCarePathway.setConduct(BooleanConduct.TRUE);
 			}
 		}
 		

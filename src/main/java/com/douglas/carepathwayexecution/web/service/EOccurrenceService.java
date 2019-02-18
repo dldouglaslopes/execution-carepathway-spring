@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import QueryMetamodel.CarePathway;
-import QueryMetamodel.EOccurrence;
 import QueryMetamodel.EQuery;
+import QueryMetamodel.QOccurrence;
 import QueryMetamodel.Query_metamodelFactory;
 
 @Service
@@ -33,8 +33,8 @@ public class EOccurrenceService {
 			size = service.count( field, literal, occurrencesDocs);		
 		}
 		
-		EOccurrence occurrence = Query_metamodelFactory.eINSTANCE.createEOccurrence();
-		occurrence.setValue(size);
+		QOccurrence occurrence = Query_metamodelFactory.eINSTANCE.createQOccurrence();
+		//occurrence.setValue(size);
 		eQuery.setEMethod(occurrence);
 		
 		return eQuery;

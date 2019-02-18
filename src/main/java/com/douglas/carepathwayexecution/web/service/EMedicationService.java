@@ -11,10 +11,10 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import QueryMetamodel.EMedication;
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Medication;
 import QueryMetamodel.Pathway;
+import QueryMetamodel.QMedication;
 import QueryMetamodel.Query_metamodelFactory;
 
 @Service
@@ -141,7 +141,7 @@ public class EMedicationService {
 		
 		list = service.select( eQuery.getEAttribute().getRange().getQuantity(), list);				
 	
-		EMedication eMedication = Query_metamodelFactory.eINSTANCE.createEMedication();
+		QMedication eMedication = Query_metamodelFactory.eINSTANCE.createQMedication();
 		
 		for (int i = 0; i < list.size(); i++) {
 			String key = list.get(i).getKey();

@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import QueryMetamodel.EQuery;
-import QueryMetamodel.ERecurrentFlow;
 import QueryMetamodel.Flow;
+import QueryMetamodel.QRecurrentFlow;
 import QueryMetamodel.Query_metamodelFactory;
 import QueryMetamodel.Sequence;
 
@@ -75,7 +75,7 @@ public class ERecurrentFlowService {
 		//dividing the list
 		list = service.select( eQuery.getEAttribute().getRange().getQuantity(), list);
 	
-		ERecurrentFlow recurrentFlow = Query_metamodelFactory.eINSTANCE.createERecurrentFlow();		
+		QRecurrentFlow recurrentFlow = Query_metamodelFactory.eINSTANCE.createQRecurrentFlow();		
 		
 		for (int i = 0; i < list.size(); i++) {			
 			Flow flow = Query_metamodelFactory.eINSTANCE.createFlow();
