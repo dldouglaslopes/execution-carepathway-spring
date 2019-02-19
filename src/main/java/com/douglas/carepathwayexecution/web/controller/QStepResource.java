@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.douglas.carepathwayexecution.web.domain.EQueryDTO;
 import com.douglas.carepathwayexecution.web.service.QCarePathwayService;
-import com.douglas.carepathwayexecution.web.service.QRecurrentFlowService;
+import com.douglas.carepathwayexecution.web.service.QStepService;
 
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Query_metamodelFactory;
@@ -23,24 +23,24 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@Api(value = "RecurrentFlow", 
-	description = "Show the recurrent flows of the care pathway execution",
+@Api(value = "Step", 
+	description = "Show the recurrent step of the care pathway execution",
 	produces ="application/json")
 @Controller
-public class QRecurrentFlowResource {
+public class QStepResource {
 	@Autowired
 	private QCarePathwayService service;
 	@Autowired
-	private QRecurrentFlowService flowService;
+	private QStepService stepService;
 	
-	@ApiOperation(value = "Calculate the reccurrent flow of a specified care pathway id")
+	@ApiOperation(value = "Calculate the reccurrent step of a specified care pathway id")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/flow" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/step" }, 
 					method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> getRecurrentFlowToOnePathway(
+	public ResponseEntity<EQueryDTO> getRecurrentStepToOnePathway(
 		@PathVariable( value = "id", required=true) String idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
@@ -61,20 +61,20 @@ public class QRecurrentFlowResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = flowService.recurrentFlow(eQuery);
+		//eQuery = flowService.recurrentFlow(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
-	@ApiOperation(value = "Calculate the reccurrent flow of each care pathway")
+	@ApiOperation(value = "Calculate the reccurrent step of each care pathway")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/flow" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/step" }, 
 					method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> getRecurrentFlowToAllPathways(
+	public ResponseEntity<EQueryDTO> getRecurrentStepToAllPathways(
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -94,7 +94,7 @@ public class QRecurrentFlowResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = flowService.recurrentFlow(eQuery);
+		//eQuery = Service.recurrentFlow(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
