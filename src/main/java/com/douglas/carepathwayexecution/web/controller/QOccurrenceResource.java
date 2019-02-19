@@ -13,23 +13,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.douglas.carepathwayexecution.web.domain.EQueryDTO;
-import com.douglas.carepathwayexecution.web.service.EConductsService;
-import com.douglas.carepathwayexecution.web.service.ECarePathwayService;
+import com.douglas.carepathwayexecution.web.service.QCarePathwayService;
+import com.douglas.carepathwayexecution.web.service.QOccurrenceService;
 
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Query_metamodelFactory;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
+@Api(value = "Occurrence", 
+	description = "Show the occurrences rating of the care pathway execution",
+	produces ="application/json")
 @Controller
-public class EConductsResource {
+public class QOccurrenceResource {
 	@Autowired
-	private ECarePathwayService service;
+	private QCarePathwayService service;
 	@Autowired
-	private EConductsService conductsService;
+	private QOccurrenceService occurrencesService;
 	
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/conducts" }, 
+	@ApiOperation(value = "Calculate the occurrences of a specified care pathway id")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/occurrences" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> conductsToOnePathway(
+	public ResponseEntity<EQueryDTO> getOccurrencesToOnePathway(
 		@PathVariable( value = "id", required=true) String idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
@@ -49,16 +60,20 @@ public class EConductsResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = conductsService.countConducts(eQuery);
+		eQuery = occurrencesService.countOccurrences(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
-	@RequestMapping(value = { "/medcare/execution/pathways/conducts" }, 
+	@ApiOperation(value = "Calculate the occurrences of each care pathway")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/occurrences" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> conductsToAllPathways(
+	public ResponseEntity<EQueryDTO> getOccurrencesToAllPathways(
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -77,7 +92,7 @@ public class EConductsResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = conductsService.countConducts(eQuery);
+		eQuery = occurrencesService.countOccurrences(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);

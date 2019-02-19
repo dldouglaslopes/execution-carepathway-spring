@@ -13,23 +13,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.douglas.carepathwayexecution.web.domain.EQueryDTO;
-import com.douglas.carepathwayexecution.web.service.ECarePathwayService;
-import com.douglas.carepathwayexecution.web.service.EMedicationService;
+import com.douglas.carepathwayexecution.web.service.QCarePathwayService;
+import com.douglas.carepathwayexecution.web.service.QMedicationService;
 
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Query_metamodelFactory;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
+@Api(value = "Medication", 
+	description = "Show the prescribed medications of the care pathway execution",
+	produces ="application/json")
 @Controller
-public class EMedicationResource {
+public class QMedicationResource {
 	@Autowired
-	private ECarePathwayService service;
+	private QCarePathwayService service;
 	@Autowired
-	private EMedicationService medicationService;
+	private QMedicationService medicationService;
 	
+	@ApiOperation(value = "Show the prescribed medications of a specified care pathway id")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/medications" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> medicationToOnePathway(
+	public ResponseEntity<EQueryDTO> getAllMedicationsToOnePathway(
 		@PathVariable( value = "id", required=true) String idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
@@ -56,10 +67,14 @@ public class EMedicationResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
+	@ApiOperation(value = "Show the prescribed medications of each care pathway")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/medications" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> medicationToAllPathways(
+	public ResponseEntity<EQueryDTO> getAllMedicationsToAllPathways(
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -85,10 +100,14 @@ public class EMedicationResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
+	@ApiOperation(value = "Show the specified prescribed medication of a specified care pathway id")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/medications/{name}" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> oneMedicationToOnePathway(
+	public ResponseEntity<EQueryDTO> getOneMedicationToOnePathway(
 		@PathVariable( value = "id", required=true) String idPathway,
 		@PathVariable( value = "name", required=true) String nameMedication,
 		@RequestParam( value = "conduct", required=false) String conductStr,
@@ -116,10 +135,14 @@ public class EMedicationResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
+	@ApiOperation(value = "Show the specified prescribed medication of each care pathway")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/medications/{name}" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> oneMedicationToAllPathways(
+	public ResponseEntity<EQueryDTO> getOneMedicationToAllPathways(
 		@PathVariable( value = "name", required=true) String nameMedication,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,

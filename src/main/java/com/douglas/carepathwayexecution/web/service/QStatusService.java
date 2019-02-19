@@ -14,9 +14,9 @@ import QueryMetamodel.Query_metamodelFactory;
 import QueryMetamodel.Status;
 
 @Service
-public class EStatusService {
+public class QStatusService {
 	@Autowired
-	private ECarePathwayService service;
+	private QCarePathwayService service;
 	
 	public EQuery countStatus(EQuery eQuery) {
 		

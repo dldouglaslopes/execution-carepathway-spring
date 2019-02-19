@@ -15,9 +15,9 @@ import QueryMetamodel.QConduct;
 import QueryMetamodel.Query_metamodelFactory;
 
 @Service
-public class EConductsService {
+public class QConductsService {
 	@Autowired
-	private ECarePathwayService service;
+	private QCarePathwayService service;
 	
 	public EQuery countConducts(EQuery eQuery) {
 		//finding all the documents

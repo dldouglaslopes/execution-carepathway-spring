@@ -14,9 +14,9 @@ import QueryMetamodel.QAverageTime;
 import QueryMetamodel.Query_metamodelFactory;
 
 @Service
-public class EAverageTimeService {
+public class QAverageTimeService {
 	@Autowired
-	private ECarePathwayService service;
+	private QCarePathwayService service;
 	
 	public EQuery averageByTime(EQuery eQuery) {	
 		//querying the average time

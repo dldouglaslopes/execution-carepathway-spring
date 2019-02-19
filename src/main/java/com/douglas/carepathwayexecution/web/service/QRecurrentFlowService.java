@@ -18,9 +18,9 @@ import QueryMetamodel.Query_metamodelFactory;
 import QueryMetamodel.Sequence;
 
 @Service
-public class ERecurrentFlowService {
+public class QRecurrentFlowService {
 	@Autowired
-	private ECarePathwayService service;
+	private QCarePathwayService service;
 
 	public EQuery recurrentFlow(EQuery eQuery) {
 		

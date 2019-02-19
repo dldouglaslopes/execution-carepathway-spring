@@ -34,7 +34,7 @@ import QueryMetamodel.Order;
 import QueryMetamodel.Query_metamodelFactory;
 
 @Service
-public class ECarePathwayService {
+public class QCarePathwayService {
 	private DBConfig dbConfig;	
 		
 	public List<Document> getService(EQuery eQuery) {

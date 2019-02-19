@@ -18,9 +18,9 @@ import QueryMetamodel.QMedication;
 import QueryMetamodel.Query_metamodelFactory;
 
 @Service
-public class EMedicationService {
+public class QMedicationService {
 	@Autowired
-	private ECarePathwayService service;
+	private QCarePathwayService service;
 	
 	//the medication in executed step or conduct complementary
 	public EQuery prescribedMedication(EQuery eQuery, String name) {

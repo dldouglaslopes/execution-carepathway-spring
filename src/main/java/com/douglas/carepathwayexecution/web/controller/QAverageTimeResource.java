@@ -13,23 +13,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.douglas.carepathwayexecution.web.domain.EQueryDTO;
-import com.douglas.carepathwayexecution.web.service.ECarePathwayService;
-import com.douglas.carepathwayexecution.web.service.EOccurrenceService;
+import com.douglas.carepathwayexecution.web.service.QAverageTimeService;
+import com.douglas.carepathwayexecution.web.service.QCarePathwayService;
 
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Query_metamodelFactory;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
+@Api(value = "AverageTime", 
+	description = "Show the average time of the care pathway execution",
+	produces ="application/json")
 @Controller
-public class EOccurrenceResource {
+public class QAverageTimeResource {
 	@Autowired
-	private ECarePathwayService service;
+	private QCarePathwayService service;
 	@Autowired
-	private EOccurrenceService occurrencesService;
+	private QAverageTimeService timeService;
 	
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/occurrences" }, 
+	@ApiOperation(value = "Calculate the average time of a specified care pathway id")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/time" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> occurrencesToOnePathway(
+	public ResponseEntity<EQueryDTO> getAverageTimeToOnePathway(
 		@PathVariable( value = "id", required=true) String idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
@@ -49,18 +60,22 @@ public class EOccurrenceResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = occurrencesService.countOccurrences(eQuery);
+		eQuery = timeService.averageByTime(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
-	@RequestMapping(value = { "/medcare/execution/pathways/occurrences" }, 
+	@ApiOperation(value = "Calculate the average time of each care pathway")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/time" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> occurrencesToAllPathways(
-		@RequestParam( value = "conduct", required=false) String conductStr,
-		@RequestParam( value = "status", required=false) String statusStr,
+	public ResponseEntity<EQueryDTO> getAverageTimeToAllPathways(
+			@RequestParam( value = "conduct", required=false) String conductStr,
+			@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
 		@RequestParam( value = "sex", required=false) String sexStr,
 		@RequestParam( value = "date", required=false) String dateStr,
@@ -77,7 +92,7 @@ public class EOccurrenceResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = occurrencesService.countOccurrences(eQuery);
+		eQuery = timeService.averageByTime(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);

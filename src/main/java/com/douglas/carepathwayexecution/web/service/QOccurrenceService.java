@@ -13,9 +13,9 @@ import QueryMetamodel.QOccurrence;
 import QueryMetamodel.Query_metamodelFactory;
 
 @Service
-public class EOccurrenceService {
+public class QOccurrenceService {
 	@Autowired
-	private ECarePathwayService service;
+	private QCarePathwayService service;
 	
 	public EQuery countOccurrences(EQuery eQuery) {
 		//finding all the documents

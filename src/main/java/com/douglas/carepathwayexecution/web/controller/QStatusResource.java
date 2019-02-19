@@ -13,73 +13,86 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.douglas.carepathwayexecution.web.domain.EQueryDTO;
-import com.douglas.carepathwayexecution.web.service.ECarePathwayService;
-import com.douglas.carepathwayexecution.web.service.ERecurrentFlowService;
+import com.douglas.carepathwayexecution.web.service.QStatusService;
+import com.douglas.carepathwayexecution.web.service.QCarePathwayService;
 
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Query_metamodelFactory;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
+@Api(value = "Status", 
+	description = "Show the status rating of the care pathway execution",
+	produces ="application/json")
 @Controller
-public class ERecurrentFlowResource {
+public class QStatusResource {
 	@Autowired
-	private ECarePathwayService service;
+	private QCarePathwayService service;
 	@Autowired
-	private ERecurrentFlowService flowService;
+	private QStatusService statusService;
 	
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/flow" }, 
-					method = RequestMethod.GET)
+	@ApiOperation(value = "Calculate the status rating of a specified care pathway id")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/status" }, 
+			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> recurrentFlowToOnePathway(
+	public ResponseEntity<EQueryDTO> getCountStatusToOnePathway(
 		@PathVariable( value = "id", required=true) String idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
 		@RequestParam( value = "sex", required=false) String sexStr,
 		@RequestParam( value = "date", required=false) String dateStr,
-		@RequestParam( value = "range", required=false) String rangeStr,
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
 		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
-										conductStr,
+										conductStr,						
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
 										sexStr, 
 										service.splitBy( dateStr, ","),
-										service.splitBy( rangeStr, ","));
-			
+										null);
+		
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = statusService.countStatus(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
 	}
-
-	@RequestMapping(value = { "/medcare/execution/pathways/flow" }, 
-					method = RequestMethod.GET)
+	
+	@ApiOperation(value = "Calculate the status rating of a specified care pathway id")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/status" }, 
+			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> recurrentFlowToAllPathways(
+	public ResponseEntity<EQueryDTO> getStatusToAllPathway(
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
 		@RequestParam( value = "sex", required=false) String sexStr,
 		@RequestParam( value = "date", required=false) String dateStr,
-		@RequestParam( value = "range", required=false) String rangeStr,
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
 		eQuery = service.setAtribbutte( 0,
-										conductStr,					
+										conductStr,
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
 										sexStr, 
 										service.splitBy( dateStr, ","),
-										service.splitBy( rangeStr, ","));
-			
+										null);
+		
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = statusService.countStatus(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
