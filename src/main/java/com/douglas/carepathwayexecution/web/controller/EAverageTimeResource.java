@@ -18,7 +18,10 @@ import com.douglas.carepathwayexecution.web.service.ECarePathwayService;
 
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Query_metamodelFactory;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value = "AverageTime", description = "Show the average time of the care pathway execution")
 @Controller
 public class EAverageTimeResource {
 	@Autowired
@@ -26,6 +29,7 @@ public class EAverageTimeResource {
 	@Autowired
 	private EAverageTimeService timeService;
 	
+	@ApiOperation(value = "Calculate the average time of a specified care pathway id")
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/time" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
@@ -55,6 +59,7 @@ public class EAverageTimeResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
+	@ApiOperation(value = "Calculate the average time of each care pathway")
 	@RequestMapping(value = { "/medcare/execution/pathways/time" }, 
 			method = RequestMethod.GET)
 	@ResponseBody

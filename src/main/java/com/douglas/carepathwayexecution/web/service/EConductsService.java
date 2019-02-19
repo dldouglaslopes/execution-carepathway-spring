@@ -1,12 +1,15 @@
 package com.douglas.carepathwayexecution.web.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import QueryMetamodel.Conduct;
 import QueryMetamodel.EQuery;
 import QueryMetamodel.QConduct;
 import QueryMetamodel.Query_metamodelFactory;
@@ -19,26 +22,48 @@ public class EConductsService {
 	public EQuery countConducts(EQuery eQuery) {
 		//finding all the documents
 		List<Document> conductsDoc = service.getService(eQuery);	
+		Map<String, Integer> withConduct = new HashMap<>();
+		Map<String, Integer> noConduct = new HashMap<>();
 		
-		QConduct conduct = Query_metamodelFactory.eINSTANCE.createQConduct();
-		int withConduct = 0;
-		int noConduct = 0;
-		
-		//counting the occurrences when the care pathway has conducts or not
 		for (Document document : conductsDoc) {
+			
 			List<Document> conducts = document.get("complementaryConducts", new ArrayList<Document>());
+			Document pathway = document.get("pathway", new Document());
+			String key = pathway.getString("name");
 			
 			if (!conducts.isEmpty()) {
-				withConduct++;
+				if (withConduct.containsKey(key)) {
+					int value = withConduct.get(key) + 1;
+					withConduct.replace(key, value);
+				}
+				else {
+					withConduct.put(key, 1);
+					noConduct.put(key, 0);
+				}
 			}
 			else {
-				noConduct++;
+				if (noConduct.containsKey(key)) {
+					int value = noConduct.get(key) + 1;
+					noConduct.replace(key, value);
+				}
+				else {
+					noConduct.put(key, 1);
+					withConduct.put(key, 0);
+				}
 			}
 		}
-//		
-//		conduct.setNoConduct(noConduct);
-//		conduct.setWithConduct(withConduct);
-		eQuery.setEMethod(conduct);
+
+		QConduct qConduct = Query_metamodelFactory.eINSTANCE.createQConduct();
+			
+		for (String key : withConduct.keySet()) {
+			Conduct conduct = Query_metamodelFactory.eINSTANCE.createConduct();
+			conduct.setName(key);
+			conduct.setNoConduct(noConduct.get(key));
+			conduct.setWithConduct(withConduct.get(key));
+			qConduct.getConduct().add(conduct);
+		}
+		
+		eQuery.setEMethod(qConduct);
 		
 		return eQuery;
 	}
