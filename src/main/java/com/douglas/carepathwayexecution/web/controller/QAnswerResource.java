@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @Api(value = "Answer", 
-	description = "Show the incident answers of the questions in the care pathway execution",
+	description = "Show the answer occorrences of the questions in the care pathway execution",
 	produces ="application/json")
 @Controller
 public class QAnswerResource {
@@ -33,7 +33,7 @@ public class QAnswerResource {
 	@Autowired
 	private QAnswerService answerService;
 	
-	@ApiOperation(value = "Calculate the incident answers of a specified care pathway id and the all questions")
+	@ApiOperation(value = "Calculate the answer occorrences of a specified care pathway id and the all questions")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
@@ -61,13 +61,13 @@ public class QAnswerResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = answerService.occorrencesAnswer(eQuery, null);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
-	@ApiOperation(value = "Calculate the incident answers of all care pathway and one question")
+	@ApiOperation(value = "Calculate the answer occurrences of all care pathway and one question")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
@@ -75,6 +75,7 @@ public class QAnswerResource {
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToAllPathwaysAndOneQuestion(
+		@PathVariable( value = "name", required=true) String question,		
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -94,13 +95,13 @@ public class QAnswerResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = Service.recurrentFlow(eQuery);
+		eQuery = answerService.occorrencesAnswer(eQuery, question);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
-	@ApiOperation(value = "Calculate the incident answers of all care pathway and all questions")
+	@ApiOperation(value = "Calculate the answer occurrences of all care pathway and all questions")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
@@ -108,7 +109,6 @@ public class QAnswerResource {
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToAllPathwaysAndAllQuestions(
-		@PathVariable( value = "id", required=true) String idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -118,7 +118,7 @@ public class QAnswerResource {
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+		eQuery = service.setAtribbutte( 0,
 										conductStr,
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
@@ -128,13 +128,13 @@ public class QAnswerResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = answerService.occorrencesAnswer(eQuery, null);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
-	@ApiOperation(value = "Calculate the incident answers of each care pathway and one question")
+	@ApiOperation(value = "Calculate the answer occorrences of each care pathway and one question")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
@@ -143,6 +143,7 @@ public class QAnswerResource {
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndOneQuestion(
 		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "name", required=true) String question,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -162,7 +163,7 @@ public class QAnswerResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = answerService.occorrencesAnswer(eQuery, question);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);

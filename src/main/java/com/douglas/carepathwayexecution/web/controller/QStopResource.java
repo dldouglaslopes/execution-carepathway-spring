@@ -61,7 +61,7 @@ public class QStopResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = stopService.recurrentStopStep(eQuery, null);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
@@ -94,7 +94,7 @@ public class QStopResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = Service.recurrentFlow(eQuery);
+		eQuery = stopService.recurrentStopStep(eQuery, null);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
@@ -108,7 +108,7 @@ public class QStopResource {
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getRecurrentStopStepToAllPathwayAndOneStep(
-		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "name", required=true) String step,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -118,7 +118,7 @@ public class QStopResource {
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+		eQuery = service.setAtribbutte( 0,
 										conductStr,
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
@@ -128,7 +128,7 @@ public class QStopResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = stopService.recurrentStopStep(eQuery, step);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
@@ -141,7 +141,42 @@ public class QStopResource {
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/stop/step/{name}" }, 
 					method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> getRecurrentFlowToOnePathwayAndOneStep(
+	public ResponseEntity<EQueryDTO> getRecurrentStopStepToOnePathwayAndOneStep(
+		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "name", required=true) String step,
+		@RequestParam( value = "conduct", required=false) String conductStr,
+		@RequestParam( value = "status", required=false) String statusStr,
+		@RequestParam( value = "age", required=false) String ageStr,
+		@RequestParam( value = "sex", required=false) String sexStr,
+		@RequestParam( value = "date", required=false) String dateStr,
+		@RequestParam( value = "range", required=false) String rangeStr,
+		Model model) throws ParseException{			
+	
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+										conductStr,
+										service.splitBy( statusStr, ","),
+										service.splitBy( ageStr, ","),
+										sexStr, 
+										service.splitBy( dateStr, ","),
+										service.splitBy( rangeStr, ","));
+			
+		EQueryDTO queryDTO = new EQueryDTO();
+		queryDTO.setAttribute(eQuery.getEAttribute());
+		eQuery = stopService.recurrentStopStep(eQuery, step);
+		queryDTO.setMethod(eQuery.getEMethod());
+		
+		return ResponseEntity.ok().body(queryDTO);
+	}
+
+	@ApiOperation(value = "Calculate the reccurrent stop care pathway of a specified id")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/stop" }, 
+					method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<EQueryDTO> getRecurrentStopToOnePathway(
 		@PathVariable( value = "id", required=true) String idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
@@ -162,7 +197,40 @@ public class QStopResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = stopService.recurrentStopPathway(eQuery);
+		queryDTO.setMethod(eQuery.getEMethod());
+		
+		return ResponseEntity.ok().body(queryDTO);
+	}
+	
+	@ApiOperation(value = "Calculate the reccurrent stop of each care pathway")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/stop" }, 
+					method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<EQueryDTO> getRecurrentStopToAllPathways(
+		@RequestParam( value = "conduct", required=false) String conductStr,
+		@RequestParam( value = "status", required=false) String statusStr,
+		@RequestParam( value = "age", required=false) String ageStr,
+		@RequestParam( value = "sex", required=false) String sexStr,
+		@RequestParam( value = "date", required=false) String dateStr,
+		@RequestParam( value = "range", required=false) String rangeStr,
+		Model model) throws ParseException{			
+	
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		eQuery = service.setAtribbutte( 0,
+										conductStr,
+										service.splitBy( statusStr, ","),
+										service.splitBy( ageStr, ","),
+										sexStr, 
+										service.splitBy( dateStr, ","),
+										service.splitBy( rangeStr, ","));
+			
+		EQueryDTO queryDTO = new EQueryDTO();
+		queryDTO.setAttribute(eQuery.getEAttribute());
+		eQuery = stopService.recurrentStopPathway(eQuery);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);

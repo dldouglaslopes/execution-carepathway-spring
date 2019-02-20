@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.douglas.carepathwayexecution.web.domain.EQueryDTO;
-import com.douglas.carepathwayexecution.web.service.QAverageTimeService;
 import com.douglas.carepathwayexecution.web.service.QCarePathwayService;
 import com.douglas.carepathwayexecution.web.service.QReturnService;
 
@@ -60,7 +59,7 @@ public class QReturnResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = returnService.returnPatient(eQuery, null);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
@@ -74,7 +73,6 @@ public class QReturnResource {
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllPatientsToAllPathways(
-		@PathVariable( value = "id", required=true) String idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -84,7 +82,7 @@ public class QReturnResource {
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+		eQuery = service.setAtribbutte( 0,
 										conductStr,
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
@@ -94,7 +92,7 @@ public class QReturnResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = returnService.returnPatient(eQuery, null);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
@@ -109,6 +107,7 @@ public class QReturnResource {
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getOnePatientToOnePathway(
 		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "code", required=true) String codePatient,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -128,7 +127,7 @@ public class QReturnResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = returnService.returnPatient(eQuery, codePatient);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
@@ -142,7 +141,7 @@ public class QReturnResource {
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getOnePatientToAllPathways(
-		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "code", required=true) String codePatient,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -152,7 +151,7 @@ public class QReturnResource {
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+		eQuery = service.setAtribbutte( 0,
 										conductStr,
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
@@ -162,7 +161,7 @@ public class QReturnResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = returnService.returnPatient(eQuery, codePatient);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);

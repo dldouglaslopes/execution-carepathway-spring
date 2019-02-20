@@ -61,7 +61,7 @@ public class QExamResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = examService.recurrentExam(eQuery, null);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
@@ -75,7 +75,6 @@ public class QExamResource {
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllExamsToAllPathways(
-		@PathVariable( value = "id", required=true) String idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -85,7 +84,7 @@ public class QExamResource {
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+		eQuery = service.setAtribbutte( 0,
 										conductStr,
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
@@ -95,7 +94,7 @@ public class QExamResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = examService.recurrentExam(eQuery, null);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
@@ -109,7 +108,7 @@ public class QExamResource {
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getOneExamToAllPathways(
-		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "name", required=true) String exam,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -119,7 +118,7 @@ public class QExamResource {
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+		eQuery = service.setAtribbutte( 0,
 										conductStr,
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
@@ -129,7 +128,7 @@ public class QExamResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = examService.recurrentExam(eQuery, exam);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
@@ -144,6 +143,7 @@ public class QExamResource {
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getOneExamToOnePathway(
 		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "name", required=true) String exam,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -163,7 +163,7 @@ public class QExamResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		//eQuery = flowService.recurrentFlow(eQuery);
+		eQuery = examService.recurrentExam(eQuery, exam);
 		queryDTO.setMethod(eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
