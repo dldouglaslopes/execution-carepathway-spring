@@ -37,7 +37,7 @@ public class QAnswerResource {
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/answers/questions" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/answers" }, 
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndAllQuestions(
@@ -105,7 +105,7 @@ public class QAnswerResource {
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/answers/questions" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/answers" }, 
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToAllPathwaysAndAllQuestions(
