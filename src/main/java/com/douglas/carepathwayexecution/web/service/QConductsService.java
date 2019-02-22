@@ -19,11 +19,12 @@ public class QConductsService {
 	@Autowired
 	private QCarePathwayService service;
 	
+	private Map<String, Integer> withConduct = new HashMap<>();
+	private Map<String, Integer> noConduct = new HashMap<>();
+	
 	public EQuery countConducts(EQuery eQuery) {
 		//finding all the documents
-		List<Document> conductsDoc = service.getService(eQuery);	
-		Map<String, Integer> withConduct = new HashMap<>();
-		Map<String, Integer> noConduct = new HashMap<>();
+		List<Document> conductsDoc = service.filterDocuments(eQuery);	
 		
 		for (Document document : conductsDoc) {
 			

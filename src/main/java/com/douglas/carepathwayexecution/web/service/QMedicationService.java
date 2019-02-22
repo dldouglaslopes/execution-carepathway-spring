@@ -22,14 +22,14 @@ public class QMedicationService {
 	@Autowired
 	private QCarePathwayService service;
 	
+	private Map<String, Integer> medicationTimes = new HashMap<>();
+	private Map<String, Integer> medicationIds = new HashMap<>();
+	private Map<String, List<String>> medicationPathway = new HashMap<>();
+	
 	//the medication in executed step or conduct complementary
 	public EQuery prescribedMedication(EQuery eQuery, String name) {
 		//finding all the documents
-		List<Document> medicationComps = service.getService(eQuery);	
-		
-		Map<String, Integer> medicationTimes = new HashMap<>();
-		Map<String, Integer> medicationIds = new HashMap<>();
-		Map<String, List<String>> medicationPathway = new HashMap<>();
+		List<Document> medicationComps = service.filterDocuments(eQuery);	
 		
 		//counting how many medication occurrences in complementary conducts/executed steps
 		for( Document doc : medicationComps) {
@@ -41,25 +41,8 @@ public class QMedicationService {
 					Document prescribedResource = complementaryConduct.get( "prescribedresource", new Document());
 											
 					if( complementaryConduct.getString( "type").equals( "MedicamentoComplementar")) {
-						
-						String key = prescribedResource.getString( "name");
-						
-						if ( key != null && !key.isEmpty()) {
-							if (medicationTimes.containsKey( prescribedResource.getString( "name"))) {
-								int value = medicationTimes.get(key) + 1;
-								medicationTimes.replace( key, value);
-								List<String> pathways = medicationPathway.get(key);
-								pathways.add(pathway.getString("name") + "/" + pathway.getInteger("_id"));
-								medicationPathway.replace( key, pathways);
-							}
-							else {
-								medicationIds.put( key, prescribedResource.getInteger("_id"));
-								medicationTimes.put( key, 1);
-								List<String> pathways = new ArrayList<>();
-								pathways.add( pathway.getString("name") + "/" + pathway.getInteger("_id"));
-								medicationPathway.put( key, pathways);
-							}							
-						}
+						String key = prescribedResource.getString( "name");						
+						add(key, prescribedResource, pathway);
 					}	
 				}
 			}	
@@ -77,24 +60,8 @@ public class QMedicationService {
 						
 						for (Document document : prescribedMedication) {
 							Document medication = document.get( "medication", new Document());
-							String key = medication.getString( "name");
-							
-							if ( key != null && !key.isEmpty()) {
-								if (medicationTimes.containsKey( key)) {
-									int value = medicationTimes.get(key) + 1;
-									medicationTimes.replace( key, value);
-									List<String> pathways = medicationPathway.get(key);
-									pathways.add(pathway.getString("name") + "/" + pathway.getInteger("_id"));
-									medicationPathway.replace( key, pathways);
-								}
-								else {
-									medicationIds.put( key, prescribedResource.getInteger("_id"));
-									medicationTimes.put( key, 1);
-									List<String> pathways = new ArrayList<>();
-									pathways.add( pathway.getString("name") + "/" + pathway.getInteger("_id"));
-									medicationPathway.put( key, pathways);
-								}
-							}							
+							String key = medication.getString( "name");							
+							add(key, prescribedResource, pathway);							
 						}					
 					}
 					
@@ -103,24 +70,8 @@ public class QMedicationService {
 						
 						for (Document document : prescribedPrescription) {
 							Document prescription = document.get( "prescription", new Document());
-							String key = prescription.getString( "medication");
-							
-							if ( key != null && !key.isEmpty()) {
-								if (medicationTimes.containsKey( key)) {
-									int value = medicationTimes.get(key) + 1;
-									medicationTimes.replace( key, value);
-									List<String> pathways = medicationPathway.get(key);
-									pathways.add(pathway.getString("name") + "/" + pathway.getInteger("_id"));
-									medicationPathway.replace( key, pathways);
-								}
-								else {
-									medicationIds.put( key, prescribedResource.getInteger("_id"));
-									medicationTimes.put( key, 1);
-									List<String> pathways = new ArrayList<>();
-									pathways.add( pathway.getString("name") + "/" + pathway.getInteger("_id"));
-									medicationPathway.put( key, pathways);
-								}
-							}							
+							String key = prescription.getString( "medication");							
+							add(key, prescribedResource, pathway);						
 						}
 					}
 				}
@@ -176,7 +127,7 @@ public class QMedicationService {
 				double percentage = service.rate( idPathways.get(idPathway).size(), idPathwaysList.size());
 				pathway.setPercentage( percentage + "%");
 				pathway.setQuantity(idPathways.get(idPathway).size());
-				pathway.getId().addAll(idPathways.get(idPathway));
+				pathway.getIds().addAll(idPathways.get(idPathway));
 				pathway.setName(idPathway);
 
 				medication.getPathway().add(pathway);
@@ -192,5 +143,26 @@ public class QMedicationService {
 	
 	public EQuery prescribedMedication( EQuery eQuery) {
 		return prescribedMedication(eQuery, null);
+	}
+	
+	private void add(String key, 
+					Document prescribedResource, 
+					Document pathway) {
+		if ( key != null && !key.isEmpty()) {
+			if (medicationTimes.containsKey( key)) {
+				int value = medicationTimes.get(key) + 1;
+				medicationTimes.replace( key, value);
+				List<String> pathways = medicationPathway.get(key);
+				pathways.add(pathway.getString("name") + "/" + pathway.getInteger("_id"));
+				medicationPathway.replace( key, pathways);
+			}
+			else {
+				medicationIds.put( key, prescribedResource.getInteger("_id"));
+				medicationTimes.put( key, 1);
+				List<String> pathways = new ArrayList<>();
+				pathways.add( pathway.getString("name") + "/" + pathway.getInteger("_id"));
+				medicationPathway.put( key, pathways);
+			}
+		}
 	}
 }

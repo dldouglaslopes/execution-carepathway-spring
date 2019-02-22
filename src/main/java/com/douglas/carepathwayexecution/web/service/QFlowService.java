@@ -11,8 +11,11 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import QueryMetamodel.ARange;
+import QueryMetamodel.CarePathway;
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Flow;
+import QueryMetamodel.Pathway;
 import QueryMetamodel.QRecurrentFlow;
 import QueryMetamodel.Query_metamodelFactory;
 import QueryMetamodel.Sequence;
@@ -20,34 +23,78 @@ import QueryMetamodel.Sequence;
 @Service
 public class QFlowService {
 	@Autowired
-	private QCarePathwayService service;
+	private QCarePathwayService service;	
+	
+	private Map<String, Integer> flowMap;	
 
-	public EQuery recurrentFlow(EQuery eQuery) {
+	public EQuery getRecurrentFlows(EQuery eQuery) {
+		QRecurrentFlow recurrentFlow = Query_metamodelFactory.eINSTANCE.createQRecurrentFlow();			
+		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {			
+			for (CarePathway carePathway : CarePathway.VALUES) {
+				eQuery.getEAttribute().getCarePathway().setName(carePathway);
+				List<Document> docs = service.filterDocuments(eQuery);	
+				if (!docs.isEmpty()) {
+					List<Entry<String, Double>> flows = getFlows(docs, 
+																carePathway, 
+																eQuery.getEAttribute().getRange());
+					Pathway pathway = getPathways(flows, carePathway);	
+					recurrentFlow.getPathway().add(pathway);
+				}			
+			}			
+		}
+		else {
+			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
+			List<Document> docs = service.filterDocuments(eQuery);
+			List<Entry<String, Double>> flows = getFlows(docs, 
+														carePathway, 
+														eQuery.getEAttribute().getRange());
+			Pathway pathway = getPathways(flows, carePathway);
+			recurrentFlow.getPathway().add(pathway);
+		}	
 		
-		//finding all the documents belonging to the same care pathway
-		List<Document> carePathwayDocs = service.getService(eQuery);
-				
-		//count how many occurrences of same care pathway name 
+		eQuery.setEMethod(recurrentFlow);
+		
+		return eQuery;
+	}	
+	
+	private Pathway getPathways(List<Entry<String, Double>> list, CarePathway carePathway) {
+		Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
+		pathway.setName(carePathway.getName());	
+		for (int i = 0; i < list.size(); i++) {			
+			Flow flow = Query_metamodelFactory.eINSTANCE.createFlow();
+			flow.setPercentage( service.decimalFormat(list.get(i).getValue()) + "%");
+			flow.setQuantity( flowMap.get( list.get(i).getKey()));
+			String flowStr = list.get(i).getKey();
+			String[] flowArr = flowStr.split("/");
+			for (int j = 0; j < flowArr.length; j++) {
+				String[] oneFlow = flowArr[j].split("-");
+				Sequence sequence = Query_metamodelFactory.eINSTANCE.createSequence();
+				sequence.setType( oneFlow[0]);
+				sequence.setId( oneFlow[1]);
+				if (oneFlow.length > 2) {
+					sequence.setName(oneFlow[2]);
+				}
+				flow.getSequences().add(sequence);
+			}					
+			pathway.getFlow().add(flow);
+		}		
+		return pathway;
+	}
+
+	private List<Entry<String, Double>> getFlows(List<Document> docs, CarePathway carePathway, ARange range) {					
+		flowMap = new HashMap<>();
 		String field = "name";
-		String literal = eQuery.getEAttribute().getCarePathway().getName().getLiteral();
-		int size = service.count( field, literal, carePathwayDocs);		
-		
-		Map<String, Integer> flowMap = new HashMap<>();
-		
-		//querying the flows and counting how many flow occurrences
-		for( Document carePathwayDoc : carePathwayDocs) {
-			
-			List<Document> executedStepDocs = carePathwayDoc.get( "executedSteps", new ArrayList<Document>());
-			
-			String flow = "";
-			
+		String literal = carePathway.getLiteral();
+		int size = service.count( field, literal, docs);					
+		for( Document carePathwayDoc : docs) { //querying the flows and counting how many flow occurrences			
+			List<Document> executedStepDocs = carePathwayDoc.get( "executedSteps", new ArrayList<Document>());			
+			String flow = "";			
 			for (Document executedStepDoc : executedStepDocs) {
 				Document stepDoc = executedStepDoc.get("step", new Document());
-				
 				flow += stepDoc.getString("type") + 
-						"-" + stepDoc.getInteger("_id") + "/";
-			}
-								
+						"-" + stepDoc.getInteger("_id") +
+						"-" + stepDoc.getString("name") + "/";
+			}								
 			if (flowMap.containsKey(flow)) {
 				int value = flowMap.get(flow) + 1;
 				flowMap.replace(flow, value);
@@ -55,51 +102,16 @@ public class QFlowService {
 			else {
 				flowMap.put(flow, 1);
 			}					
-		}								
-	
+		}				
 		Map<String, Double> percentMap = new HashMap<>();
-		
-		//calculating the percent of the flow
-		for ( String key : flowMap.keySet()) {
-			int dividend = flowMap.get(key);
-			
+		for ( String key : flowMap.keySet()) { //calculating the percent of the flow
+			int dividend = flowMap.get(key);			
 			double percent = service.rate( dividend, size);
 			percentMap.put( key, percent);	
-		}
-		
+		}		
 		List<Entry<String, Double>> list = new LinkedList<>( percentMap.entrySet());
-		
-		//sorting the list following the order
-		service.sort( list, eQuery.getEAttribute().getRange().getOrder());
-		
-		//dividing the list
-		list = service.select( eQuery.getEAttribute().getRange().getQuantity(), list);
-	
-		QRecurrentFlow recurrentFlow = Query_metamodelFactory.eINSTANCE.createQRecurrentFlow();		
-		
-		for (int i = 0; i < list.size(); i++) {			
-			Flow flow = Query_metamodelFactory.eINSTANCE.createFlow();
-			flow.setPercentage( service.decimalFormat(list.get(i).getValue()) + "%");
-			flow.setQuantity( flowMap.get( list.get(i).getKey()));
-			
-			String flowStr = list.get(i).getKey();
-			String[] flowArr = flowStr.split("/");
-			
-			for (int j = 0; j < flowArr.length; j++) {
-				String[] oneFlow = flowArr[j].split("-");
-				
-				Sequence sequence = Query_metamodelFactory.eINSTANCE.createSequence();
-				sequence.setType( oneFlow[0]);
-				sequence.setId( oneFlow[1]);				
-				
-				flow.getSequences().add(sequence);
-			}
-			
-			recurrentFlow.getFlows().add(flow);
-		}
-		
-		eQuery.setEMethod(recurrentFlow);
-		
-		return eQuery;
-	}	
+		service.sort( list, range.getOrder());	//sorting the list following the order		
+		list = service.select( range.getQuantity(), list); //dividing the list	
+		return list;
+	}
 }

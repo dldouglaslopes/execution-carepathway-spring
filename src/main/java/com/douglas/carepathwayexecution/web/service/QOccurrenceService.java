@@ -19,7 +19,7 @@ public class QOccurrenceService {
 	
 	public EQuery countOccurrences(EQuery eQuery) {
 		//finding all the documents
-		List<Document> occurrencesDocs = service.getService(eQuery);	
+		List<Document> occurrencesDocs = service.filterDocuments(eQuery);	
 		
 		QOccurrence qOccurrence = Query_metamodelFactory.eINSTANCE.createQOccurrence();
 		if (!eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {

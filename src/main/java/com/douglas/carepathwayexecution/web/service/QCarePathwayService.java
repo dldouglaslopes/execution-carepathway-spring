@@ -35,14 +35,9 @@ import QueryMetamodel.Query_metamodelFactory;
 
 @Service
 public class QCarePathwayService {
-	private DBConfig dbConfig;	
+	private DBConfig dbConfig = new DBConfig();	
 		
-	public List<Document> getService(EQuery eQuery) {
-		dbConfig = new DBConfig();
-		return filterDocuments(eQuery);
-	}
-			
-	private List<Document> filterDocuments(EQuery eQuery) {
+	public List<Document> filterDocuments(EQuery eQuery) {
 		ACarePathway carePathway = eQuery.getEAttribute().getCarePathway();
 		AAge age = eQuery.getEAttribute().getAge();
 		ADate date = eQuery.getEAttribute().getDate();

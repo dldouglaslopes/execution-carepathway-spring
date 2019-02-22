@@ -21,7 +21,7 @@ public class QStatusService {
 	public EQuery countStatus(EQuery eQuery) {
 		
 		//finding all the documents
-		List<Document> statusDoc = service.getService(eQuery);		
+		List<Document> statusDoc = service.filterDocuments(eQuery);		
 		Map<String, Integer> aborted = new HashMap<>();
 		Map<String, Integer> completed = new HashMap<>();
 		Map<String, Integer> inProgress = new HashMap<>();

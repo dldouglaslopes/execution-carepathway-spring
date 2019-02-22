@@ -20,7 +20,7 @@ public class QAverageTimeService {
 	
 	public EQuery averageByTime(EQuery eQuery) {	
 		//querying the average time
-		List<Document> docs = service.getService(eQuery);
+		List<Document> docs = service.filterDocuments(eQuery);
 		
 		QAverageTime qAverageTime = Query_metamodelFactory.eINSTANCE.createQAverageTime();		
 		Map<String, Double> times = new HashMap<>();
