@@ -4,30 +4,35 @@
     <step id="1633" type="AuxilioConduta" name="Avaliar Hipovolemia" description="Verificar se paciente está hipovolêmico" isInitial="true">
       <audit date="2018-05-29T17:16:30.019-0300"/>
     </step>
-    <answer id="4349" type="RespostaSimOuNao">
+    <answer id="4349" type="RespostaSimOuNao" justification="">
       <question id="1262" text="Olhos fundos?">
-        <variable id="1922" type="SimOuNao" name="hipovolemia_olhos_fundos" weight="1.0"/>
+        <variable id="1922" type="SimOuNao" name="hipovolemia_olhos_fundos" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="4350" type="RespostaSimOuNao">
+    <answer id="4350" type="RespostaSimOuNao" justification="">
       <question id="1263" text="Ausência de lágrimas?">
-        <variable id="1923" type="SimOuNao" name="hipovolemia_ausencia_de_lagrimas" weight="1.0"/>
+        <variable id="1923" type="SimOuNao" name="hipovolemia_ausencia_de_lagrimas" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="4351" type="RespostaSimOuNao">
+    <answer id="4351" type="RespostaSimOuNao" justification="">
       <question id="1264" text="Boca e língua secas?">
-        <variable id="1924" type="SimOuNao" name="hipovolemia_boca_seca" weight="1.0"/>
+        <variable id="1924" type="SimOuNao" name="hipovolemia_boca_seca" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="4352" type="RespostaSimOuNao">
+    <answer id="4352" type="RespostaSimOuNao" justification="">
       <question id="1265" text="Sede?">
-        <variable id="1925" type="SimOuNao" name="hipovolemia_sede" weight="1.0"/>
+        <variable id="1925" type="SimOuNao" name="hipovolemia_sede" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="4353" type="RespostaSimOuNao">
+    <answer id="4353" type="RespostaSimOuNao" justification="">
       <question id="1266" text="Turgor da pele reduzido?">
-        <variable id="1926" type="SimOuNao" name="hipovolemia_turgor_reduzido" weight="1.0"/>
+        <variable id="1926" type="SimOuNao" name="hipovolemia_turgor_reduzido" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <idsExecutedStep>3365</idsExecutedStep>

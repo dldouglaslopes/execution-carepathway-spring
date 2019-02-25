@@ -2,10 +2,11 @@
 <MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2462" creationDate="2018-08-08T10:47:23.433-0300" conclusionDate="2018-08-17T17:28:43.431-0300" completed="true" aborted="true" name="Lombalgia" cid="A90" timeExecution="802032.646998">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="3062" creationDate="2018-08-08T10:36:51.186-0300" modificationDate="2018-08-08T10:36:51.232-0300" createdById="21" name="Dor mecânica relacionada a coluna">
     <step id="2621" type="AuxilioConduta" name="Dor mecânica relacionada a coluna" description="&lt;p>Realizar Anamnese completa + exame f&amp;iacute;sico do local da dor&lt;/p>" isInitial="true"/>
-    <answer id="3724" type="RespostaSimOuNao">
+    <answer id="3724" type="RespostaSimOuNao" justification="">
       <question id="1981" text="Dor mecânica relacionada a coluna?">
-        <variable id="3101" type="SimOuNao" name="dor_coluna" weight="1.0"/>
+        <variable id="3101" type="SimOuNao" name="dor_coluna" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <idsExecutedStep>3062</idsExecutedStep>

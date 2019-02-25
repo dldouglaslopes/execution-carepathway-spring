@@ -2,15 +2,17 @@
 <MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2636" creationDate="2018-08-14T11:53:42.102-0300" conclusionDate="2018-11-13T15:13:30.161-0300" completed="true" aborted="true" name="ITU - Cistite" cid="N10" timeExecution="7874109.279059">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="3236" creationDate="2018-08-14T11:53:55.148-0300" modificationDate="2018-08-14T11:53:55.197-0300" createdById="344" name="Informar Sexo do paciente">
     <step id="101" type="AuxilioConduta" name="Informar Sexo do paciente" description="Informe o sexo do paciente para seguir com o tratamento adequado." isInitial="true"/>
-    <answer id="4082" type="RespostaSimOuNao">
+    <answer id="4082" type="RespostaSimOuNao" justification="">
       <question id="93" text="Masculino">
-        <variable id="170" type="SimOuNao" name="sexo_masculino" weight="1.0"/>
+        <variable id="170" type="SimOuNao" name="sexo_masculino" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="4083" type="RespostaSimOuNao">
+    <answer id="4083" type="RespostaSimOuNao" justification="">
       <question id="94" text="Feminino">
-        <variable id="171" type="SimOuNao" name="sexo_feminino" weight="1.0"/>
+        <variable id="171" type="SimOuNao" name="sexo_feminino" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
   </eStep>
   <idsExecutedStep>3236</idsExecutedStep>

@@ -2,65 +2,77 @@
 <MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="1282" creationDate="2018-06-08T11:18:32.605-0300" conclusionDate="2018-06-08T11:10:34.689-0300" completed="true" aborted="true" name="Cefaléia" cid="" timeExecution="43.478084">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="1542" creationDate="2018-06-08T11:19:18.052-0300" modificationDate="2018-06-08T11:19:18.093-0300" createdById="21" name="Avaliar Sintomas">
     <step id="1674" type="AuxilioConduta" name="Avaliar Sintomas" description="ANAMNESE COMPLETA SOBRE CEFALEIA, PARA DIFERENCIAR SE CEFALIA PRIMÁRIA OU SECUNDÁRIA" isInitial="true"/>
-    <answer id="1984" type="RespostaSimOuNao">
+    <answer id="1984" type="RespostaSimOuNao" justification="">
       <question id="1290" text="Queda do estado geral" category="Sintomas Sistêmicos">
-        <variable id="1962" type="SimOuNao" name="sistemicos_queda_estado_geral" weight="1.0"/>
+        <variable id="1962" type="SimOuNao" name="sistemicos_queda_estado_geral" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1985" type="RespostaSimOuNao">
+    <answer id="1985" type="RespostaSimOuNao" justification="">
       <question id="1291" text="Febre" category="Sintomas Sistêmicos">
-        <variable id="1963" type="SimOuNao" name="sistemicos_febre" weight="1.0"/>
+        <variable id="1963" type="SimOuNao" name="sistemicos_febre" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1986" type="RespostaSimOuNao">
+    <answer id="1986" type="RespostaSimOuNao" justification="">
       <question id="1292" text="Rigidez na nuca" category="Sintomas Sistêmicos">
-        <variable id="1964" type="SimOuNao" name="sistemicos_rigidez_nuca" weight="1.0"/>
+        <variable id="1964" type="SimOuNao" name="sistemicos_rigidez_nuca" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1987" type="RespostaSimOuNao">
+    <answer id="1987" type="RespostaSimOuNao" justification="">
       <question id="1293" text="Rash cutâneo" category="Sintomas Sistêmicos">
-        <variable id="1965" type="SimOuNao" name="sistemicos_rash_cutaneo" weight="1.0"/>
+        <variable id="1965" type="SimOuNao" name="sistemicos_rash_cutaneo" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1988" type="RespostaSimOuNao">
+    <answer id="1988" type="RespostaSimOuNao" justification="">
       <question id="1294" text="Imunossupresso" category="Sintomas Sistêmicos">
-        <variable id="1966" type="SimOuNao" name="sistemicos_imunossupresso" weight="1.0"/>
+        <variable id="1966" type="SimOuNao" name="sistemicos_imunossupresso" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1989" type="RespostaSimOuNao">
+    <answer id="1989" type="RespostaSimOuNao" justification="">
       <question id="1295" text="Portador de Neoplasia ou HIV" category="Sintomas Sistêmicos">
-        <variable id="1967" type="SimOuNao" name="sistemicos_neoplasia_ou_hiv" weight="1.0"/>
+        <variable id="1967" type="SimOuNao" name="sistemicos_neoplasia_ou_hiv" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1990" type="RespostaSimOuNao">
+    <answer id="1990" type="RespostaSimOuNao" justification="">
       <question id="1296" text="Déficits Neurologicos Focais" category="Sistemas Neurológicos">
-        <variable id="1968" type="SimOuNao" name="neurologicos_deficits_neurologicos_focais" weight="1.0"/>
+        <variable id="1968" type="SimOuNao" name="neurologicos_deficits_neurologicos_focais" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1991" type="RespostaSimOuNao">
+    <answer id="1991" type="RespostaSimOuNao" justification="">
       <question id="1297" text="Convulsões" category="Sistemas Neurológicos">
-        <variable id="1969" type="SimOuNao" name="neurologicos_convulsoes" weight="1.0"/>
+        <variable id="1969" type="SimOuNao" name="neurologicos_convulsoes" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1992" type="RespostaSimOuNao">
+    <answer id="1992" type="RespostaSimOuNao" justification="">
       <question id="1298" text="Vômitos" category="Sistemas Neurológicos">
-        <variable id="1970" type="SimOuNao" name="neurologicos_vomitos" weight="1.0"/>
+        <variable id="1970" type="SimOuNao" name="neurologicos_vomitos" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1993" type="RespostaSimOuNao">
+    <answer id="1993" type="RespostaSimOuNao" justification="">
       <question id="1299" text="Síncope" category="Sistemas Neurológicos">
-        <variable id="1971" type="SimOuNao" name="neurologicos_sincope" weight="1.0"/>
+        <variable id="1971" type="SimOuNao" name="neurologicos_sincope" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1994" type="RespostaSimOuNao">
+    <answer id="1994" type="RespostaSimOuNao" justification="">
       <question id="1300" text="Cefaleia de inicio subito?">
-        <variable id="1972" type="SimOuNao" name="cefaleia_inicio_subito" weight="1.0"/>
+        <variable id="1972" type="SimOuNao" name="cefaleia_inicio_subito" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1995" type="RespostaSimOuNao">
+    <answer id="1995" type="RespostaSimOuNao" justification="">
       <question id="1301" text="Mudança de padrão da cefaleia prévia ou cefaleia progressiva (intensidade, frequência ou duração) ou cefaleia refratária">
-        <variable id="1973" type="SimOuNao" name="mudanca_de_padrao_de_cefaleia" weight="1.0"/>
+        <variable id="1973" type="SimOuNao" name="mudanca_de_padrao_de_cefaleia" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <idsExecutedStep>1542</idsExecutedStep>

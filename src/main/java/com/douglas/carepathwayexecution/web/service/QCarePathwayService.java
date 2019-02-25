@@ -230,6 +230,24 @@ public class QCarePathwayService {
 		if (order.equals(Order.BOTTOM)) {
 			ascending(list);
 		}
+	}	
+
+	public void descending(final List<Entry<String, Double>> list) {
+		//sorting the list with a comparator
+		Collections.sort( list, new Comparator<Entry<String, Double>>() {
+			public int compare( final Map.Entry<String, Double> o1, final Map.Entry<String, Double> o2) {
+				return ( o2.getValue()).compareTo( o1.getValue());
+			}
+		});
+	}
+	
+	public void ascending(final List<Entry<String, Double>> list) {
+		//sorting the list with a comparator
+		Collections.sort( list, new Comparator<Entry<String, Double>>() {
+			public int compare( final Map.Entry<String, Double> o1, final Map.Entry<String, Double> o2) {
+				return ( o1.getValue()).compareTo( o2.getValue());
+			}
+		});
 	}
 	
 	public double rate( double dividend, double divider) {
@@ -249,25 +267,7 @@ public class QCarePathwayService {
 		}		
 		
 		return cont;
-	}
-	
-	public void descending(final List<Entry<String, Double>> list) {
-		//sorting the list with a comparator
-		Collections.sort( list, new Comparator<Entry<String, Double>>() {
-			public int compare( final Map.Entry<String, Double> o1, final Map.Entry<String, Double> o2) {
-				return ( o2.getValue()).compareTo( o1.getValue());
-			}
-		});
-	}
-	
-	public void ascending(final List<Entry<String, Double>> list) {
-		//sorting the list with a comparator
-		Collections.sort( list, new Comparator<Entry<String, Double>>() {
-			public int compare( final Map.Entry<String, Double> o1, final Map.Entry<String, Double> o2) {
-				return ( o1.getValue()).compareTo( o2.getValue());
-			}
-		});
-	}
+	}	
 	
 	public String[] splitBy( String str, String symbol) {		
 		if (!str.isEmpty()) {

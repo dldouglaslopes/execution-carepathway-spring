@@ -2,35 +2,41 @@
 <MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="5290" creationDate="2018-08-14T13:36:00.059-0300" name="IVAS" cid="J189" timeExecution="9247635.599888">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="5890" isCurrent="true" creationDate="2018-08-14T13:36:13.167-0300" modificationDate="2018-08-14T13:36:13.198-0300" createdById="391" name="Avaliar Critérios de Sepse">
     <step id="153" type="AuxilioConduta" name="Avaliar Critérios de Sepse" description="Avaliar Critérios de Sepse" isInitial="true"/>
-    <answer id="16666" type="RespostaSimOuNao">
+    <answer id="16666" type="RespostaSimOuNao" justification="">
       <question id="120" text="Temperatura > 38 ou &lt; 36?">
-        <variable id="218" type="SimOuNao" name="verifica_sepse_temperatura" weight="1.0"/>
+        <variable id="218" type="SimOuNao" name="verifica_sepse_temperatura" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="16667" type="RespostaSimOuNao">
+    <answer id="16667" type="RespostaSimOuNao" justification="">
       <question id="121" text="Frequência Respiratória > 20?">
-        <variable id="219" type="SimOuNao" name="verifica_sepse_fr" weight="1.0"/>
+        <variable id="219" type="SimOuNao" name="verifica_sepse_fr" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="16668" type="RespostaSimOuNao">
+    <answer id="16668" type="RespostaSimOuNao" justification="">
       <question id="122" text="Frequência cardíaca > 90?">
-        <variable id="220" type="SimOuNao" name="verifica_sepse_freq_card" weight="1.0"/>
+        <variable id="220" type="SimOuNao" name="verifica_sepse_freq_card" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="16669" type="RespostaSimOuNao">
+    <answer id="16669" type="RespostaSimOuNao" justification="">
       <question id="123" text="Confusão Mental?">
-        <variable id="221" type="SimOuNao" name="verifica_sepse_confusao_mental" weight="1.0"/>
+        <variable id="221" type="SimOuNao" name="verifica_sepse_confusao_mental" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="16670" type="RespostaSimOuNao">
+    <answer id="16670" type="RespostaSimOuNao" justification="">
       <question id="124" text="Sat &lt;= 92%?">
-        <variable id="222" type="SimOuNao" name="verifica_sepse_sat" weight="1.0"/>
+        <variable id="222" type="SimOuNao" name="verifica_sepse_sat" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="16671" type="RespostaSimOuNao">
+    <answer id="16671" type="RespostaSimOuNao" justification="">
       <question id="125" text="FC/PAS >= 0,8?">
-        <variable id="223" type="SimOuNao" name="verifica_sepse_FC_PAS" weight="1.0"/>
+        <variable id="223" type="SimOuNao" name="verifica_sepse_FC_PAS" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <idsExecutedStep>5890</idsExecutedStep>

@@ -2,51 +2,59 @@
 <MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="1782" creationDate="2018-07-19T11:34:45.981-0300" conclusionDate="2018-07-19T11:36:04.826-0300" completed="true" name="Pneumonia &amp; Influenza" cid="J15" timeExecution="44.034845">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2102" executed="true" creationDate="2018-07-19T11:35:44.600-0300" modificationDate="2018-07-19T11:34:17.489-0300" executionDate="2018-07-19T11:30:42.238-0300" createdById="141" executedById="141" name="Verificar Critérios para SEPSE" next="/atendimentos/1362/protocolos/1782/passos/2103/">
     <step id="1124" type="AuxilioConduta" name="Verificar Critérios para SEPSE" description="Verifique os critérios para SIRS" isInitial="true"/>
-    <answer id="2604" type="RespostaSimOuNao">
+    <answer id="2604" type="RespostaSimOuNao" justification="">
       <question id="887" text="TAX > 37.8ºc ou &lt; 35ºc?">
-        <variable id="1407" type="SimOuNao" name="ver_sepse_tax" weight="1.0"/>
+        <variable id="1407" type="SimOuNao" name="ver_sepse_tax" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2605" type="RespostaSimOuNao">
+    <answer id="2605" type="RespostaSimOuNao" justification="">
       <question id="888" text="FC > 90 bpm?">
-        <variable id="1408" type="SimOuNao" name="ver_sep_fc" weight="1.0"/>
+        <variable id="1408" type="SimOuNao" name="ver_sep_fc" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2606" type="RespostaSimOuNao">
+    <answer id="2606" type="RespostaSimOuNao" justification="">
       <question id="889" text="FR > 20 irpm?">
-        <variable id="1409" type="SimOuNao" name="ver_sep_fr" weight="1.0"/>
+        <variable id="1409" type="SimOuNao" name="ver_sep_fr" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2103" executed="true" creationDate="2018-07-19T11:36:08.560-0300" modificationDate="2018-07-19T11:40:45.225-0300" executionDate="2018-07-19T11:39:45.760-0300" createdById="141" executedById="141" name="Verificar Fatores Agravantes Para SEPSE" previous="/atendimentos/1362/protocolos/1782/passos/2102/" next="/atendimentos/1362/protocolos/1782/passos/2104/">
     <step id="1125" type="AuxilioConduta" name="Verificar Fatores Agravantes Para SEPSE" description="Verifique se o paciente apresenta algum dos fatores a seguir."/>
-    <answer id="2607" type="RespostaSimOuNao">
+    <answer id="2607" type="RespostaSimOuNao" justification="">
       <question id="890" text="Oligúria / Anúria?">
-        <variable id="1410" type="SimOuNao" name="fat_agra_oliguria" weight="1.0"/>
+        <variable id="1410" type="SimOuNao" name="fat_agra_oliguria" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2608" type="RespostaSimOuNao">
+    <answer id="2608" type="RespostaSimOuNao" justification="">
       <question id="891" text="PAS &lt; 100 mmHg?">
-        <variable id="1411" type="SimOuNao" name="fat_agra_pas" weight="1.0"/>
+        <variable id="1411" type="SimOuNao" name="fat_agra_pas" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2609" type="RespostaSimOuNao">
+    <answer id="2609" type="RespostaSimOuNao" justification="">
       <question id="892" text="Agitação / Sonolência / Alteração Nível de Consciência?">
-        <variable id="1412" type="SimOuNao" name="fat_agra_agita_sono_cons" weight="1.0"/>
+        <variable id="1412" type="SimOuNao" name="fat_agra_agita_sono_cons" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2610" type="RespostaSimOuNao">
+    <answer id="2610" type="RespostaSimOuNao" justification="">
       <question id="893" text="Dispneia ou SatO2 &lt; 93%?">
-        <variable id="1413" type="SimOuNao" name="fat_risc_disp_sat" weight="1.0"/>
+        <variable id="1413" type="SimOuNao" name="fat_risc_disp_sat" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2104" executed="true" creationDate="2018-07-19T11:42:15.566-0300" modificationDate="2018-07-19T11:29:16.981-0300" executionDate="2018-07-19T11:45:26.344-0300" createdById="141" executedById="141" name="Verificar Idade do Paciente" previous="/atendimentos/1362/protocolos/1782/passos/2103/" next="/atendimentos/1362/protocolos/1782/passos/2105/">
     <step id="1107" type="AuxilioConduta" name="Verificar Idade do Paciente" description="Verifique a idade do paciente"/>
-    <answer id="2611" type="RespostaNumerica">
+    <answer id="2611" type="RespostaNumerica" justification="">
       <question id="821" text="Idade:">
-        <variable id="1341" type="Numerica" name="idade" weight="1.0"/>
+        <variable id="1341" type="Numerica" name="idade" weight="1.0" value="0.0"/>
       </question>
+      <value xsi:type="MetamodelExecution:Numeric" value="82.0"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:ETreatment" id="2105" executed="true" creationDate="2018-07-19T11:30:16.846-0300" modificationDate="2018-07-19T11:30:43.366-0300" executionDate="2018-07-19T11:30:43.206-0300" createdById="141" executedById="141" name="Raio X + Pacote de Exames Laboratoriais" previous="/atendimentos/1362/protocolos/1782/passos/2104/" next="/atendimentos/1362/protocolos/1782/passos/2106/">
@@ -114,10 +122,11 @@
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2106" executed="true" creationDate="2018-07-19T11:31:15.222-0300" modificationDate="2018-07-19T11:45:29.462-0300" executionDate="2018-07-19T11:44:54.007-0300" createdById="141" executedById="141" name="Verificar Resultados Exames Laboratoriais" previous="/atendimentos/1362/protocolos/1782/passos/2105/" next="/atendimentos/1362/protocolos/1782/passos/2107/">
     <step id="1128" type="AuxilioConduta" name="Verificar Resultados Exames Laboratoriais" description="Avalie o resultado dos exames para seguir com o tratamento adequado."/>
-    <answer id="2612" type="RespostaSimOuNao">
+    <answer id="2612" type="RespostaSimOuNao" justification="">
       <question id="894" text="Raio-x  e exames laboratoriais sugerem quadro de pneumonia?">
-        <variable id="1414" type="SimOuNao" name="result_exames_lab" weight="1.0"/>
+        <variable id="1414" type="SimOuNao" name="result_exames_lab" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EInformation" id="2107" executed="true" creationDate="2018-07-19T11:29:47.876-0300" modificationDate="2018-07-19T11:35:48.893-0300" executionDate="2018-07-19T11:35:48.756-0300" createdById="141" executedById="141" name="Aviso: Discutir caso com líder local" previous="/atendimentos/1362/protocolos/1782/passos/2106/">

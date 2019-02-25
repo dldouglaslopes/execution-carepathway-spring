@@ -2,28 +2,32 @@
 <MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="1902" creationDate="2018-07-25T12:41:33.621-0300" conclusionDate="2018-11-13T15:16:16.731-0300" completed="true" aborted="true" name="Dor Torácica" cid="A90" timeExecution="9599386.29711">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2222" executed="true" creationDate="2018-07-25T12:42:33.968-0300" modificationDate="2018-07-25T12:33:22.690-0300" executionDate="2018-07-25T12:33:03.137-0300" createdById="21" executedById="21" name="Avaliar Sinais Vitais" next="/atendimentos/21/protocolos/1902/passos/2223/">
     <step id="2361" type="AuxilioConduta" name="Avaliar Sinais Vitais" description="" isInitial="true"/>
-    <answer id="2724" type="RespostaSimOuNao">
+    <answer id="2724" type="RespostaSimOuNao" justification="">
       <question id="1821" text="Paciente com dor torácica importante e/ou taquidispneico e/ou com crepitações na ausculta pulmonar e/ou hipotenso e/ou com emergência hipertensiva e/ou arritimia?">
-        <variable id="2821" type="SimOuNao" name="sinais_vitais_graves" weight="1.0"/>
+        <variable id="2821" type="SimOuNao" name="sinais_vitais_graves" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2223" executed="true" creationDate="2018-07-25T12:34:18.423-0300" modificationDate="2018-07-25T12:44:06.250-0300" executionDate="2018-07-25T12:43:07.390-0300" createdById="21" executedById="21" name="Caracterização da Dor Torácica" previous="/atendimentos/21/protocolos/1902/passos/2222/" next="/atendimentos/21/protocolos/1902/passos/2224/">
     <step id="2365" type="AuxilioConduta" name="Caracterização da Dor Torácica" description="Caracterizar a dor torácica entre anginosa ou não anginosa conforme sintomas apresentados"/>
-    <answer id="2725" type="RespostaSimOuNao">
+    <answer id="2725" type="RespostaSimOuNao" justification="">
       <question id="1822" text="Dor retroesternal/precordial em queimação ou aperto com/sem irradiação para região cervical, dorso ou MMSS">
-        <variable id="2822" type="SimOuNao" name="dor_retroesternal" weight="1.0"/>
+        <variable id="2822" type="SimOuNao" name="dor_retroesternal" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="2726" type="RespostaSimOuNao">
+    <answer id="2726" type="RespostaSimOuNao" justification="">
       <question id="1823" text="Dor epigástrica em pacientes do sexo feminino diabéticos ou idosos ou portadores de doença coronariana crônica">
-        <variable id="2823" type="SimOuNao" name="dor_epigastrica" weight="1.0"/>
+        <variable id="2823" type="SimOuNao" name="dor_epigastrica" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2727" type="RespostaSimOuNao">
+    <answer id="2727" type="RespostaSimOuNao" justification="">
       <question id="1824" text="Dor torácica ou epigástrica associada a dispneia, sudorese fria, palidez ou náuseas">
-        <variable id="2824" type="SimOuNao" name="dor_associada_a_dispneia" weight="1.0"/>
+        <variable id="2824" type="SimOuNao" name="dor_associada_a_dispneia" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:ETreatment" id="2224" executed="true" creationDate="2018-07-25T12:45:38.127-0300" modificationDate="2018-07-25T12:35:40.391-0300" executionDate="2018-07-25T12:35:30.905-0300" createdById="21" executedById="21" name="[Dor Anginosa] Exame" previous="/atendimentos/21/protocolos/1902/passos/2223/" next="/atendimentos/21/protocolos/1902/passos/2225/">
@@ -40,18 +44,30 @@
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2526" reworked="true" executed="true" creationDate="2018-07-27T13:35:25.631-0300" modificationDate="2018-07-27T13:35:02.561-0300" executionDate="2018-07-27T13:34:38.882-0300" createdById="21" executedById="21" name="[Dor Anginosa] Sindrome Coronariana Aguda?" previous="/atendimentos/21/protocolos/1902/passos/2225/" next="/atendimentos/21/protocolos/1902/passos/2529/">
     <step id="2368" type="AuxilioConduta" name="[Dor Anginosa] Sindrome Coronariana Aguda?" description="Avaliar probabilidade de Síndrome Coronariana Aguda"/>
-    <answer id="2945" type="RespostaEscolha">
+    <answer id="2945" type="RespostaEscolha" justification="">
       <question id="1825" text="Fatores de Síndrome Coronariana">
-        <variable id="2825" type="Escolha" name="fatores_sindrome_coronariana" weight="1.0"/>
+        <variable id="2825" type="Escolha" name="fatores_sindrome_coronariana" weight="1.0" value="null">
+          <option id="281" text="Tabagismo" weight="1.0"/>
+          <option id="282" text="Dislipidemia" weight="1.0"/>
+          <option id="286" text="Doença aterosclerótica conhecida (DAC)" weight="1.0"/>
+          <option id="284" text="Idade > 60 anos" weight="1.0"/>
+          <option id="285" text="Hipertensão" weight="1.0"/>
+          <option id="283" text="DM" weight="1.0"/>
+        </variable>
       </question>
+      <choice>
+        <option>284</option>
+        <option>283</option>
+      </choice>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2529" creationDate="2018-07-27T13:35:55.735-0300" modificationDate="2018-07-27T13:35:55.774-0300" createdById="21" name="[Síndrome Coronariana Aguda] Risco Intermediário ou Alto - Avaliar ECG" previous="/atendimentos/21/protocolos/1902/passos/2526/">
     <step id="2370" type="AuxilioConduta" name="[Síndrome Coronariana Aguda] Risco Intermediário ou Alto - Avaliar ECG" description=""/>
-    <answer id="2948" type="RespostaSimOuNao">
+    <answer id="2948" type="RespostaSimOuNao" justification="">
       <question id="1827" text="ECG isquêmico?">
-        <variable id="2827" type="SimOuNao" name="risco_alto_ecg_isquemico" weight="1.0"/>
+        <variable id="2827" type="SimOuNao" name="risco_alto_ecg_isquemico" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <idsExecutedStep>2222</idsExecutedStep>

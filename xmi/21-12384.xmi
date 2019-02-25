@@ -4,59 +4,69 @@
     <step id="101" type="AuxilioConduta" name="Informar Sexo do paciente" description="Informe o sexo do paciente para seguir com o tratamento adequado." isInitial="true"/>
     <answer id="39095" type="RespostaSimOuNao">
       <question id="93" text="Masculino">
-        <variable id="170" type="SimOuNao" name="sexo_masculino" weight="1.0"/>
+        <variable id="170" type="SimOuNao" name="sexo_masculino" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="39096" type="RespostaSimOuNao">
       <question id="94" text="Feminino">
-        <variable id="171" type="SimOuNao" name="sexo_feminino" weight="1.0"/>
+        <variable id="171" type="SimOuNao" name="sexo_feminino" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="13249" executed="true" creationDate="2018-09-03T11:55:09.148-0300" modificationDate="2018-09-03T11:48:15.363-0300" executionDate="2018-09-03T11:44:35.395-0300" createdById="21" executedById="21" name="[Feminino] Avaliar Sintomas" previous="/atendimentos/21/protocolos/12384/passos/13084/" next="/atendimentos/21/protocolos/12384/passos/13250/">
     <step id="103" type="AuxilioConduta" name="[Feminino] Avaliar Sintomas" description="Informe os sintomas apresentados pelo paciente."/>
     <answer id="39238" type="RespostaSimOuNao">
       <question id="102" text="Sintomas por mais de 7 dias">
-        <variable id="179" type="SimOuNao" name="avaliar_sintomas_mulher_7_dias" weight="1.0"/>
+        <variable id="179" type="SimOuNao" name="avaliar_sintomas_mulher_7_dias" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
     <answer id="39239" type="RespostaSimOuNao">
       <question id="103" text="Imunossupressão">
-        <variable id="180" type="SimOuNao" name="avaliar_sintomas_mulher_imunossupressao" weight="1.0"/>
+        <variable id="180" type="SimOuNao" name="avaliar_sintomas_mulher_imunossupressao" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="39240" type="RespostaSimOuNao">
       <question id="104" text="Diabetes Melitus">
-        <variable id="181" type="SimOuNao" name="avaliar_sintomas_mulher_dm" weight="1.0"/>
+        <variable id="181" type="SimOuNao" name="avaliar_sintomas_mulher_dm" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="39241" type="RespostaSimOuNao">
       <question id="105" text="Idade > 65 anos">
-        <variable id="182" type="SimOuNao" name="avaliar_sintomas_mulher_idosa" weight="1.0"/>
+        <variable id="182" type="SimOuNao" name="avaliar_sintomas_mulher_idosa" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="39242" type="RespostaSimOuNao">
       <question id="106" text="Alterações Urológicas ou DRC">
-        <variable id="183" type="SimOuNao" name="avaliar_sintomas_mulher_alteracoes_urologicas" weight="1.0"/>
+        <variable id="183" type="SimOuNao" name="avaliar_sintomas_mulher_alteracoes_urologicas" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
     <answer id="39243" type="RespostaSimOuNao">
       <question id="107" text="Recorrência dos sintomas por mais de 14 dias">
-        <variable id="184" type="SimOuNao" name="avaliar_sintomas_mulher_14_dias" weight="1.0"/>
+        <variable id="184" type="SimOuNao" name="avaliar_sintomas_mulher_14_dias" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="39244" type="RespostaSimOuNao">
       <question id="108" text="Paciente em uso de antibiótico recente (há 48-72H), sem melhora dos sintomas?">
-        <variable id="185" type="SimOuNao" name="antibiotico_recente_fem" weight="1.0"/>
+        <variable id="185" type="SimOuNao" name="antibiotico_recente_fem" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="13250" executed="true" creationDate="2018-09-03T11:50:12.667-0300" modificationDate="2018-09-03T11:52:51.826-0300" executionDate="2018-09-03T11:51:50.066-0300" createdById="21" executedById="21" name="[Feminino] Já em uso de antibiótico?" previous="/atendimentos/21/protocolos/12384/passos/13249/" next="/atendimentos/21/protocolos/12384/passos/13251/">
     <step id="112" type="AuxilioConduta" name="[Feminino] Já em uso de antibiótico?" description="Já em uso de antibiótico nas últimas 72h sem melhora?"/>
     <answer id="39245" type="RespostaSimOuNao">
       <question id="111" text="PACIENTE JÁ EM USO DE ANTIBIÓTICO HÁ 72H, SEM MELHORA DOS SINTOMAS">
-        <variable id="188" type="SimOuNao" name="feminino_antibiotico_72h_sem_melhora" weight="1.0"/>
+        <variable id="188" type="SimOuNao" name="feminino_antibiotico_72h_sem_melhora" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:ETreatment" id="13251" executed="true" creationDate="2018-09-03T11:54:35.091-0300" modificationDate="2018-09-03T11:50:10.006-0300" executionDate="2018-09-03T11:49:51.521-0300" createdById="21" executedById="21" name="[Feminino - Antibiótico] Realizar Exame de Imagem" previous="/atendimentos/21/protocolos/12384/passos/13250/" next="/atendimentos/21/protocolos/12384/passos/13252/">
@@ -97,8 +107,9 @@
     <step id="117" type="AuxilioConduta" name="[Feminino - Antibiótico] Alteração no exame de imagem?" description="Verifica se há alterações no exame de imagem"/>
     <answer id="39246" type="RespostaSimOuNao">
       <question id="113" text="Houve alterações no exame de imagem?">
-        <variable id="190" type="SimOuNao" name="feminino_alteracao_exame_imagem_com_sintomas" weight="1.0"/>
+        <variable id="190" type="SimOuNao" name="feminino_alteracao_exame_imagem_com_sintomas" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EInformation" id="13253" executed="true" creationDate="2018-09-03T11:55:59.680-0300" modificationDate="2018-09-03T11:51:49.591-0300" executionDate="2018-09-03T11:51:49.433-0300" createdById="21" executedById="21" name="Aviso: Discutir tratamento específico com líder local" previous="/atendimentos/21/protocolos/12384/passos/13252/">

@@ -2,20 +2,23 @@
 <MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="1642" creationDate="2018-07-05T15:01:10.533-0300" conclusionDate="2018-11-13T15:01:54.379-0300" completed="true" aborted="true" name="Pneumonia &amp; Influenza" cid="J13" timeExecution="1.1319152290846E7">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="1962" creationDate="2018-07-05T15:04:01.498-0300" modificationDate="2018-07-05T15:04:01.541-0300" createdById="161" name="Verificar Critérios para SEPSE">
     <step id="1124" type="AuxilioConduta" name="Verificar Critérios para SEPSE" description="Verifique os critérios para SIRS" isInitial="true"/>
-    <answer id="2444" type="RespostaSimOuNao">
+    <answer id="2444" type="RespostaSimOuNao" justification="">
       <question id="887" text="TAX > 37.8ºc ou &lt; 35ºc?">
-        <variable id="1407" type="SimOuNao" name="ver_sepse_tax" weight="1.0"/>
+        <variable id="1407" type="SimOuNao" name="ver_sepse_tax" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2445" type="RespostaSimOuNao">
+    <answer id="2445" type="RespostaSimOuNao" justification="">
       <question id="888" text="FC > 90 bpm?">
-        <variable id="1408" type="SimOuNao" name="ver_sep_fc" weight="1.0"/>
+        <variable id="1408" type="SimOuNao" name="ver_sep_fc" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2446" type="RespostaSimOuNao">
+    <answer id="2446" type="RespostaSimOuNao" justification="">
       <question id="889" text="FR > 20 irpm?">
-        <variable id="1409" type="SimOuNao" name="ver_sep_fr" weight="1.0"/>
+        <variable id="1409" type="SimOuNao" name="ver_sep_fr" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <idsExecutedStep>1962</idsExecutedStep>

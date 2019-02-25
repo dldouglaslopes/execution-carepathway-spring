@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import MetamodelExecution.Answer;
 import MetamodelExecution.Audit;
+import MetamodelExecution.Choice;
 import MetamodelExecution.Complement;
 import MetamodelExecution.EAuxiliaryConduct;
 import MetamodelExecution.EDischarge;
@@ -25,6 +26,7 @@ import MetamodelExecution.Internment;
 import MetamodelExecution.Justification;
 import MetamodelExecution.Medication;
 import MetamodelExecution.Numeric;
+import MetamodelExecution.Option;
 import MetamodelExecution.PExamination;
 import MetamodelExecution.PInternment;
 import MetamodelExecution.PMedication;
@@ -131,22 +133,39 @@ public class ExecutedStep {
 			answer.setId(answerJson.getInt("id"));
 			answer.setType(answerJson.getString("type"));
 			
+			if (!answerJson.isNull("justificativa")) {
+				answer.setJustification(answerJson.getString("justificativa"));
+			}
+			
 			String type = answerJson.getString("type");		
 			
-			if (type.equals("RespostaSimOuNao")) {
-				//set yes or no
-				YesOrNo yesOrNo = Execution_metamodelFactory.eINSTANCE.createYesOrNo();
-				yesOrNo.setValue(answerJson.getBoolean("valor"));				
-				//save value
-				//answer.setValue(yesOrNo);
+			if (type.equals("RespostaSimOuNao")) {				
+				YesOrNo yesOrNo = Execution_metamodelFactory.eINSTANCE.createYesOrNo(); //set yes or no
+				yesOrNo.setValue(answerJson.getBoolean("valor")); //save value				
+				answer.setValue(yesOrNo); 
 			}
-			else if (type.equals("RespostaNumerica")) {
-				//set numeric
-				Numeric numeric = Execution_metamodelFactory.eINSTANCE.createNumeric();
-				numeric.setValue(answerJson.getDouble("valor"));				
-				//save value
-				//answer.setValue(numeric);
-			}	
+			else if (type.equals("RespostaNumerica")) {				
+				Numeric numeric = Execution_metamodelFactory.eINSTANCE.createNumeric(); //set numeric
+				numeric.setValue(answerJson.getDouble("valor")); //save value				
+				answer.setValue(numeric); 
+			}
+			else if (type.equals("RespostaEscolha")) {
+				if (!answerJson.isNull("opcoes_escolhidas")) {
+					Choice choice = Execution_metamodelFactory.eINSTANCE.createChoice();
+					Object optionsJson = answerJson.get("opcoes_escolhidas");
+					if (optionsJson.getClass().equals(Integer.class)) {
+						choice.getOption().add(answerJson.getInt("opcoes_escolhidas"));
+					}
+					else {						
+						JSONArray optionsArr = (JSONArray) optionsJson;
+						for (int j = 0; j < optionsArr.length(); j++) {
+							choice.getOption().add(optionsArr.optInt(j));
+						}
+					}				
+										
+					answer.setChoice(choice);
+				}
+			}
 			
 			//set question
 			JSONObject questionJson = answerJson.getJSONObject("pergunta");
@@ -164,26 +183,23 @@ public class ExecutedStep {
 			variable.setType(variableJson.getString("type"));
 			variable.setName(variableJson.getString("nome"));
 			variable.setWeight(variableJson.getInt("peso"));			
+			variable.setValue(variableJson.get("valor") + "");			
 			
-			if (type.equals("RespostaSimOuNao")) {			
-				//set yes or no
-				YesOrNo yesOrNo = Execution_metamodelFactory.eINSTANCE.createYesOrNo();
-				yesOrNo.setValue(variableJson.getBoolean("valor"));					
-				//save yes or no
-				//variable.setValue(yesOrNo);			
-			}else if (type.equals("RespostaNumerica")) {
-				//set numeric
-				Numeric numeric = Execution_metamodelFactory.eINSTANCE.createNumeric();
-				numeric.setValue(variableJson.getDouble("valor"));				
-				//save numeric
-				//variable.setValue(numeric);
-			}				
+			if (!variableJson.isNull("opcoes")) {
+				JSONArray optionsJson = variableJson.getJSONArray("opcoes");
+				for (int j = 0; j < optionsJson.length(); j++) {
+					Option option = Execution_metamodelFactory.eINSTANCE.createOption();
+					JSONObject optionJson = optionsJson.getJSONObject(j);
+					option.setId(optionJson.getInt("id"));
+					option.setText(optionJson.getString("texto"));
+					option.setWeight(optionJson.getDouble("peso"));
+					variable.getOption().add(option);
+				}
+			}
 			
-			question.setVariable(variable);			
-			//save question
-			answer.setQuestion(question);			
-			//save answer
-			eAuxiliaryConduct.getAnswer().add(answer);
+			question.setVariable(variable); //save question
+			answer.setQuestion(question);
+			eAuxiliaryConduct.getAnswer().add(answer); //save answer
 		}		
 		
 		return eAuxiliaryConduct;

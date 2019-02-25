@@ -2,20 +2,23 @@
 <MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="1342" creationDate="2018-06-12T13:58:33.771-0300" conclusionDate="2018-08-31T11:59:22.473-0300" completed="true" aborted="true" name="Pneumonia &amp; Influenza" cid="J15" timeExecution="6905162.685702">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="1622" executed="true" creationDate="2018-06-12T13:59:28.143-0300" modificationDate="2018-06-12T13:54:57.497-0300" executionDate="2018-06-12T13:53:37.879-0300" createdById="121" executedById="121" name="Verificar Critérios para SEPSE" next="/atendimentos/1042/protocolos/1342/passos/1623/">
     <step id="1124" type="AuxilioConduta" name="Verificar Critérios para SEPSE" description="Verifique os critérios para SIRS" isInitial="true"/>
-    <answer id="2104" type="RespostaSimOuNao">
+    <answer id="2104" type="RespostaSimOuNao" justification="">
       <question id="887" text="TAX > 37.8ºc ou &lt; 35ºc?">
-        <variable id="1407" type="SimOuNao" name="ver_sepse_tax" weight="1.0"/>
+        <variable id="1407" type="SimOuNao" name="ver_sepse_tax" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="2105" type="RespostaSimOuNao">
+    <answer id="2105" type="RespostaSimOuNao" justification="">
       <question id="888" text="FC > 90 bpm?">
-        <variable id="1408" type="SimOuNao" name="ver_sep_fc" weight="1.0"/>
+        <variable id="1408" type="SimOuNao" name="ver_sep_fc" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="2106" type="RespostaSimOuNao">
+    <answer id="2106" type="RespostaSimOuNao" justification="">
       <question id="889" text="FR > 20 irpm?">
-        <variable id="1409" type="SimOuNao" name="ver_sep_fr" weight="1.0"/>
+        <variable id="1409" type="SimOuNao" name="ver_sep_fr" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EInformation" id="1623" executed="true" creationDate="2018-06-12T13:56:56.629-0300" modificationDate="2018-06-12T13:59:41.294-0300" executionDate="2018-06-12T13:59:41.158-0300" createdById="121" executedById="121" name="Encaminhar Paciente ao Eixo Vermelho" previous="/atendimentos/1042/protocolos/1342/passos/1622/">

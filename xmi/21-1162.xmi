@@ -2,91 +2,107 @@
 <MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="1162" creationDate="2018-05-30T14:33:52.683-0300" conclusionDate="2018-06-20T16:31:47.511-0300" completed="true" aborted="true" name="Cefaléia" cid="A030" timeExecution="1821597.876828">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="1402" reworked="true" executed="true" creationDate="2018-05-30T14:34:33.812-0300" modificationDate="2018-05-30T14:30:38.694-0300" executionDate="2018-05-30T14:28:07.500-0300" createdById="21" executedById="21" name="Avaliar Sintomas" next="/atendimentos/21/protocolos/1162/passos/1406/">
     <step id="1575" type="AuxilioConduta" name="Avaliar Sintomas" description="ANAMNESE COMPLETA SOBRE CEFALEIA, PARA DIFERENCIAR SE CEFALIA PRIMÁRIA OU SECUNDÁRIA" isInitial="true"/>
-    <answer id="1764" type="RespostaSimOuNao">
+    <answer id="1764" type="RespostaSimOuNao" justification="">
       <question id="1219" text="Queda do estado geral" category="Sintomas Sistêmicos">
-        <variable id="1864" type="SimOuNao" name="sistemicos_queda_estado_geral" weight="1.0"/>
+        <variable id="1864" type="SimOuNao" name="sistemicos_queda_estado_geral" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1765" type="RespostaSimOuNao">
+    <answer id="1765" type="RespostaSimOuNao" justification="">
       <question id="1220" text="Febre" category="Sintomas Sistêmicos">
-        <variable id="1865" type="SimOuNao" name="sistemicos_febre" weight="1.0"/>
+        <variable id="1865" type="SimOuNao" name="sistemicos_febre" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1766" type="RespostaSimOuNao">
+    <answer id="1766" type="RespostaSimOuNao" justification="">
       <question id="1221" text="Rigidez na nuca" category="Sintomas Sistêmicos">
-        <variable id="1866" type="SimOuNao" name="sistemicos_rigidez_nuca" weight="1.0"/>
+        <variable id="1866" type="SimOuNao" name="sistemicos_rigidez_nuca" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1767" type="RespostaSimOuNao">
+    <answer id="1767" type="RespostaSimOuNao" justification="">
       <question id="1222" text="Rash cutâneo" category="Sintomas Sistêmicos">
-        <variable id="1867" type="SimOuNao" name="sistemicos_rash_cutaneo" weight="1.0"/>
+        <variable id="1867" type="SimOuNao" name="sistemicos_rash_cutaneo" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1768" type="RespostaSimOuNao">
+    <answer id="1768" type="RespostaSimOuNao" justification="">
       <question id="1223" text="Imunossupresso" category="Sintomas Sistêmicos">
-        <variable id="1868" type="SimOuNao" name="sistemicos_imunossupresso" weight="1.0"/>
+        <variable id="1868" type="SimOuNao" name="sistemicos_imunossupresso" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1769" type="RespostaSimOuNao">
+    <answer id="1769" type="RespostaSimOuNao" justification="">
       <question id="1224" text="Portador de Neoplasia ou HIV" category="Sintomas Sistêmicos">
-        <variable id="1869" type="SimOuNao" name="sistemicos_neoplasia_ou_hiv" weight="1.0"/>
+        <variable id="1869" type="SimOuNao" name="sistemicos_neoplasia_ou_hiv" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1770" type="RespostaSimOuNao">
+    <answer id="1770" type="RespostaSimOuNao" justification="">
       <question id="1225" text="Déficits Neurologicos Focais" category="Sistemas Neurológicos">
-        <variable id="1870" type="SimOuNao" name="neurologicos_deficits_neurologicos_focais" weight="1.0"/>
+        <variable id="1870" type="SimOuNao" name="neurologicos_deficits_neurologicos_focais" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1771" type="RespostaSimOuNao">
+    <answer id="1771" type="RespostaSimOuNao" justification="">
       <question id="1226" text="Convulsões" category="Sistemas Neurológicos">
-        <variable id="1871" type="SimOuNao" name="neurologicos_convulsoes" weight="1.0"/>
+        <variable id="1871" type="SimOuNao" name="neurologicos_convulsoes" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1772" type="RespostaSimOuNao">
+    <answer id="1772" type="RespostaSimOuNao" justification="">
       <question id="1227" text="Vômitos" category="Sistemas Neurológicos">
-        <variable id="1872" type="SimOuNao" name="neurologicos_vomitos" weight="1.0"/>
+        <variable id="1872" type="SimOuNao" name="neurologicos_vomitos" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1773" type="RespostaSimOuNao">
+    <answer id="1773" type="RespostaSimOuNao" justification="">
       <question id="1228" text="Síncope" category="Sistemas Neurológicos">
-        <variable id="1873" type="SimOuNao" name="neurologicos_sincope" weight="1.0"/>
+        <variable id="1873" type="SimOuNao" name="neurologicos_sincope" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1774" type="RespostaSimOuNao">
+    <answer id="1774" type="RespostaSimOuNao" justification="">
       <question id="1229" text="Cefaleia de inicio subito?">
-        <variable id="1874" type="SimOuNao" name="cefaleia_inicio_subito" weight="1.0"/>
+        <variable id="1874" type="SimOuNao" name="cefaleia_inicio_subito" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1775" type="RespostaSimOuNao">
+    <answer id="1775" type="RespostaSimOuNao" justification="">
       <question id="1230" text="Mudança de padrão da cefaleia prévia ou cefaleia progressiva (intensidade, frequência ou duração) ou cefaleia refratária">
-        <variable id="1875" type="SimOuNao" name="mudanca_de_padrao_de_cefaleia" weight="1.0"/>
+        <variable id="1875" type="SimOuNao" name="mudanca_de_padrao_de_cefaleia" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="1406" executed="true" creationDate="2018-05-30T14:32:58.671-0300" modificationDate="2018-05-30T14:40:01.394-0300" executionDate="2018-05-30T14:39:12.749-0300" createdById="21" executedById="21" name="[Cefaleia Primaria] Classificar Cefaleia" previous="/atendimentos/21/protocolos/1162/passos/1402/" next="/atendimentos/21/protocolos/1162/passos/1407/">
     <step id="1576" type="AuxilioConduta" name="[Cefaleia Primaria] Classificar Cefaleia" description="Classificar tipo de cefaleia conforme sintomas apresentados"/>
-    <answer id="1776" type="RespostaSimOuNao">
+    <answer id="1776" type="RespostaSimOuNao" justification="">
       <question id="1231" text="Enxaqueca: Cefaleia de forte intensidade, latejante/pulsátil, piorando com as atividades do dia a dia. Dura de 4 a 72 horas. Geralmente a dor é unilateral. Sintomas associados: náuseas e/ou vômitos, foto e fonofobia">
-        <variable id="1876" type="SimOuNao" name="cefaleia_primaria_enxaqueca" weight="1.0"/>
+        <variable id="1876" type="SimOuNao" name="cefaleia_primaria_enxaqueca" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="1777" type="RespostaSimOuNao">
+    <answer id="1777" type="RespostaSimOuNao" justification="">
       <question id="1232" text="Cefaleia Tensional: Sensação de aperto ou pressão e, geralmente bilateral. Pode ser frontal, occipital ou holocraniana. Dor pode melhorar com atividades físicas. Costuma surgir no final da tarde. Relacionada com estresse físico, muscular ou emocional">
-        <variable id="1877" type="SimOuNao" name="cefaleia_primaria_tensional" weight="1.0"/>
+        <variable id="1877" type="SimOuNao" name="cefaleia_primaria_tensional" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="1778" type="RespostaSimOuNao">
+    <answer id="1778" type="RespostaSimOuNao" justification="">
       <question id="1233" text="Cefaleia em Salvas: Unilateral, sempre do mesmo lado, de forte intensidade (excruciante), localizando-se em região orbital, supraorbital e/ou temporal. Associação a sintomas autonômicos ipsilaterais e duração de 15 a 180 minutos">
-        <variable id="1878" type="SimOuNao" name="cefaleia_primaira_em_salvas" weight="1.0"/>
+        <variable id="1878" type="SimOuNao" name="cefaleia_primaira_em_salvas" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="1407" reworked="true" executed="true" creationDate="2018-05-30T14:40:56.487-0300" modificationDate="2018-06-20T16:32:57.918-0300" executionDate="2018-06-20T16:30:49.493-0300" createdById="21" executedById="21" name="[Enxaqueca] Duração" previous="/atendimentos/21/protocolos/1162/passos/1406/" next="/atendimentos/21/protocolos/1162/passos/1763/">
     <step id="1577" type="AuxilioConduta" name="[Enxaqueca] Duração" description="Duração do episódio de enxaqueca"/>
-    <answer id="1779" type="RespostaSimOuNao">
+    <answer id="1779" type="RespostaSimOuNao" justification="">
       <question id="1234" text="Episódios duram mais de 72h?">
-        <variable id="1879" type="SimOuNao" name="enxaqueca_mais_de_72h" weight="1.0"/>
+        <variable id="1879" type="SimOuNao" name="enxaqueca_mais_de_72h" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:ETreatment" id="1763" creationDate="2018-06-20T16:18:02.050-0300" modificationDate="2018-06-20T16:18:02.093-0300" createdById="21" name="[Enxaqueca] Cefaléia Severa" previous="/atendimentos/21/protocolos/1162/passos/1407/">

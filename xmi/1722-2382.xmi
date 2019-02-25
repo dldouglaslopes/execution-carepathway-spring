@@ -2,51 +2,59 @@
 <MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2382" creationDate="2018-08-02T15:06:22.417-0300" conclusionDate="2018-11-13T15:12:49.587-0300" completed="true" aborted="true" name="Pneumonia &amp; Influenza" cid="J15" timeExecution="8899164.42317">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2962" executed="true" creationDate="2018-08-02T15:06:48.567-0300" modificationDate="2018-08-02T15:11:02.001-0300" executionDate="2018-08-02T15:09:53.678-0300" createdById="181" executedById="181" name="Verificar Critérios para SEPSE" next="/atendimentos/1722/protocolos/2382/passos/2963/">
     <step id="1979" type="AuxilioConduta" name="Verificar Critérios para SEPSE" description="Verifique os critérios para SIRS" isInitial="true"/>
-    <answer id="3584" type="RespostaSimOuNao">
+    <answer id="3584" type="RespostaSimOuNao" justification="">
       <question id="1587" text="TAX > 37.8ºc ou &lt; 35ºc?">
-        <variable id="2387" type="SimOuNao" name="ver_sepse_tax" weight="1.0"/>
+        <variable id="2387" type="SimOuNao" name="ver_sepse_tax" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3585" type="RespostaSimOuNao">
+    <answer id="3585" type="RespostaSimOuNao" justification="">
       <question id="1588" text="FC > 90 bpm?">
-        <variable id="2388" type="SimOuNao" name="ver_sep_fc" weight="1.0"/>
+        <variable id="2388" type="SimOuNao" name="ver_sep_fc" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3586" type="RespostaSimOuNao">
+    <answer id="3586" type="RespostaSimOuNao" justification="">
       <question id="1589" text="FR > 20 irpm?">
-        <variable id="2389" type="SimOuNao" name="ver_sep_fr" weight="1.0"/>
+        <variable id="2389" type="SimOuNao" name="ver_sep_fr" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2963" executed="true" creationDate="2018-08-02T15:12:37.780-0300" modificationDate="2018-08-02T15:16:03.627-0300" executionDate="2018-08-02T15:15:04.062-0300" createdById="181" executedById="181" name="Verificar Fatores Agravantes Para SEPSE" previous="/atendimentos/1722/protocolos/2382/passos/2962/" next="/atendimentos/1722/protocolos/2382/passos/2964/">
     <step id="1980" type="AuxilioConduta" name="Verificar Fatores Agravantes Para SEPSE" description="Verifique se o paciente apresenta algum dos fatores a seguir."/>
-    <answer id="3587" type="RespostaSimOuNao">
+    <answer id="3587" type="RespostaSimOuNao" justification="">
       <question id="1590" text="Oligúria / Anúria?">
-        <variable id="2390" type="SimOuNao" name="fat_agra_oliguria" weight="1.0"/>
+        <variable id="2390" type="SimOuNao" name="fat_agra_oliguria" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3588" type="RespostaSimOuNao">
+    <answer id="3588" type="RespostaSimOuNao" justification="">
       <question id="1591" text="PAS &lt; 100 mmHg?">
-        <variable id="2391" type="SimOuNao" name="fat_agra_pas" weight="1.0"/>
+        <variable id="2391" type="SimOuNao" name="fat_agra_pas" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3589" type="RespostaSimOuNao">
+    <answer id="3589" type="RespostaSimOuNao" justification="">
       <question id="1592" text="Agitação / Sonolência / Alteração Nível de Consciência?">
-        <variable id="2392" type="SimOuNao" name="fat_agra_agita_sono_cons" weight="1.0"/>
+        <variable id="2392" type="SimOuNao" name="fat_agra_agita_sono_cons" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3590" type="RespostaSimOuNao">
+    <answer id="3590" type="RespostaSimOuNao" justification="">
       <question id="1593" text="Dispneia ou SatO2 &lt; 93%?">
-        <variable id="2393" type="SimOuNao" name="fat_risc_disp_sat" weight="1.0"/>
+        <variable id="2393" type="SimOuNao" name="fat_risc_disp_sat" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2964" executed="true" creationDate="2018-08-02T15:17:50.329-0300" modificationDate="2018-08-02T15:11:14.700-0300" executionDate="2018-08-02T15:10:49.560-0300" createdById="181" executedById="181" name="Verificar Idade do Paciente" previous="/atendimentos/1722/protocolos/2382/passos/2963/" next="/atendimentos/1722/protocolos/2382/passos/2965/">
     <step id="1963" type="AuxilioConduta" name="Verificar Idade do Paciente" description="Verifique a idade do paciente"/>
-    <answer id="3591" type="RespostaNumerica">
+    <answer id="3591" type="RespostaNumerica" justification="">
       <question id="1521" text="Idade:">
-        <variable id="2321" type="Numerica" name="idade" weight="1.0"/>
+        <variable id="2321" type="Numerica" name="idade" weight="1.0" value="0.0"/>
       </question>
+      <value xsi:type="MetamodelExecution:Numeric" value="82.0"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:ETreatment" id="2965" executed="true" creationDate="2018-08-02T15:12:52.342-0300" modificationDate="2018-08-02T15:14:34.769-0300" executionDate="2018-08-02T15:14:34.623-0300" createdById="181" executedById="181" name="Raio X + Pacote de Exames Laboratoriais" previous="/atendimentos/1722/protocolos/2382/passos/2964/" next="/atendimentos/1722/protocolos/2382/passos/2966/">
@@ -114,131 +122,155 @@
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2966" executed="true" creationDate="2018-08-02T15:15:55.172-0300" modificationDate="2018-08-02T15:14:23.225-0300" executionDate="2018-08-02T15:14:06.023-0300" createdById="181" executedById="181" name="Verificar Resultados Exames Laboratoriais" previous="/atendimentos/1722/protocolos/2382/passos/2965/" next="/atendimentos/1722/protocolos/2382/passos/2967/">
     <step id="1983" type="AuxilioConduta" name="Verificar Resultados Exames Laboratoriais" description="Avalie o resultado dos exames para seguir com o tratamento adequado."/>
-    <answer id="3592" type="RespostaSimOuNao">
+    <answer id="3592" type="RespostaSimOuNao" justification="">
       <question id="1594" text="Raio-x  e exames laboratoriais sugerem quadro de pneumonia?">
-        <variable id="2394" type="SimOuNao" name="result_exames_lab" weight="1.0"/>
+        <variable id="2394" type="SimOuNao" name="result_exames_lab" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2967" executed="true" creationDate="2018-08-02T15:15:55.845-0300" modificationDate="2018-08-02T15:18:38.631-0300" executionDate="2018-08-02T15:13:02.118-0300" createdById="181" executedById="181" name="Cálculo do Port" previous="/atendimentos/1722/protocolos/2382/passos/2966/" next="/atendimentos/1722/protocolos/2382/passos/2968/">
     <step id="1973" type="AuxilioConduta" name="Cálculo do Port" description="Verifique os exames do paciente e preencha a tabela a seguir para calcular o PORT e seguir com o tratamento mais adequado."/>
-    <answer id="3593" type="RespostaSimOuNao">
+    <answer id="3593" type="RespostaSimOuNao" justification="">
       <question id="1549" text="Paciente mulher?" category="Fatores Demográficos">
-        <variable id="2349" type="SimOuNao" name="port_mulher" weight="10.0"/>
+        <variable id="2349" type="SimOuNao" name="port_mulher" weight="10.0" value="true"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="3594" type="RespostaSimOuNao">
+    <answer id="3594" type="RespostaSimOuNao" justification="">
       <question id="1550" text="Procedente de Asilo?" category="Fatores Demográficos">
-        <variable id="2350" type="SimOuNao" name="port_asilo" weight="10.0"/>
+        <variable id="2350" type="SimOuNao" name="port_asilo" weight="10.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3595" type="RespostaSimOuNao">
+    <answer id="3595" type="RespostaSimOuNao" justification="">
       <question id="1551" text="Neoplasia?" category="Comorbidades">
-        <variable id="2351" type="SimOuNao" name="port_neoplasia" weight="30.0"/>
+        <variable id="2351" type="SimOuNao" name="port_neoplasia" weight="30.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3596" type="RespostaSimOuNao">
+    <answer id="3596" type="RespostaSimOuNao" justification="">
       <question id="1552" text="Doença Hepática?" category="Comorbidades">
-        <variable id="2352" type="SimOuNao" name="port_doenca_hepatica" weight="10.0"/>
+        <variable id="2352" type="SimOuNao" name="port_doenca_hepatica" weight="10.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3597" type="RespostaSimOuNao">
+    <answer id="3597" type="RespostaSimOuNao" justification="">
       <question id="1553" text="ICC?" category="Comorbidades">
-        <variable id="2353" type="SimOuNao" name="port_icc" weight="10.0"/>
+        <variable id="2353" type="SimOuNao" name="port_icc" weight="10.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3598" type="RespostaSimOuNao">
+    <answer id="3598" type="RespostaSimOuNao" justification="">
       <question id="1554" text="Doença Cerebrovascular?" category="Comorbidades">
-        <variable id="2354" type="SimOuNao" name="port_doenca_cerebrovasc" weight="10.0"/>
+        <variable id="2354" type="SimOuNao" name="port_doenca_cerebrovasc" weight="10.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3599" type="RespostaSimOuNao">
+    <answer id="3599" type="RespostaSimOuNao" justification="">
       <question id="1555" text="Doença Renal?" category="Comorbidades">
-        <variable id="2355" type="SimOuNao" name="port_doenca_renal" weight="10.0"/>
+        <variable id="2355" type="SimOuNao" name="port_doenca_renal" weight="10.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3600" type="RespostaSimOuNao">
+    <answer id="3600" type="RespostaSimOuNao" justification="">
       <question id="1556" text="ph &lt; 7,35?" category="Achados Laboratoriais">
-        <variable id="2356" type="SimOuNao" name="port_ph" weight="30.0"/>
+        <variable id="2356" type="SimOuNao" name="port_ph" weight="30.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3601" type="RespostaSimOuNao">
+    <answer id="3601" type="RespostaSimOuNao" justification="">
       <question id="1557" text="Ureia > 65 mg/dl?" category="Achados Laboratoriais">
-        <variable id="2357" type="SimOuNao" name="port_ureia" weight="20.0"/>
+        <variable id="2357" type="SimOuNao" name="port_ureia" weight="20.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3602" type="RespostaSimOuNao">
+    <answer id="3602" type="RespostaSimOuNao" justification="">
       <question id="1558" text="Sódio &lt; 130 meq/dl?" category="Achados Laboratoriais">
-        <variable id="2358" type="SimOuNao" name="port_sodio" weight="20.0"/>
+        <variable id="2358" type="SimOuNao" name="port_sodio" weight="20.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3603" type="RespostaSimOuNao">
+    <answer id="3603" type="RespostaSimOuNao" justification="">
       <question id="1559" text="Glicose > 250 mg/dl?" category="Achados Laboratoriais">
-        <variable id="2359" type="SimOuNao" name="port_glicose" weight="10.0"/>
+        <variable id="2359" type="SimOuNao" name="port_glicose" weight="10.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3604" type="RespostaSimOuNao">
+    <answer id="3604" type="RespostaSimOuNao" justification="">
       <question id="1560" text="Hematócritos &lt; 30%?" category="Achados Laboratoriais">
-        <variable id="2360" type="SimOuNao" name="port_hematocrito" weight="10.0"/>
+        <variable id="2360" type="SimOuNao" name="port_hematocrito" weight="10.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3605" type="RespostaSimOuNao">
+    <answer id="3605" type="RespostaSimOuNao" justification="">
       <question id="1561" text="PO2 &lt; 60 mmhg?" category="Achados Laboratoriais">
-        <variable id="2361" type="SimOuNao" name="port_po2" weight="10.0"/>
+        <variable id="2361" type="SimOuNao" name="port_po2" weight="10.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3606" type="RespostaSimOuNao">
+    <answer id="3606" type="RespostaSimOuNao" justification="">
       <question id="1562" text="Derrame pleural?" category="Achados Laboratoriais">
-        <variable id="2362" type="SimOuNao" name="port_derrame_pleural" weight="10.0"/>
+        <variable id="2362" type="SimOuNao" name="port_derrame_pleural" weight="10.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3607" type="RespostaSimOuNao">
+    <answer id="3607" type="RespostaSimOuNao" justification="">
       <question id="1563" text="Alteração do estado mental?" category="Exame Físico">
-        <variable id="2363" type="SimOuNao" name="port_alteracao_mental" weight="20.0"/>
+        <variable id="2363" type="SimOuNao" name="port_alteracao_mental" weight="20.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3608" type="RespostaSimOuNao">
+    <answer id="3608" type="RespostaSimOuNao" justification="">
       <question id="1564" text="F. Respiratória > 30 ciclos?" category="Exame Físico">
-        <variable id="2364" type="SimOuNao" name="port_freq_esp" weight="20.0"/>
+        <variable id="2364" type="SimOuNao" name="port_freq_esp" weight="20.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3609" type="RespostaSimOuNao">
+    <answer id="3609" type="RespostaSimOuNao" justification="">
       <question id="1565" text="PA sistólica &lt; 90 mmHg?" category="Exame Físico">
-        <variable id="2365" type="SimOuNao" name="port_pa_sistolica" weight="20.0"/>
+        <variable id="2365" type="SimOuNao" name="port_pa_sistolica" weight="20.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3610" type="RespostaSimOuNao">
+    <answer id="3610" type="RespostaSimOuNao" justification="">
       <question id="1566" text="Temperatura &lt; 35 ou > 40?" category="Exame Físico">
-        <variable id="2366" type="SimOuNao" name="port_temperatura" weight="15.0"/>
+        <variable id="2366" type="SimOuNao" name="port_temperatura" weight="15.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3611" type="RespostaSimOuNao">
+    <answer id="3611" type="RespostaSimOuNao" justification="">
       <question id="1567" text="Pulso >= 125 bvm?" category="Exame Físico">
-        <variable id="2367" type="SimOuNao" name="port_pulso" weight="10.0"/>
+        <variable id="2367" type="SimOuNao" name="port_pulso" weight="10.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3612" type="RespostaNumerica">
+    <answer id="3612" type="RespostaNumerica" justification="">
       <question id="1568" text="Idade:" category="Fatores Demográficos">
-        <variable id="2368" type="Numerica" name="port_idade" weight="1.0"/>
+        <variable id="2368" type="Numerica" name="port_idade" weight="1.0" value="0.0"/>
       </question>
+      <value xsi:type="MetamodelExecution:Numeric" value="82.0"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2968" executed="true" creationDate="2018-08-02T15:07:37.271-0300" modificationDate="2018-08-02T15:18:48.668-0300" executionDate="2018-08-02T15:18:04.948-0300" createdById="181" executedById="181" name="[Port 3] Avaliar Fatores de Risco Para Influenza" previous="/atendimentos/1722/protocolos/2382/passos/2967/" next="/atendimentos/1722/protocolos/2382/passos/2969/">
     <step id="1974" type="AuxilioConduta" name="[Port 3] Avaliar Fatores de Risco Para Influenza" description="Avalie se o paciente apresenta fatores que indicam risco de Influenza."/>
-    <answer id="3613" type="RespostaSimOuNao">
+    <answer id="3613" type="RespostaSimOuNao" justification="">
       <question id="1569" text="Tosse?">
-        <variable id="2369" type="SimOuNao" name="port3_fatores_risco_tosse" weight="1.0"/>
+        <variable id="2369" type="SimOuNao" name="port3_fatores_risco_tosse" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3614" type="RespostaSimOuNao">
+    <answer id="3614" type="RespostaSimOuNao" justification="">
       <question id="1570" text="Dor de garganta?">
-        <variable id="2370" type="SimOuNao" name="port3_fatores_risco_dor" weight="1.0"/>
+        <variable id="2370" type="SimOuNao" name="port3_fatores_risco_dor" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3615" type="RespostaSimOuNao">
+    <answer id="3615" type="RespostaSimOuNao" justification="">
       <question id="1571" text="Febre?">
-        <variable id="2371" type="SimOuNao" name="port3_fatores_risco_febre" weight="1.0"/>
+        <variable id="2371" type="SimOuNao" name="port3_fatores_risco_febre" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EPrescription" id="2969" creationDate="2018-08-02T15:06:35.533-0300" modificationDate="2018-08-02T15:16:19.213-0300" createdById="181" name="[Port 2/3] Receita Padrão - Escolha um antibiótico e as opções de medicamentos sintomáticos" previous="/atendimentos/1722/protocolos/2382/passos/2968/" text="">

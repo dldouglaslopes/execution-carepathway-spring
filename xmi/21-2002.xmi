@@ -2,54 +2,77 @@
 <MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2002" creationDate="2018-07-26T14:15:40.385-0300" conclusionDate="2018-07-26T14:51:21.695-0300" completed="true" aborted="true" name="Protocolo completo" cid="A90" timeExecution="1807.33431">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2344" reworked="true" executed="true" creationDate="2018-07-26T14:16:03.497-0300" modificationDate="2018-07-26T14:53:35.665-0300" executionDate="2018-07-26T14:49:58.264-0300" createdById="21" executedById="21" name="Passo A1" next="/atendimentos/21/protocolos/2002/passos/2363/">
     <step id="2481" type="AuxilioConduta" name="Passo A1" description="Passo do tipo AUXILIO CONDUTA" isInitial="true"/>
-    <answer id="2824" type="RespostaNumerica">
+    <answer id="2824" type="RespostaNumerica" justification="">
       <question id="1881" text="Pergunta sem vinculo do tipo numérica?" category="Exame Físico">
-        <variable id="2921" type="Numerica" name="pergunta_sem_vinculo" weight="1.0"/>
+        <variable id="2921" type="Numerica" name="pergunta_sem_vinculo" weight="1.0" value="10.0"/>
       </question>
+      <value xsi:type="MetamodelExecution:Numeric" value="10.0"/>
     </answer>
-    <answer id="2825" type="RespostaSimOuNao">
+    <answer id="2825" type="RespostaSimOuNao" justification="">
       <question id="1882" text="Pergunta sem vinculo do tipo sim ou não?" category="Fatores Demográficos">
-        <variable id="2922" type="SimOuNao" name="pergunta_sem_vinculo_sim_ou_nao" weight="2.0"/>
+        <variable id="2922" type="SimOuNao" name="pergunta_sem_vinculo_sim_ou_nao" weight="2.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2826" type="RespostaSimOuNao">
+    <answer id="2826" type="RespostaSimOuNao" justification="">
       <question id="1883" text="Pergunta com vinculo de comorbidade" category="Comorbidades">
-        <variable id="2923" type="SimOuNao" name="vinculo_comorbidade" weight="1.0"/>
+        <variable id="2923" type="SimOuNao" name="vinculo_comorbidade" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="2827" type="RespostaSimOuNao">
+    <answer id="2827" type="RespostaSimOuNao" justification="">
       <question id="1884" text="Pergunta com vinculo de alergia" category="Exame Físico">
-        <variable id="2924" type="SimOuNao" name="vinculo_de_alergia" weight="2.0"/>
+        <variable id="2924" type="SimOuNao" name="vinculo_de_alergia" weight="2.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="2828" type="RespostaNumerica">
+    <answer id="2828" type="RespostaNumerica" justification="">
       <question id="1885" text="Pergunta sinal vital com vinculo do tipo numérica" category="Exame Físico">
-        <variable id="2925" type="Numerica" name="15" weight="1.0"/>
+        <variable id="2925" type="Numerica" name="15" weight="1.0" value="36.0"/>
       </question>
+      <value xsi:type="MetamodelExecution:Numeric" value="36.0"/>
     </answer>
-    <answer id="2829" type="RespostaSimOuNao">
+    <answer id="2829" type="RespostaSimOuNao" justification="">
       <question id="1886" text="Pergunta sinal vital com vinculo do tipo sim ou não" category="Exame Físico">
-        <variable id="2926" type="SimOuNao" name="vinculo_com_sinal_vital_sim_ou_nao" weight="1.0"/>
+        <variable id="2926" type="SimOuNao" name="vinculo_com_sinal_vital_sim_ou_nao" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="2830" type="RespostaNumerica">
+    <answer id="2830" type="RespostaNumerica" justification="">
       <question id="1887" text="Vinculo com a idade, qual idade do paciente?" category="Fatores Demográficos">
-        <variable id="2927" type="Numerica" name="idade_do_paciente" weight="1.0"/>
+        <variable id="2927" type="Numerica" name="idade_do_paciente" weight="1.0" value="0.0"/>
       </question>
+      <value xsi:type="MetamodelExecution:Numeric" value="16.0"/>
     </answer>
-    <answer id="2831" type="RespostaSimOuNao">
+    <answer id="2831" type="RespostaSimOuNao" justification="">
       <question id="1888" text="vinculo com o sexo, paciente é mulher?" category="Fatores Demográficos">
-        <variable id="2928" type="SimOuNao" name="sexo_do_paciente" weight="1.0"/>
+        <variable id="2928" type="SimOuNao" name="sexo_do_paciente" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="2832" type="RespostaEscolha">
+    <answer id="2832" type="RespostaEscolha" justification="">
       <question id="1889" text="Unica Reposta">
-        <variable id="2929" type="Escolha" name="unica_resposta" weight="1.0"/>
+        <variable id="2929" type="Escolha" name="unica_resposta" weight="1.0" value="null">
+          <option id="321" text="op4" weight="-2.0"/>
+          <option id="322" text="op2" weight="-1.0"/>
+          <option id="323" text="op1"/>
+          <option id="324" text="op3" weight="2.0"/>
+          <option id="325" text="op5" weight="3.0"/>
+        </variable>
       </question>
+      <choice>
+        <option>321</option>
+      </choice>
     </answer>
-    <answer id="2833" type="RespostaEscolha">
+    <answer id="2833" type="RespostaEscolha" justification="">
       <question id="1890" text="Multipla Resposta">
-        <variable id="2930" type="Escolha" name="multipla_resposta" weight="1.0"/>
+        <variable id="2930" type="Escolha" name="multipla_resposta" weight="1.0" value="null">
+          <option id="326" text="po5" weight="-2.0"/>
+          <option id="327" text="po3" weight="-1.0"/>
+          <option id="328" text="po1"/>
+          <option id="329" text="po2" weight="1.0"/>
+          <option id="330" text="po4" weight="2.0"/>
+        </variable>
       </question>
     </answer>
   </eStep>

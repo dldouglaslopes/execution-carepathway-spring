@@ -4,15 +4,17 @@
     <step id="1941" type="AuxilioConduta" name="Verificar Grau da Fratura" description="Informe o Grau da fratura baseado na classificação de Gustillo" isInitial="true">
       <audit date="2018-06-13T14:46:33.695-0300"/>
     </step>
-    <answer id="2544" type="RespostaSimOuNao">
+    <answer id="2544" type="RespostaSimOuNao" justification="">
       <question id="1501" text="Fratura exposta Grau I / II">
-        <variable id="2301" type="SimOuNao" name="frat-grau12" weight="1.0"/>
+        <variable id="2301" type="SimOuNao" name="frat-grau12" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="2545" type="RespostaSimOuNao">
+    <answer id="2545" type="RespostaSimOuNao" justification="">
       <question id="1502" text="Fratura exposta Grau III / IV">
-        <variable id="2302" type="SimOuNao" name="frat-grau34" weight="1.0"/>
+        <variable id="2302" type="SimOuNao" name="frat-grau34" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:ETreatment" id="2048" creationDate="2018-07-17T16:01:20.095-0300" modificationDate="2018-07-17T16:01:20.136-0300" createdById="141" name="Tratamento Fratura de Grau I/II" previous="/atendimentos/1302/protocolos/1724/passos/2047/">

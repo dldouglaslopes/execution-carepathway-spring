@@ -2,182 +2,215 @@
 <MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="2223" creationDate="2018-07-30T12:01:05.889-0300" conclusionDate="2018-07-30T12:31:57.319-0300" completed="true" name="IVAS" cid="A90" timeExecution="2422.42843">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2708" reworked="true" executed="true" creationDate="2018-07-30T12:02:38.148-0300" modificationDate="2018-07-30T12:38:20.948-0300" executionDate="2018-07-30T12:36:27.165-0300" createdById="21" executedById="21" name="Avaliar Critérios de Sepse" next="/atendimentos/21/protocolos/2223/passos/2713/">
     <step id="153" type="AuxilioConduta" name="Avaliar Critérios de Sepse" description="Avaliar Critérios de Sepse" isInitial="true"/>
-    <answer id="3279" type="RespostaSimOuNao">
+    <answer id="3279" type="RespostaSimOuNao" justification="">
       <question id="120" text="Temperatura > 38 ou &lt; 36?">
-        <variable id="218" type="SimOuNao" name="verifica_sepse_temperatura" weight="1.0"/>
+        <variable id="218" type="SimOuNao" name="verifica_sepse_temperatura" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3280" type="RespostaSimOuNao">
+    <answer id="3280" type="RespostaSimOuNao" justification="">
       <question id="121" text="Frequência Respiratória > 20?">
-        <variable id="219" type="SimOuNao" name="verifica_sepse_fr" weight="1.0"/>
+        <variable id="219" type="SimOuNao" name="verifica_sepse_fr" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3281" type="RespostaSimOuNao">
+    <answer id="3281" type="RespostaSimOuNao" justification="">
       <question id="122" text="Frequência cardíaca > 90?">
-        <variable id="220" type="SimOuNao" name="verifica_sepse_freq_card" weight="1.0"/>
+        <variable id="220" type="SimOuNao" name="verifica_sepse_freq_card" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3282" type="RespostaSimOuNao">
+    <answer id="3282" type="RespostaSimOuNao" justification="">
       <question id="123" text="Confusão Mental?">
-        <variable id="221" type="SimOuNao" name="verifica_sepse_confusao_mental" weight="1.0"/>
+        <variable id="221" type="SimOuNao" name="verifica_sepse_confusao_mental" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3283" type="RespostaSimOuNao">
+    <answer id="3283" type="RespostaSimOuNao" justification="">
       <question id="124" text="Sat &lt;= 92%?">
-        <variable id="222" type="SimOuNao" name="verifica_sepse_sat" weight="1.0"/>
+        <variable id="222" type="SimOuNao" name="verifica_sepse_sat" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="3284" type="RespostaSimOuNao">
+    <answer id="3284" type="RespostaSimOuNao" justification="">
       <question id="125" text="FC/PAS >= 0,8?">
-        <variable id="223" type="SimOuNao" name="verifica_sepse_FC_PAS" weight="1.0"/>
+        <variable id="223" type="SimOuNao" name="verifica_sepse_FC_PAS" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2713" executed="true" creationDate="2018-07-30T12:24:57.079-0300" modificationDate="2018-07-30T12:33:28.776-0300" executionDate="2018-07-30T12:30:00.902-0300" createdById="21" executedById="21" name="Avaliar Critérios de Pneumonia" previous="/atendimentos/21/protocolos/2223/passos/2708/" next="/atendimentos/21/protocolos/2223/passos/2714/">
     <step id="155" type="AuxilioConduta" name="Avaliar Critérios de Pneumonia" description="Avaliar Critérios de Pneumonia"/>
-    <answer id="3286" type="RespostaSimOuNao">
+    <answer id="3286" type="RespostaSimOuNao" justification="">
       <question id="126" text="Dispnéia?">
-        <variable id="224" type="SimOuNao" name="criterios_pneumonia_dispneia" weight="1.0"/>
+        <variable id="224" type="SimOuNao" name="criterios_pneumonia_dispneia" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3287" type="RespostaSimOuNao">
+    <answer id="3287" type="RespostaSimOuNao" justification="">
       <question id="127" text="Dor pleurítica?">
-        <variable id="225" type="SimOuNao" name="criterios_pneumonia_dor_pleuritica" weight="1.0"/>
+        <variable id="225" type="SimOuNao" name="criterios_pneumonia_dor_pleuritica" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3288" type="RespostaSimOuNao">
+    <answer id="3288" type="RespostaSimOuNao" justification="">
       <question id="128" text="Tosse produtiva?">
-        <variable id="226" type="SimOuNao" name="criterios_pneumonia_tosse_produtiva" weight="1.0"/>
+        <variable id="226" type="SimOuNao" name="criterios_pneumonia_tosse_produtiva" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3289" type="RespostaSimOuNao">
+    <answer id="3289" type="RespostaSimOuNao" justification="">
       <question id="129" text="Calafrios?">
-        <variable id="227" type="SimOuNao" name="criterios_pneumonia_calafrios" weight="1.0"/>
+        <variable id="227" type="SimOuNao" name="criterios_pneumonia_calafrios" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3290" type="RespostaSimOuNao">
+    <answer id="3290" type="RespostaSimOuNao" justification="">
       <question id="130" text="Confusão recente?">
-        <variable id="228" type="SimOuNao" name="criterios_pneumonia_confusao_recente" weight="1.0"/>
+        <variable id="228" type="SimOuNao" name="criterios_pneumonia_confusao_recente" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3291" type="RespostaSimOuNao">
+    <answer id="3291" type="RespostaSimOuNao" justification="">
       <question id="131" text="Estertores Crepantes?">
-        <variable id="229" type="SimOuNao" name="criterios_pneumonia_estertores_crepantes" weight="1.0"/>
+        <variable id="229" type="SimOuNao" name="criterios_pneumonia_estertores_crepantes" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3292" type="RespostaSimOuNao">
+    <answer id="3292" type="RespostaSimOuNao" justification="">
       <question id="132" text="Entrada recente?">
-        <variable id="230" type="SimOuNao" name="criterios_pneumonia_entrada_recente" weight="1.0"/>
+        <variable id="230" type="SimOuNao" name="criterios_pneumonia_entrada_recente" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2714" executed="true" creationDate="2018-07-30T12:35:32.321-0300" modificationDate="2018-07-30T12:33:46.533-0300" executionDate="2018-07-30T12:32:38.828-0300" createdById="21" executedById="21" name="Influenza: Fatores de Risco" previous="/atendimentos/21/protocolos/2223/passos/2713/" next="/atendimentos/21/protocolos/2223/passos/2715/">
     <step id="157" type="AuxilioConduta" name="Influenza: Fatores de Risco" description="Avaliar presença de fatores de risco para influenza"/>
-    <answer id="3293" type="RespostaSimOuNao">
+    <answer id="3293" type="RespostaSimOuNao" justification="">
       <question id="133" text="Cefaléia?">
-        <variable id="231" type="SimOuNao" name="influenza_riscos_cefaleia" weight="1.0"/>
+        <variable id="231" type="SimOuNao" name="influenza_riscos_cefaleia" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="3294" type="RespostaSimOuNao">
+    <answer id="3294" type="RespostaSimOuNao" justification="">
       <question id="134" text="Mialgia?">
-        <variable id="232" type="SimOuNao" name="influenza_riscos_mialgia" weight="1.0"/>
+        <variable id="232" type="SimOuNao" name="influenza_riscos_mialgia" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="3295" type="RespostaSimOuNao">
+    <answer id="3295" type="RespostaSimOuNao" justification="">
       <question id="135" text="Artralgia?">
-        <variable id="233" type="SimOuNao" name="influenza_riscos_artralgia" weight="1.0"/>
+        <variable id="233" type="SimOuNao" name="influenza_riscos_artralgia" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="3296" type="RespostaSimOuNao">
+    <answer id="3296" type="RespostaSimOuNao" justification="">
       <question id="136" text="Diarréia?">
-        <variable id="234" type="SimOuNao" name="influenza_riscos_diarreia" weight="1.0"/>
+        <variable id="234" type="SimOuNao" name="influenza_riscos_diarreia" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2715" reworked="true" executed="true" creationDate="2018-07-30T12:35:28.671-0300" modificationDate="2018-07-30T12:34:13.181-0300" executionDate="2018-07-30T12:31:35.995-0300" createdById="21" executedById="21" name="Influenza: Riscos de Complicações" previous="/atendimentos/21/protocolos/2223/passos/2714/" next="/atendimentos/21/protocolos/2223/passos/2717/">
     <step id="158" type="AuxilioConduta" name="Influenza: Riscos de Complicações" description="Avaliar presença de riscos de complicações para influenza"/>
-    <answer id="3297" type="RespostaSimOuNao">
+    <answer id="3297" type="RespostaSimOuNao" justification="">
       <question id="137" text="Gestante / Puerperas?">
-        <variable id="235" type="SimOuNao" name="influenza_complicacoes_gestante" weight="1.0"/>
+        <variable id="235" type="SimOuNao" name="influenza_complicacoes_gestante" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3298" type="RespostaSimOuNao">
+    <answer id="3298" type="RespostaSimOuNao" justification="">
       <question id="138" text="Idade > 60 anos?">
-        <variable id="236" type="SimOuNao" name="influenza_complicacoes_idoso" weight="1.0"/>
+        <variable id="236" type="SimOuNao" name="influenza_complicacoes_idoso" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3299" type="RespostaSimOuNao">
+    <answer id="3299" type="RespostaSimOuNao" justification="">
       <question id="139" text="Pneumopatias?">
-        <variable id="237" type="SimOuNao" name="influenza_complicacoes_pneumopatias" weight="1.0"/>
+        <variable id="237" type="SimOuNao" name="influenza_complicacoes_pneumopatias" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3300" type="RespostaSimOuNao">
+    <answer id="3300" type="RespostaSimOuNao" justification="">
       <question id="140" text="ICC?">
-        <variable id="238" type="SimOuNao" name="influenza_complicacoes_icc" weight="1.0"/>
+        <variable id="238" type="SimOuNao" name="influenza_complicacoes_icc" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3301" type="RespostaSimOuNao">
+    <answer id="3301" type="RespostaSimOuNao" justification="">
       <question id="141" text="Doença renal crônica?">
-        <variable id="239" type="SimOuNao" name="influenza_complicacoes_doenca_renal" weight="1.0"/>
+        <variable id="239" type="SimOuNao" name="influenza_complicacoes_doenca_renal" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3302" type="RespostaSimOuNao">
+    <answer id="3302" type="RespostaSimOuNao" justification="">
       <question id="142" text="Cirrose Hepática?">
-        <variable id="240" type="SimOuNao" name="influenza_complicacoes_cirrose" weight="1.0"/>
+        <variable id="240" type="SimOuNao" name="influenza_complicacoes_cirrose" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3303" type="RespostaSimOuNao">
+    <answer id="3303" type="RespostaSimOuNao" justification="">
       <question id="143" text="Neoplasias Hematológicas?">
-        <variable id="241" type="SimOuNao" name="influenza_complicacoes_neoplasias" weight="1.0"/>
+        <variable id="241" type="SimOuNao" name="influenza_complicacoes_neoplasias" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3304" type="RespostaSimOuNao">
+    <answer id="3304" type="RespostaSimOuNao" justification="">
       <question id="144" text="Diabetes?">
-        <variable id="242" type="SimOuNao" name="influenza_complicacoes_diabetes" weight="1.0"/>
+        <variable id="242" type="SimOuNao" name="influenza_complicacoes_diabetes" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3305" type="RespostaSimOuNao">
+    <answer id="3305" type="RespostaSimOuNao" justification="">
       <question id="145" text="Doenças Neurodegenerativas?">
-        <variable id="243" type="SimOuNao" name="influenza_complicacoes_doencas_neurodegen" weight="1.0"/>
+        <variable id="243" type="SimOuNao" name="influenza_complicacoes_doencas_neurodegen" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3306" type="RespostaSimOuNao">
+    <answer id="3306" type="RespostaSimOuNao" justification="">
       <question id="146" text="Obesidade Mórbida (IMC > 40)?">
-        <variable id="244" type="SimOuNao" name="influenza_complicacoes_obesidade_morbida" weight="1.0"/>
+        <variable id="244" type="SimOuNao" name="influenza_complicacoes_obesidade_morbida" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3307" type="RespostaSimOuNao">
+    <answer id="3307" type="RespostaSimOuNao" justification="">
       <question id="147" text="Imunossupressão?">
-        <variable id="245" type="SimOuNao" name="influenza_complicacoes_imunossupressao" weight="1.0"/>
+        <variable id="245" type="SimOuNao" name="influenza_complicacoes_imunossupressao" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2717" executed="true" creationDate="2018-07-30T12:36:25.902-0300" modificationDate="2018-07-30T12:43:56.516-0300" executionDate="2018-07-30T12:42:42.548-0300" createdById="21" executedById="21" name="Avaliar Sintomas Específicos" previous="/atendimentos/21/protocolos/2223/passos/2715/" next="/atendimentos/21/protocolos/2223/passos/2718/">
     <step id="159" type="AuxilioConduta" name="Avaliar Sintomas Específicos" description="Avaliar sintomas apresentados pelo paciente"/>
-    <answer id="3308" type="RespostaSimOuNao">
+    <answer id="3308" type="RespostaSimOuNao" justification="">
       <question id="148" text="Resfriado comum">
-        <variable id="246" type="SimOuNao" name="sintomas_resfriado" weight="1.0"/>
+        <variable id="246" type="SimOuNao" name="sintomas_resfriado" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3309" type="RespostaSimOuNao">
+    <answer id="3309" type="RespostaSimOuNao" justification="">
       <question id="149" text="Amigdalite / Tonsilite">
-        <variable id="247" type="SimOuNao" name="sintomas_amigdalite" weight="1.0"/>
+        <variable id="247" type="SimOuNao" name="sintomas_amigdalite" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3310" type="RespostaSimOuNao">
+    <answer id="3310" type="RespostaSimOuNao" justification="">
       <question id="150" text="Otite">
-        <variable id="248" type="SimOuNao" name="sintomas_otite" weight="1.0"/>
+        <variable id="248" type="SimOuNao" name="sintomas_otite" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="3311" type="RespostaSimOuNao">
+    <answer id="3311" type="RespostaSimOuNao" justification="">
       <question id="151" text="Rinite / Rinossinusites">
-        <variable id="249" type="SimOuNao" name="sintomas_rinite" weight="1.0"/>
+        <variable id="249" type="SimOuNao" name="sintomas_rinite" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="3312" type="RespostaSimOuNao">
+    <answer id="3312" type="RespostaSimOuNao" justification="">
       <question id="152" text="Laringite">
-        <variable id="250" type="SimOuNao" name="sintomas_laringite" weight="1.0"/>
+        <variable id="250" type="SimOuNao" name="sintomas_laringite" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EPrescription" id="2718" executed="true" creationDate="2018-07-30T12:29:01.883-0300" modificationDate="2018-07-30T12:31:42.859-0300" executionDate="2018-07-30T12:31:42.695-0300" createdById="21" executedById="21" name="Rinite (Receita)" previous="/atendimentos/21/protocolos/2223/passos/2717/" text="informação complementar">

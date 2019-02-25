@@ -2,53 +2,62 @@
 <MetamodelExecution:EPathway xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:MetamodelExecution="http://www.example.org/MetamodelExecution" id="1822" creationDate="2018-07-23T10:05:04.779-0300" conclusionDate="2018-07-23T10:18:20.031-0300" completed="true" aborted="true" name="ITU - Cistite" cid="33" timeExecution="931.863252">
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2142" executed="true" creationDate="2018-07-23T10:06:09.903-0300" modificationDate="2018-07-23T09:59:04.223-0300" executionDate="2018-07-23T10:12:23.111-0300" createdById="141" executedById="141" name="Informar Sexo do paciente" next="/atendimentos/1402/protocolos/1822/passos/2143/">
     <step id="101" type="AuxilioConduta" name="Informar Sexo do paciente" description="Informe o sexo do paciente para seguir com o tratamento adequado." isInitial="true"/>
-    <answer id="2644" type="RespostaSimOuNao">
+    <answer id="2644" type="RespostaSimOuNao" justification="">
       <question id="93" text="Masculino">
-        <variable id="170" type="SimOuNao" name="sexo_masculino" weight="1.0"/>
+        <variable id="170" type="SimOuNao" name="sexo_masculino" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
-    <answer id="2645" type="RespostaSimOuNao">
+    <answer id="2645" type="RespostaSimOuNao" justification="">
       <question id="94" text="Feminino">
-        <variable id="171" type="SimOuNao" name="sexo_feminino" weight="1.0"/>
+        <variable id="171" type="SimOuNao" name="sexo_feminino" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="2143" executed="true" creationDate="2018-07-23T10:00:04.616-0300" modificationDate="2018-07-23T10:08:39.795-0300" executionDate="2018-07-23T10:06:49.539-0300" createdById="141" executedById="141" name="[Masculino] Avaliar Sintomas" previous="/atendimentos/1402/protocolos/1822/passos/2142/" next="/atendimentos/1402/protocolos/1822/passos/2144/">
     <step id="102" type="AuxilioConduta" name="[Masculino] Avaliar Sintomas" description="Informe os sintomas apresentados pelo paciente."/>
-    <answer id="2646" type="RespostaSimOuNao">
+    <answer id="2646" type="RespostaSimOuNao" justification="">
       <question id="95" text="Sintomas por mais de 7 dias">
-        <variable id="172" type="SimOuNao" name="avaliar_sintomas_homem_7_dias" weight="1.0"/>
+        <variable id="172" type="SimOuNao" name="avaliar_sintomas_homem_7_dias" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2647" type="RespostaSimOuNao">
+    <answer id="2647" type="RespostaSimOuNao" justification="">
       <question id="96" text="Imunossupressão">
-        <variable id="173" type="SimOuNao" name="avaliar_sintomas_homem_imunossupressao" weight="1.0"/>
+        <variable id="173" type="SimOuNao" name="avaliar_sintomas_homem_imunossupressao" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2648" type="RespostaSimOuNao">
+    <answer id="2648" type="RespostaSimOuNao" justification="">
       <question id="97" text="DM">
-        <variable id="174" type="SimOuNao" name="avaliar_sintomas_homem_dm" weight="1.0"/>
+        <variable id="174" type="SimOuNao" name="avaliar_sintomas_homem_dm" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2649" type="RespostaSimOuNao">
+    <answer id="2649" type="RespostaSimOuNao" justification="">
       <question id="98" text="Idade > 65 anos">
-        <variable id="175" type="SimOuNao" name="avaliar_sintomas_homem_idoso" weight="1.0"/>
+        <variable id="175" type="SimOuNao" name="avaliar_sintomas_homem_idoso" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2650" type="RespostaSimOuNao">
+    <answer id="2650" type="RespostaSimOuNao" justification="">
       <question id="99" text="Alterações Urológicas ou DRC?">
-        <variable id="176" type="SimOuNao" name="avaliar_sintomas_homem_alteracoes_urologicas" weight="1.0"/>
+        <variable id="176" type="SimOuNao" name="avaliar_sintomas_homem_alteracoes_urologicas" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2651" type="RespostaSimOuNao">
+    <answer id="2651" type="RespostaSimOuNao" justification="">
       <question id="100" text="Recorrência dos sintomas por mais de 14 dias">
-        <variable id="177" type="SimOuNao" name="avaliar_sintomas_homem_14_dias" weight="1.0"/>
+        <variable id="177" type="SimOuNao" name="avaliar_sintomas_homem_14_dias" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
-    <answer id="2652" type="RespostaSimOuNao">
+    <answer id="2652" type="RespostaSimOuNao" justification="">
       <question id="101" text="Paciente em uso de antibiótico recente (há 48-72H), sem melhora dos sintomas?">
-        <variable id="178" type="SimOuNao" name="antibiotico_recente_masc" weight="1.0"/>
+        <variable id="178" type="SimOuNao" name="antibiotico_recente_masc" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:ETreatment" id="2144" creationDate="2018-07-23T10:10:22.518-0300" modificationDate="2018-07-23T10:10:22.563-0300" createdById="141" name="[Masculino] Solicitar Exames" previous="/atendimentos/1402/protocolos/1822/passos/2143/">

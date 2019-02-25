@@ -4,92 +4,108 @@
     <step id="21" type="AuxilioConduta" name="Verificar Critérios para SEPSE" description="Verifique os critérios para SIRS" isInitial="true"/>
     <answer id="41" type="RespostaSimOuNao">
       <question id="67" text="TAX > 37.8ºc ou &lt; 35ºc?">
-        <variable id="67" type="SimOuNao" name="ver_sepse_tax" weight="1.0"/>
+        <variable id="67" type="SimOuNao" name="ver_sepse_tax" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="42" type="RespostaSimOuNao">
       <question id="68" text="FC > 90 bpm?">
-        <variable id="68" type="SimOuNao" name="ver_sep_fc" weight="1.0"/>
+        <variable id="68" type="SimOuNao" name="ver_sep_fc" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="43" type="RespostaSimOuNao">
       <question id="69" text="FR > 20 irpm?">
-        <variable id="69" type="SimOuNao" name="ver_sep_fr" weight="1.0"/>
+        <variable id="69" type="SimOuNao" name="ver_sep_fr" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="61" executed="true" creationDate="2018-03-20T13:47:11.981-0300" modificationDate="2018-03-20T13:35:46.921-0300" executionDate="2018-03-20T13:34:41.315-0300" createdById="1" executedById="1" name="Verificar Fatores Agravantes Para SEPSE" previous="/atendimentos/21/protocolos/41/passos/41/" next="/atendimentos/21/protocolos/41/passos/62/">
     <step id="22" type="AuxilioConduta" name="Verificar Fatores Agravantes Para SEPSE" description="Verifique se o paciente apresenta algum dos fatores a seguir."/>
     <answer id="61" type="RespostaSimOuNao">
       <question id="70" text="Oligúria / Anúria?">
-        <variable id="70" type="SimOuNao" name="fat_agra_oliguria" weight="1.0"/>
+        <variable id="70" type="SimOuNao" name="fat_agra_oliguria" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="62" type="RespostaSimOuNao">
       <question id="71" text="PAS &lt; 100 mmHg?">
-        <variable id="71" type="SimOuNao" name="fat_agra_pas" weight="1.0"/>
+        <variable id="71" type="SimOuNao" name="fat_agra_pas" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="63" type="RespostaSimOuNao">
       <question id="72" text="Agitação / Sonolência / Alteração Nível de Consciência?">
-        <variable id="72" type="SimOuNao" name="fat_agra_agita_sono_cons" weight="1.0"/>
+        <variable id="72" type="SimOuNao" name="fat_agra_agita_sono_cons" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="64" type="RespostaSimOuNao">
       <question id="73" text="Dispneia ou SatO2 &lt; 93%?">
-        <variable id="73" type="SimOuNao" name="fat_risc_disp_sat" weight="1.0"/>
+        <variable id="73" type="SimOuNao" name="fat_risc_disp_sat" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="62" executed="true" creationDate="2018-03-20T13:37:16.171-0300" modificationDate="2018-03-20T13:36:45.742-0300" executionDate="2018-03-20T13:36:17.318-0300" createdById="1" executedById="1" name="Verificar Idade do Paciente" previous="/atendimentos/21/protocolos/41/passos/61/" next="/atendimentos/21/protocolos/41/passos/63/">
     <step id="4" type="AuxilioConduta" name="Verificar Idade do Paciente" description="Verifique a idade do paciente"/>
     <answer id="65" type="RespostaNumerica">
       <question id="1" text="Idade:">
-        <variable id="1" type="Numerica" name="idade" weight="1.0"/>
+        <variable id="1" type="Numerica" name="idade" weight="1.0" value="0.0"/>
       </question>
+      <value xsi:type="MetamodelExecution:Numeric" value="16.0"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="63" executed="true" creationDate="2018-03-20T13:37:49.105-0300" modificationDate="2018-03-20T13:40:40.857-0300" executionDate="2018-03-20T13:37:37.438-0300" createdById="1" executedById="1" name="Verificar Comorbidades" previous="/atendimentos/21/protocolos/41/passos/62/" next="/atendimentos/21/protocolos/41/passos/64/">
     <step id="5" type="AuxilioConduta" name="Verificar Comorbidades" description="Verifique se o paciente possui alguma comorbidade."/>
     <answer id="66" type="RespostaSimOuNao">
       <question id="2" text="DPOC?">
-        <variable id="2" type="SimOuNao" name="comorbidades_dpoc" weight="1.0"/>
+        <variable id="2" type="SimOuNao" name="comorbidades_dpoc" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="67" type="RespostaSimOuNao">
       <question id="3" text="ICC?">
-        <variable id="3" type="SimOuNao" name="comorbidades_ICC" weight="1.0"/>
+        <variable id="3" type="SimOuNao" name="comorbidades_ICC" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="68" type="RespostaSimOuNao">
       <question id="4" text="IRC?">
-        <variable id="4" type="SimOuNao" name="comorbidades_IRC" weight="1.0"/>
+        <variable id="4" type="SimOuNao" name="comorbidades_IRC" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="69" type="RespostaSimOuNao">
       <question id="5" text="Doença Hepática Crônica?">
-        <variable id="5" type="SimOuNao" name="comorbidades_doenca_hepatica" weight="1.0"/>
+        <variable id="5" type="SimOuNao" name="comorbidades_doenca_hepatica" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="70" type="RespostaSimOuNao">
       <question id="6" text="Doenças Neurodegenerativas?">
-        <variable id="6" type="SimOuNao" name="comorbidades_doenca_neurodegen" weight="1.0"/>
+        <variable id="6" type="SimOuNao" name="comorbidades_doenca_neurodegen" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="71" type="RespostaSimOuNao">
       <question id="7" text="Doença Neoplásica?">
-        <variable id="7" type="SimOuNao" name="comorbidades_doenca_neoplasica" weight="1.0"/>
+        <variable id="7" type="SimOuNao" name="comorbidades_doenca_neoplasica" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="72" type="RespostaSimOuNao">
       <question id="8" text="Imunossupressão?">
-        <variable id="8" type="SimOuNao" name="comorbidades_imunossupressao" weight="1.0"/>
+        <variable id="8" type="SimOuNao" name="comorbidades_imunossupressao" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="73" type="RespostaSimOuNao">
       <question id="9" text="Internamento Recente (útimos 30 dias)?">
-        <variable id="9" type="SimOuNao" name="comorbidades_internamento" weight="1.0"/>
+        <variable id="9" type="SimOuNao" name="comorbidades_internamento" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:ETreatment" id="64" executed="true" creationDate="2018-03-20T13:42:39.454-0300" modificationDate="2018-03-26T10:02:26.067-0300" executionDate="2018-03-26T10:15:25.047-0300" createdById="1" executedById="21" name="Raio X de Tórax" previous="/atendimentos/21/protocolos/41/passos/63/" next="/atendimentos/21/protocolos/41/passos/201/">
@@ -105,8 +121,9 @@
     <step id="8" type="AuxilioConduta" name="Avaliar Resultados" description="Avalie o resultado do exame do paciente. Verifique a presença de infiltrados no resultado do exame."/>
     <answer id="161" type="RespostaSimOuNao">
       <question id="10" text="Há infiltrado?">
-        <variable id="10" type="SimOuNao" name="ha_infiltrado" weight="1.0"/>
+        <variable id="10" type="SimOuNao" name="ha_infiltrado" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EInformation" id="581" executed="true" creationDate="2018-04-16T17:45:20.525-0300" modificationDate="2018-04-16T17:48:02.790-0300" executionDate="2018-04-16T17:48:02.641-0300" createdById="21" executedById="21" name="Aviso: Alterações Importantes" previous="/atendimentos/21/protocolos/41/passos/201/" next="/atendimentos/21/protocolos/41/passos/582/">
@@ -116,99 +133,117 @@
     <step id="11" type="AuxilioConduta" name="[Port 2] Avaliar Fatores de Risco Para Influenza" description="Avalie se o paciente apresenta fatores que indicam risco de Influenza."/>
     <answer id="781" type="RespostaSimOuNao">
       <question id="11" text="Tosse?">
-        <variable id="11" type="SimOuNao" name="port2_fatores_risco_tosse" weight="1.0"/>
+        <variable id="11" type="SimOuNao" name="port2_fatores_risco_tosse" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
     <answer id="782" type="RespostaSimOuNao">
       <question id="12" text="Febre?">
-        <variable id="12" type="SimOuNao" name="port2_fatores_risco_febre" weight="1.0"/>
+        <variable id="12" type="SimOuNao" name="port2_fatores_risco_febre" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
     <answer id="783" type="RespostaSimOuNao">
       <question id="13" text="Dor de garganta?">
-        <variable id="13" type="SimOuNao" name="port2_fatores_risco_dor" weight="1.0"/>
+        <variable id="13" type="SimOuNao" name="port2_fatores_risco_dor" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="583" executed="true" creationDate="2018-04-16T17:39:20.210-0300" modificationDate="2018-04-16T17:39:22.781-0300" executionDate="2018-04-16T17:54:53.178-0300" createdById="21" executedById="21" name="[Port 2] Avaliar Fatores Agravantes para Influenza" previous="/atendimentos/21/protocolos/41/passos/582/" next="/atendimentos/21/protocolos/41/passos/584/">
     <step id="12" type="AuxilioConduta" name="[Port 2] Avaliar Fatores Agravantes para Influenza" description="Avalie se o paciente apresenta algum dos fatores que podem ser indicadores agravantes no caso de Influenza"/>
     <answer id="784" type="RespostaSimOuNao">
       <question id="14" text="Mialgia?">
-        <variable id="14" type="SimOuNao" name="port2_agravantes_mialgia" weight="1.0"/>
+        <variable id="14" type="SimOuNao" name="port2_agravantes_mialgia" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
     <answer id="785" type="RespostaSimOuNao">
       <question id="15" text="Cefaléia?">
-        <variable id="15" type="SimOuNao" name="port2_agravantes_cefaleia" weight="1.0"/>
+        <variable id="15" type="SimOuNao" name="port2_agravantes_cefaleia" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="786" type="RespostaSimOuNao">
       <question id="16" text="Artralgia?">
-        <variable id="16" type="SimOuNao" name="port2_agravantes_artralgia" weight="1.0"/>
+        <variable id="16" type="SimOuNao" name="port2_agravantes_artralgia" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="787" type="RespostaSimOuNao">
       <question id="17" text="Diarréia?">
-        <variable id="17" type="SimOuNao" name="port2_agravantes_diarreia" weight="1.0"/>
+        <variable id="17" type="SimOuNao" name="port2_agravantes_diarreia" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EAuxiliaryConduct" id="584" executed="true" creationDate="2018-04-16T17:40:38.209-0300" modificationDate="2018-04-16T17:40:05.428-0300" executionDate="2018-04-16T17:52:48.002-0300" createdById="21" executedById="21" name="[Port 2] Avaliar Complicações para Influenza" previous="/atendimentos/21/protocolos/41/passos/583/" next="/atendimentos/21/protocolos/41/passos/585/">
     <step id="13" type="AuxilioConduta" name="[Port 2] Avaliar Complicações para Influenza" description="Verifique se o paciente possui alguma comorbidade ou fator agravante para o quadro de Influenza."/>
     <answer id="788" type="RespostaSimOuNao">
       <question id="18" text="Gestante/Puerperas?">
-        <variable id="18" type="SimOuNao" name="port2_complicacoes_gestante" weight="1.0"/>
+        <variable id="18" type="SimOuNao" name="port2_complicacoes_gestante" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo" value="true"/>
     </answer>
     <answer id="789" type="RespostaSimOuNao">
       <question id="19" text="Idade > 60?">
-        <variable id="19" type="SimOuNao" name="port2_complicacoes_idade" weight="1.0"/>
+        <variable id="19" type="SimOuNao" name="port2_complicacoes_idade" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="790" type="RespostaSimOuNao">
       <question id="20" text="Pneumopatias?">
-        <variable id="20" type="SimOuNao" name="port2_complicacoes_pneumopatias" weight="1.0"/>
+        <variable id="20" type="SimOuNao" name="port2_complicacoes_pneumopatias" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="791" type="RespostaSimOuNao">
       <question id="21" text="ICC?">
-        <variable id="21" type="SimOuNao" name="port2_complicacoes_ICC" weight="1.0"/>
+        <variable id="21" type="SimOuNao" name="port2_complicacoes_ICC" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="792" type="RespostaSimOuNao">
       <question id="22" text="Doença Renal Crônica?">
-        <variable id="22" type="SimOuNao" name="port2_complicacoes_doenca_renal" weight="1.0"/>
+        <variable id="22" type="SimOuNao" name="port2_complicacoes_doenca_renal" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="793" type="RespostaSimOuNao">
       <question id="23" text="Cirrose Hepática?">
-        <variable id="23" type="SimOuNao" name="port2_complicacoes_cirrose" weight="1.0"/>
+        <variable id="23" type="SimOuNao" name="port2_complicacoes_cirrose" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="794" type="RespostaSimOuNao">
       <question id="24" text="Neoplasias?">
-        <variable id="24" type="SimOuNao" name="port2_complicacoes_neoplasias" weight="1.0"/>
+        <variable id="24" type="SimOuNao" name="port2_complicacoes_neoplasias" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="795" type="RespostaSimOuNao">
       <question id="25" text="Diabetes?">
-        <variable id="25" type="SimOuNao" name="port2_complicacoes_diabetes" weight="1.0"/>
+        <variable id="25" type="SimOuNao" name="port2_complicacoes_diabetes" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="796" type="RespostaSimOuNao">
       <question id="26" text="Doenças Neurodegenerativas?">
-        <variable id="26" type="SimOuNao" name="port2_complicacoes_doencas_neurodegen" weight="1.0"/>
+        <variable id="26" type="SimOuNao" name="port2_complicacoes_doencas_neurodegen" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="797" type="RespostaSimOuNao">
       <question id="27" text="Obesidade Mórbida (IMC > 40)?">
-        <variable id="27" type="SimOuNao" name="port2_complicacoes_obesidade" weight="1.0"/>
+        <variable id="27" type="SimOuNao" name="port2_complicacoes_obesidade" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
     <answer id="798" type="RespostaSimOuNao">
       <question id="28" text="Imunossupressão?">
-        <variable id="28" type="SimOuNao" name="port2_complicacoes_imunossupressao" weight="1.0"/>
+        <variable id="28" type="SimOuNao" name="port2_complicacoes_imunossupressao" weight="1.0" value="false"/>
       </question>
+      <value xsi:type="MetamodelExecution:YesOrNo"/>
     </answer>
   </eStep>
   <eStep xsi:type="MetamodelExecution:EInformation" id="585" executed="true" creationDate="2018-04-16T17:41:59.444-0300" modificationDate="2018-04-16T17:51:07.426-0300" executionDate="2018-04-16T17:51:07.270-0300" createdById="21" executedById="21" name="[Port 2] Aviso Influenza" previous="/atendimentos/21/protocolos/41/passos/584/" next="/atendimentos/21/protocolos/41/passos/586/">
