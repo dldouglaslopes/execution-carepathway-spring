@@ -64,7 +64,7 @@ public class QConductsService {
 			qConduct.getConduct().add(conduct);
 		}
 		
-		eQuery.setEMethod(qConduct);
+		eQuery.getEMethod().add(qConduct);
 		
 		return eQuery;
 	}

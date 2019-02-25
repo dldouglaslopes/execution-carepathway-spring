@@ -60,8 +60,7 @@ public class QReturnResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = returnService.returnPatient(eQuery, null);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
@@ -93,8 +92,7 @@ public class QReturnResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = returnService.returnPatient(eQuery, null);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
@@ -128,8 +126,7 @@ public class QReturnResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = returnService.returnPatient(eQuery, codePatient);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
@@ -162,8 +159,7 @@ public class QReturnResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = returnService.returnPatient(eQuery, codePatient);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 

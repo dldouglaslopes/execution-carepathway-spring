@@ -11,9 +11,15 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import QueryMetamodel.ABoolean;
+import QueryMetamodel.ANumeric;
 import QueryMetamodel.ARange;
 import QueryMetamodel.CarePathway;
 import QueryMetamodel.EQuery;
+import QueryMetamodel.Pathway;
+import QueryMetamodel.QAnswer;
+import QueryMetamodel.Query_metamodelFactory;
+import QueryMetamodel.Question;
 
 @Service
 public class QAnswerService {
@@ -25,36 +31,104 @@ public class QAnswerService {
 	private Map<String, Integer> noMap;
 	private Map<String, Map<String,Double>> numericMap;
 	
-	public EQuery occorrencesAnswer(EQuery eQuery, String questionStr) { //querying the average time		
+	public EQuery getOccorrencesAnswer(EQuery eQuery, String questionStr, String type) { //querying the average time		
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
 			for (CarePathway carePathway : CarePathway.VALUES) {
 				eQuery.getEAttribute().getCarePathway().setName(carePathway);
 				List<Document> docs = service.filterDocuments(eQuery);
-				getVariables(docs, questionStr);	
-				getAnswers(eQuery.getEAttribute().getRange());
+				if (!docs.isEmpty()) {
+					getVariables(docs, questionStr, type);	
+					getAnswers(eQuery.getEAttribute().getRange());
+					List<Question> questions = getQuestions(carePathway, 
+															eQuery.getEAttribute().getRange());				
+					Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
+					pathway.setName(carePathway.getName());
+					pathway.setPercentage("");
+					pathway.setQuantity(0);
+					QAnswer qAnswer = Query_metamodelFactory.eINSTANCE.createQAnswer();
+					qAnswer.setPathway(pathway);					
+					for (Question question : questions) {
+						qAnswer.getQuestion().add(question);
+					}	
+					eQuery.getEMethod().add(qAnswer);
+				}			
 			}	
 		}
 		else {
+			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
 			List<Document> docs = service.filterDocuments(eQuery);
-			getVariables(docs, questionStr);
-			getAnswers(eQuery.getEAttribute().getRange());	
+			getVariables(docs, questionStr, type);
+			getAnswers(eQuery.getEAttribute().getRange());
+			List<Question> questions = getQuestions(carePathway, 
+													eQuery.getEAttribute().getRange());
+			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
+			pathway.setName(carePathway.getName());
+			pathway.setPercentage("");
+			pathway.setQuantity(0);
+			QAnswer qAnswer = Query_metamodelFactory.eINSTANCE.createQAnswer();
+			qAnswer.setPathway(pathway);					
+			for (Question question : questions) {
+				qAnswer.getQuestion().add(question);
+			}	
+			eQuery.getEMethod().add(qAnswer);			
 		}
 		return eQuery;
 	}
 	
+	private List<Question> getQuestions(CarePathway carePathway, ARange range) {
+		List<Question> questions = new ArrayList<>();
+		for ( String key : yesMap.keySet()) {
+			ABoolean aBoolean = Query_metamodelFactory.eINSTANCE.createABoolean();
+			aBoolean.setFalseQuantity(noMap.get(key));
+			aBoolean.setTrueQuantity(yesMap.get(key));
+			Question question = Query_metamodelFactory.eINSTANCE.createQuestion();
+			question.setName(key);
+			question.setQuantity(yesMap.get(key) + noMap.get(key));
+			question.setType("BooleanAnswer");
+			question.setPercentage("");
+			question.getAnswer().add(aBoolean);
+			questions.add(question);
+		}
+		for ( String key : numericMap.keySet()) {
+			Question question = Query_metamodelFactory.eINSTANCE.createQuestion();
+			question.setName(key);
+			question.setQuantity(0);
+			question.setType("NumericAnswer");
+			question.setPercentage("");
+			List<Entry<String, Double>> listKey = new LinkedList<>( numericMap.get(key).entrySet());
+			service.sort( listKey, range.getOrder());	//sorting the list following the order		
+			listKey = service.select( range.getQuantity(), listKey); //dividing the list
+			for (int i = 0; i < listKey.size(); i++) {
+				ANumeric aNumeric = Query_metamodelFactory.eINSTANCE.createANumeric();
+				aNumeric.setQuantity( listKey.get(i).getValue().intValue());
+				aNumeric.setValue(Double.parseDouble(listKey.get(i).getKey()));
+				question.getAnswer().add(aNumeric);
+			}			
+			questions.add(question);
+		}
+		return questions;
+	}
+
 	private void getAnswers(ARange range) {
+		yesMap = new HashMap<>();
+		noMap = new HashMap<>();	
+		numericMap = new HashMap<>();
 		for (String key : variablesMap.keySet()) {
 			List<String> variablesList = variablesMap.get(key);
 			for (String data : variablesList) {
 				String[] dataArr = data.split("-");
 				String type = dataArr[0];
-				String value = dataArr[1];
-				if (type == "RespostaNumerica") {
-					getNumericAnswers(key, range, value);
-				}
-				else if(type == "RespostaSimOuNao") {
-					getBooleanAnswers(key, Boolean.parseBoolean(value));
-				}
+				String value = "";
+
+				if (dataArr.length > 1) {
+					value = dataArr[1];	
+					if (type.equals("RespostaNumerica")) {
+						getNumericAnswers(key, range, value);
+					}
+					else if(type.equals("RespostaSimOuNao")) {
+						getBooleanAnswers(key, Boolean.parseBoolean(value));
+					}
+				}				
 			}
 		}
 	}
@@ -69,18 +143,13 @@ public class QAnswerService {
 				numericMap.get(key).put(num, 1.0);
 			}
 		}				
-		else {
+		else {			
 			numericMap.put(key, new HashMap<>());
 			numericMap.get(key).put(num, 1.0);
-		}		
-//		for (String key : numericMap.keySet()) {
-//			List<Entry<String, Double>> listKey = new LinkedList<>( numericMap.get(key).entrySet());
-//			service.sort( listKey, range.getOrder());	//sorting the list following the order		
-//			listKey = service.select( range.getQuantity(), listKey); //dividing the list
-//		}
+		}						
 	}
 
-	private void getBooleanAnswers(String key, boolean bool) {
+	private void getBooleanAnswers(String key, boolean bool) {	
 		if (bool) {
 			if (yesMap.containsKey(key)) {
 				int sum = yesMap.get(key) + 1;
@@ -100,17 +169,17 @@ public class QAnswerService {
 				yesMap.put(key, 0);
 				noMap.put(key, 1);
 			}
-		}
+		}		
 	}
 	
-	private void getVariables(List<Document> docs, String questionStr) {
+	private void getVariables(List<Document> docs, String questionStr, String type) {
 		variablesMap = new HashMap<>();
 		for (Document document : docs) {
 			List<Document> eSteps = document.get("executedSteps", new ArrayList<>());			
 			for (Document eStep : eSteps) {
 				Document step = eStep.get("step", new Document());
-				String type = step.getString("type");				
-				if (type.equals("AuxilioConduta")) {
+				String typeStr = step.getString("type");				
+				if (typeStr.equals("AuxilioConduta")) {
 					List<Document> answersList = eStep.get("answer", new ArrayList<>());				
 					for (Document answer : answersList) {
 						Document question = answer.get("question", new Document());
@@ -126,8 +195,18 @@ public class QAnswerService {
 									value.getBoolean("value");
 						}						
 						if (questionStr == null) {
-							add(text, data);
-						}						
+							if (type.isEmpty()) {
+								add(text, data);
+							}
+							else {
+								if (type.equals("boolean")) {
+									add(text, data);
+								}
+								else if(type.equals("numeric")) {
+									add(text, data);
+								}
+							}
+						}
 						else {							
 							if (questionStr.equals(text)) {
 								add(text, data);

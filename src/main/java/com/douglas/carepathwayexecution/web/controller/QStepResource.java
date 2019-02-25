@@ -62,7 +62,7 @@ public class QStepResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = stepService.recurrentStep(eQuery, null);
-		queryDTO.setMethod(eQuery.getEMethod());
+		queryDTO.setMethod( eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
 	}
@@ -95,8 +95,7 @@ public class QStepResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = stepService.recurrentStep(eQuery, null);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
@@ -129,8 +128,7 @@ public class QStepResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = stepService.recurrentStep(eQuery, step);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
@@ -164,8 +162,7 @@ public class QStepResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = stepService.recurrentStep(eQuery, step);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 }

@@ -52,7 +52,7 @@ public class QFlowService {
 			recurrentFlow.getPathway().add(pathway);
 		}	
 		
-		eQuery.setEMethod(recurrentFlow);
+		eQuery.getEMethod().add(recurrentFlow);
 		
 		return eQuery;
 	}	

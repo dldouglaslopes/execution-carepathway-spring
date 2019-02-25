@@ -62,8 +62,7 @@ public class QExamResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = examService.recurrentExam(eQuery, null);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());		
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
@@ -95,8 +94,7 @@ public class QExamResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = examService.recurrentExam(eQuery, null);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
@@ -129,8 +127,7 @@ public class QExamResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = examService.recurrentExam(eQuery, exam);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
@@ -164,8 +161,7 @@ public class QExamResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = examService.recurrentExam(eQuery, exam);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 }

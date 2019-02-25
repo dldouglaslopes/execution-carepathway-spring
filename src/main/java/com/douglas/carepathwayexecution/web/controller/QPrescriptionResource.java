@@ -59,8 +59,7 @@ public class QPrescriptionResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = prescriptionService.recurrentPrescription(eQuery, null);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
@@ -93,8 +92,7 @@ public class QPrescriptionResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = prescriptionService.recurrentPrescription(eQuery, null);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
@@ -128,8 +126,7 @@ public class QPrescriptionResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = prescriptionService.recurrentPrescription(eQuery, prescription);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
@@ -164,8 +161,7 @@ public class QPrescriptionResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = prescriptionService.recurrentPrescription(eQuery, prescription);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 

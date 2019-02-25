@@ -53,7 +53,7 @@ public class QAverageTimeService {
 			qAverageTime.getAverageTime().add(averageTime);	
 		}			
 		
-		eQuery.setEMethod(qAverageTime);
+		eQuery.getEMethod().add(qAverageTime);
 		
 		return eQuery;
 	}

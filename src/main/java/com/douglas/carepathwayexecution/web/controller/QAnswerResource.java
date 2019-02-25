@@ -37,11 +37,12 @@ public class QAnswerResource {
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/answers" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/{type}answers" }, 
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndAllQuestions(
 		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "type", required=false) String type,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -61,9 +62,9 @@ public class QAnswerResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = answerService.occorrencesAnswer(eQuery, null);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		eQuery = answerService.getOccorrencesAnswer(eQuery, null, type);
+		queryDTO.setMethod( eQuery.getEMethod());
+
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
@@ -75,7 +76,7 @@ public class QAnswerResource {
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToAllPathwaysAndOneQuestion(
-		@PathVariable( value = "name", required=true) String question,		
+		@PathVariable( value = "name", required=true) String question,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -95,9 +96,8 @@ public class QAnswerResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = answerService.occorrencesAnswer(eQuery, question);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		eQuery = answerService.getOccorrencesAnswer(eQuery, question, null);
+		queryDTO.setMethod( eQuery.getEMethod());		
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
@@ -105,10 +105,11 @@ public class QAnswerResource {
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/answers" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{type}answers" }, 
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToAllPathwaysAndAllQuestions(
+		@PathVariable( value = "type", required=false) String type,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -128,9 +129,8 @@ public class QAnswerResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = answerService.occorrencesAnswer(eQuery, null);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		eQuery = answerService.getOccorrencesAnswer(eQuery, null, type);
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
@@ -163,9 +163,8 @@ public class QAnswerResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = answerService.occorrencesAnswer(eQuery, question);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		eQuery = answerService.getOccorrencesAnswer(eQuery, question, null);
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 

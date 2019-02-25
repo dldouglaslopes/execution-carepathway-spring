@@ -16,6 +16,7 @@ import com.douglas.carepathwayexecution.web.domain.EQueryDTO;
 import com.douglas.carepathwayexecution.web.service.QCarePathwayService;
 import com.douglas.carepathwayexecution.web.service.QStopService;
 
+import QueryMetamodel.EMethod;
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Query_metamodelFactory;
 import io.swagger.annotations.Api;
@@ -62,8 +63,7 @@ public class QStopResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = stopService.recurrentStopStep(eQuery, null);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
@@ -95,8 +95,7 @@ public class QStopResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = stopService.recurrentStopStep(eQuery, null);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
@@ -129,8 +128,7 @@ public class QStopResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = stopService.recurrentStopStep(eQuery, step);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
@@ -164,8 +162,9 @@ public class QStopResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = stopService.recurrentStopStep(eQuery, step);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		for (EMethod eMethod: eQuery.getEMethod()) {
+			queryDTO.getMethod().add(eMethod);
+		}
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
@@ -198,8 +197,7 @@ public class QStopResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = stopService.recurrentStopPathway(eQuery);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
@@ -231,8 +229,7 @@ public class QStopResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = stopService.recurrentStopPathway(eQuery);
-		queryDTO.setMethod(eQuery.getEMethod());
-		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 }

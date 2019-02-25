@@ -136,7 +136,7 @@ public class QMedicationService {
 			eMedication.getMedications().add(medication);
 		}
 		
-		eQuery.setEMethod(eMedication);
+		eQuery.getEMethod().add(eMedication);
 		
 		return eQuery;
 	}

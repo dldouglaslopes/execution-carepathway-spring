@@ -1,5 +1,7 @@
 package com.douglas.carepathwayexecution.web.domain;
 
+import java.util.List;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import QueryMetamodel.EAttribute;
@@ -7,23 +9,23 @@ import QueryMetamodel.EMethod;
 
 @Document
 public class EQueryDTO {
-	private EMethod method;
+	private List<EMethod> methods;
 	private EAttribute attribute;
 	
 	public EQueryDTO() {}
 	
-	public EQueryDTO(EMethod method, EAttribute attribute) {
+	public EQueryDTO(List<EMethod> methods, EAttribute attribute) {
 		super();
 		this.attribute = attribute;
-		this.method = method;
+		this.methods = methods;
 	}	
 
-	public EMethod getMethod() {
-		return method;
+	public List<EMethod> getMethod() {
+		return methods;
 	}
 
-	public void setMethod(EMethod method) {
-		this.method = method;
+	public void setMethod(List<EMethod> methods) {
+		this.methods = methods;
 	}
 	
 	public EAttribute getAttribute() {

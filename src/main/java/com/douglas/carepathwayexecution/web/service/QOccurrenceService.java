@@ -49,7 +49,7 @@ public class QOccurrenceService {
 			}				
 		}
 				
-		eQuery.setEMethod(qOccurrence);
+		eQuery.getEMethod().add(qOccurrence);
 		
 		return eQuery;
 	}

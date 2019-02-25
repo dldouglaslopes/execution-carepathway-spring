@@ -77,7 +77,7 @@ public class QStatusService {
 			qStatus.getStatus().add(status);
 		}
 		
-		eQuery.setEMethod(qStatus);
+		eQuery.getEMethod().add(qStatus);
 		
 		return eQuery;				
 	}
