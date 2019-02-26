@@ -34,6 +34,7 @@ public class QMedicationService {
 				List<Document> docs = service.filterDocuments(eQuery);
 				if (!docs.isEmpty()) {
 					List<Entry<String, Double>> medications = getMedicationInPathways(docs,
+																					name,
 																					eQuery.getEAttribute().getRange());
 					QMedication qMedication =  Query_metamodelFactory.eINSTANCE.createQMedication();
 					for (Entry<String, Double> entry : medications) {
@@ -43,6 +44,33 @@ public class QMedicationService {
 						medication.setQuantity(medicationsMap.get(entry.getKey()));;
 						qMedication.getMedications().add(medication);
 					}
+					if (!medications.isEmpty()) {
+						Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
+						pathway.setName(carePathway.getName());
+						pathway.setPercentage("");
+						pathway.setQuantity(medications.size());
+						qMedication.setPathway(pathway);
+						eQuery.getEMethod().add(qMedication);
+					}
+				}
+			}
+		}
+		else{
+			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
+			List<Document> docs = service.filterDocuments(eQuery);
+			if (!docs.isEmpty()) {
+				List<Entry<String, Double>> medications = getMedicationInPathways(docs,
+																				name,
+																				eQuery.getEAttribute().getRange());
+				QMedication qMedication =  Query_metamodelFactory.eINSTANCE.createQMedication();
+				for (Entry<String, Double> entry : medications) {
+					Medication medication = Query_metamodelFactory.eINSTANCE.createMedication();
+					medication.setName(entry.getKey());
+					medication.setPercentage(percentMap.get(entry.getKey()) + "%");
+					medication.setQuantity(medicationsMap.get(entry.getKey()));;
+					qMedication.getMedications().add(medication);
+				}
+				if (!medications.isEmpty()) {
 					Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
 					pathway.setName(carePathway.getName());
 					pathway.setPercentage("");
@@ -52,41 +80,20 @@ public class QMedicationService {
 				}
 			}
 		}
-		else{
-			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
-			List<Document> docs = service.filterDocuments(eQuery);
-			if (!docs.isEmpty()) {
-				List<Entry<String, Double>> medications = getMedicationInPathways(docs,
-						eQuery.getEAttribute().getRange());
-				QMedication qMedication =  Query_metamodelFactory.eINSTANCE.createQMedication();
-				for (Entry<String, Double> entry : medications) {
-					Medication medication = Query_metamodelFactory.eINSTANCE.createMedication();
-					medication.setName(entry.getKey());
-					medication.setPercentage(percentMap.get(entry.getKey()) + "%");
-					medication.setQuantity(medicationsMap.get(entry.getKey()));;
-					qMedication.getMedications().add(medication);
-				}
-				Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
-				pathway.setName(carePathway.getName());
-				pathway.setPercentage("");
-				pathway.setQuantity(medications.size());
-				qMedication.setPathway(pathway);
-				eQuery.getEMethod().add(qMedication);
-			}
-		}
 		
 		return eQuery;
 	}
 	
-	public List<Entry<String, Double>> getMedicationInPathways(List<Document> docs, ARange range) { //the medication in executed step or conduct complementary
+	public List<Entry<String, Double>> getMedicationInPathways(List<Document> docs, String name, ARange range) { //the medication in executed step or conduct complementary
+		medicationsMap = new HashMap<>();
 		for( Document doc : docs) {
 			List<Document> complementaryConducts = doc.get( "complementaryConducts", new ArrayList<Document>());			
 			if( !complementaryConducts.isEmpty()) {				
-				getMedicationInComplementaryConducts(complementaryConducts);
+				getMedicationInComplementaryConducts(complementaryConducts, name);
 			}	
 			List<Document> executedSteps = doc.get( "executedSteps", new ArrayList<Document>());
 			if (!executedSteps.isEmpty()) {
-				getMedicationsInSteps(executedSteps);
+				getMedicationsInSteps(executedSteps, name);
 			}							
 		}		
 		percentMap = new HashMap<>();
@@ -100,7 +107,7 @@ public class QMedicationService {
 		return list;
 	}
 	
-	public void getMedicationsInSteps(List<Document> executedSteps) { //the medication in executed step
+	public void getMedicationsInSteps(List<Document> executedSteps, String name) { //the medication in executed step
 		for( Document step : executedSteps) {				
 			Document prescribedResource = step.get( "step", new Document());
 			
@@ -112,7 +119,14 @@ public class QMedicationService {
 				for (Document document : prescribedMedication) {
 					Document medication = document.get( "medication", new Document());
 					String key = medication.getString( "name");							
-					add(key);							
+					if (name == null) {
+						add(key);
+					}			
+					else {
+						if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
+							add(key);
+						}
+					}							
 				}					
 			}
 			
@@ -122,19 +136,33 @@ public class QMedicationService {
 				for (Document document : prescribedPrescription) {
 					Document prescription = document.get( "prescription", new Document());
 					String key = prescription.getString( "medication");							
-					add(key);						
+					if (name == null) {
+						add(key);
+					}			
+					else {
+						if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
+							add(key);
+						}
+					}
 				}
 			}
 		}
 	}
 	
-	public void getMedicationInComplementaryConducts(List<Document> complementaryConducts) { //the medication in conduct complementary
+	public void getMedicationInComplementaryConducts(List<Document> complementaryConducts, String name) { //the medication in conduct complementary
 		for( Document complementaryConduct : complementaryConducts) {
 			Document prescribedResource = complementaryConduct.get( "prescribedresource", new Document());
 									
 			if( complementaryConduct.getString( "type").equals( "MedicamentoComplementar")) {
-				String key = prescribedResource.getString( "name");						
-				add(key);
+				String key = prescribedResource.getString( "name");
+				if (name == null) {
+					add(key);
+				}			
+				else {
+					if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
+						add(key);
+					}
+				}
 			}	
 		}
 	}

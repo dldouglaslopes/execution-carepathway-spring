@@ -207,10 +207,10 @@ public class QAnswerService {
 								}
 							}
 						}
-						else {							
-							if (questionStr.equals(text)) {
+						else {		
+							if (text.toLowerCase().matches(".*" + questionStr.toLowerCase() + ".*")) {
 								add(text, data);
-							}	
+							}
 						}
 					}
 				}
