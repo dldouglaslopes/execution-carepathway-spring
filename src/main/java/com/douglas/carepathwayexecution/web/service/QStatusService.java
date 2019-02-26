@@ -8,10 +8,11 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import QueryMetamodel.CarePathway;
 import QueryMetamodel.EQuery;
+import QueryMetamodel.Pathway;
 import QueryMetamodel.QStatus;
 import QueryMetamodel.Query_metamodelFactory;
-import QueryMetamodel.Status;
 
 @Service
 public class QStatusService {
@@ -65,19 +66,18 @@ public class QStatusService {
 				}
 			}
 		}
-
-		QStatus qStatus = Query_metamodelFactory.eINSTANCE.createQStatus();		
-		
 		for (String key : aborted.keySet()) {
-			Status status = Query_metamodelFactory.eINSTANCE.createStatus();
-			status.setAborted(aborted.get(key));
-			status.setCompleted(completed.get(key));
-			status.setInProgress(inProgress.get(key));
-			status.setName(key);
-			qStatus.getStatus().add(status);
+			QStatus qStatus = Query_metamodelFactory.eINSTANCE.createQStatus();
+			qStatus.setAborted(aborted.get(key));
+			qStatus.setCompleted(completed.get(key));
+			qStatus.setInProgress(inProgress.get(key));
+			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
+			pathway.setName(CarePathway.getByName(key).getName());
+			pathway.setPercentage("");
+			pathway.setQuantity(0);
+			qStatus.setPathway(pathway);
+			eQuery.getEMethod().add(qStatus);
 		}
-		
-		eQuery.getEMethod().add(qStatus);
 		
 		return eQuery;				
 	}

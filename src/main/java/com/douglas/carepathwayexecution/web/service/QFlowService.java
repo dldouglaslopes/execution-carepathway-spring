@@ -16,7 +16,7 @@ import QueryMetamodel.CarePathway;
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Flow;
 import QueryMetamodel.Pathway;
-import QueryMetamodel.QRecurrentFlow;
+import QueryMetamodel.QFlow;
 import QueryMetamodel.Query_metamodelFactory;
 import QueryMetamodel.Sequence;
 
@@ -27,45 +27,60 @@ public class QFlowService {
 	
 	private Map<String, Integer> flowMap;	
 
-	public EQuery getRecurrentFlows(EQuery eQuery) {
-		QRecurrentFlow recurrentFlow = Query_metamodelFactory.eINSTANCE.createQRecurrentFlow();			
+	public EQuery getRecurrentFlows(EQuery eQuery) {			
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {			
 			for (CarePathway carePathway : CarePathway.VALUES) {
+				QFlow recurrentFlow = Query_metamodelFactory.eINSTANCE.createQFlow();
 				eQuery.getEAttribute().getCarePathway().setName(carePathway);
 				List<Document> docs = service.filterDocuments(eQuery);	
 				if (!docs.isEmpty()) {
-					List<Entry<String, Double>> flows = getFlows(docs, 
+					List<Entry<String, Double>> flowsList = getFlows(docs, 
 																carePathway, 
 																eQuery.getEAttribute().getRange());
-					Pathway pathway = getPathways(flows, carePathway);	
-					recurrentFlow.getPathway().add(pathway);
-				}			
+					List<Flow> flows = getSequences(flowsList);
+					for (Flow flow : flows) {
+						recurrentFlow.getFlow().add(flow);
+					}
+					Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
+					pathway.setName(carePathway.getName());
+					pathway.setPercentage("");
+					pathway.setQuantity(0);
+					recurrentFlow.setPathway(pathway);
+					eQuery.getEMethod().add(recurrentFlow);
+				}
 			}			
 		}
 		else {
+			QFlow recurrentFlow = Query_metamodelFactory.eINSTANCE.createQFlow();
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
 			List<Document> docs = service.filterDocuments(eQuery);
-			List<Entry<String, Double>> flows = getFlows(docs, 
-														carePathway, 
-														eQuery.getEAttribute().getRange());
-			Pathway pathway = getPathways(flows, carePathway);
-			recurrentFlow.getPathway().add(pathway);
-		}	
-		
-		eQuery.getEMethod().add(recurrentFlow);
-		
+			if (!docs.isEmpty()) {
+				List<Entry<String, Double>> flowsList = getFlows(docs, 
+															carePathway, 
+															eQuery.getEAttribute().getRange());
+				List<Flow> flows = getSequences(flowsList);
+				for (Flow flow : flows) {
+					recurrentFlow.getFlow().add(flow);
+				}
+				Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
+				pathway.setName(carePathway.getName());
+				pathway.setPercentage("");
+				pathway.setQuantity(0);
+				recurrentFlow.setPathway(pathway);
+				eQuery.getEMethod().add(recurrentFlow);
+			}			
+		}		
 		return eQuery;
 	}	
 	
-	private Pathway getPathways(List<Entry<String, Double>> list, CarePathway carePathway) {
-		Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
-		pathway.setName(carePathway.getName());	
+	private List<Flow> getSequences(List<Entry<String, Double>> list) {
+		List<Flow> flows = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {			
 			Flow flow = Query_metamodelFactory.eINSTANCE.createFlow();
 			flow.setPercentage( service.decimalFormat(list.get(i).getValue()) + "%");
 			flow.setQuantity( flowMap.get( list.get(i).getKey()));
 			String flowStr = list.get(i).getKey();
-			String[] flowArr = flowStr.split("/");
+			String[] flowArr = flowStr.split("#");
 			for (int j = 0; j < flowArr.length; j++) {
 				String[] oneFlow = flowArr[j].split("-");
 				Sequence sequence = Query_metamodelFactory.eINSTANCE.createSequence();
@@ -74,11 +89,14 @@ public class QFlowService {
 				if (oneFlow.length > 2) {
 					sequence.setName(oneFlow[2]);
 				}
-				flow.getSequences().add(sequence);
-			}					
-			pathway.getFlow().add(flow);
+				else {
+					sequence.setName("");
+				}
+				flow.getSequences().add(sequence);				
+			}		
+			flows.add(flow);
 		}		
-		return pathway;
+		return flows;
 	}
 
 	private List<Entry<String, Double>> getFlows(List<Document> docs, CarePathway carePathway, ARange range) {					
@@ -93,7 +111,7 @@ public class QFlowService {
 				Document stepDoc = executedStepDoc.get("step", new Document());
 				flow += stepDoc.getString("type") + 
 						"-" + stepDoc.getInteger("_id") +
-						"-" + stepDoc.getString("name") + "/";
+						"-" + stepDoc.getString("name") + "#";
 			}								
 			if (flowMap.containsKey(flow)) {
 				int value = flowMap.get(flow) + 1;

@@ -9,8 +9,9 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import QueryMetamodel.Conduct;
+import QueryMetamodel.CarePathway;
 import QueryMetamodel.EQuery;
+import QueryMetamodel.Pathway;
 import QueryMetamodel.QConduct;
 import QueryMetamodel.Query_metamodelFactory;
 
@@ -53,19 +54,18 @@ public class QConductsService {
 				}
 			}
 		}
-
-		QConduct qConduct = Query_metamodelFactory.eINSTANCE.createQConduct();
-			
+	
 		for (String key : withConduct.keySet()) {
-			Conduct conduct = Query_metamodelFactory.eINSTANCE.createConduct();
-			conduct.setName(key);
-			conduct.setNoConduct(noConduct.get(key));
-			conduct.setWithConduct(withConduct.get(key));
-			qConduct.getConduct().add(conduct);
-		}
-		
-		eQuery.getEMethod().add(qConduct);
-		
+			QConduct qConduct = Query_metamodelFactory.eINSTANCE.createQConduct();
+			qConduct.setNoConduct(noConduct.get(key));
+			qConduct.setWithConduct(withConduct.get(key));
+			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
+			pathway.setName(CarePathway.getByName(key).getName());
+			pathway.setPercentage("");
+			pathway.setQuantity(0);
+			qConduct.setPathway(pathway);
+			eQuery.getEMethod().add(qConduct);
+		}		
 		return eQuery;
 	}
 }

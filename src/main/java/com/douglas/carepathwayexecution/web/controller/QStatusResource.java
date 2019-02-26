@@ -93,7 +93,7 @@ public class QStatusResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = statusService.countStatus(eQuery);
-		queryDTO.setMethod( eQuery.getEMethod());o		
+		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 

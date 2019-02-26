@@ -61,7 +61,7 @@ public class QMedicationResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = medicationService.prescribedMedication(eQuery);
+		eQuery = medicationService.getMedications(eQuery, null);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
@@ -93,7 +93,7 @@ public class QMedicationResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = medicationService.prescribedMedication(eQuery);
+		eQuery = medicationService.getMedications(eQuery, null);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
@@ -127,7 +127,7 @@ public class QMedicationResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = medicationService.prescribedMedication(eQuery, nameMedication);
+		eQuery = medicationService.getMedications(eQuery, nameMedication);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
@@ -160,7 +160,7 @@ public class QMedicationResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = medicationService.prescribedMedication(eQuery, nameMedication);
+		eQuery = medicationService.getMedications(eQuery, nameMedication);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}

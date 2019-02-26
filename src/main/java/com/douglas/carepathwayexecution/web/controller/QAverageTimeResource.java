@@ -62,7 +62,7 @@ public class QAverageTimeResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = timeService.averageByTime(eQuery);
+		eQuery = timeService.getAverageByTime(eQuery);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
@@ -95,7 +95,7 @@ public class QAverageTimeResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = timeService.averageByTime(eQuery);
+		eQuery = timeService.getAverageByTime(eQuery);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
@@ -128,7 +128,7 @@ public class QAverageTimeResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = timeService.averageByTime(eQuery);
+		eQuery = timeService.getAverageByTime(eQuery);
 		queryDTO.setMethod( eQuery.getEMethod());		
 		return ResponseEntity.ok().body(queryDTO);
 	}
@@ -160,7 +160,7 @@ public class QAverageTimeResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = timeService.averageByTime(eQuery);
+		eQuery = timeService.getAverageByTime(eQuery);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
