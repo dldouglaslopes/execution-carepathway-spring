@@ -116,7 +116,7 @@ public class QAnswerService {
 		for (String key : variablesMap.keySet()) {
 			List<String> variablesList = variablesMap.get(key);
 			for (String data : variablesList) {
-				String[] dataArr = data.split("-");
+				String[] dataArr = data.split("$");
 				String type = dataArr[0];
 				String value = "";
 
@@ -187,11 +187,11 @@ public class QAnswerService {
 						String text = question.getString("text");
 						String data = "";						
 						if (answer.getString("type").equals("RespostaNumerica")) {
-							data = answer.getString("type") + "-" +
+							data = answer.getString("type") + "$" +
 									value.getDouble("value");
 						}
 						else if (answer.getString("type").equals("RespostaSimOuNao")) {
-							data = answer.getString("type") + "-" +
+							data = answer.getString("type") + "$" +
 									value.getBoolean("value");
 						}						
 						if (questionStr == null) {

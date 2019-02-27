@@ -82,7 +82,7 @@ public class QFlowService {
 			String flowStr = list.get(i).getKey();
 			String[] flowArr = flowStr.split("#");
 			for (int j = 0; j < flowArr.length; j++) {
-				String[] oneFlow = flowArr[j].split("-");
+				String[] oneFlow = flowArr[j].split("$");
 				Sequence sequence = Query_metamodelFactory.eINSTANCE.createSequence();
 				sequence.setType( oneFlow[0]);
 				sequence.setId( oneFlow[1]);
@@ -110,8 +110,8 @@ public class QFlowService {
 			for (Document executedStepDoc : executedStepDocs) {
 				Document stepDoc = executedStepDoc.get("step", new Document());
 				flow += stepDoc.getString("type") + 
-						"-" + stepDoc.getInteger("_id") +
-						"-" + stepDoc.getString("name") + "#";
+						"$" + stepDoc.getInteger("_id") +
+						"$" + stepDoc.getString("name") + "#";
 			}								
 			if (flowMap.containsKey(flow)) {
 				int value = flowMap.get(flow) + 1;
