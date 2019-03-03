@@ -28,7 +28,6 @@ public class QOccurrenceService {
 			QOccurrence qOccurrence = Query_metamodelFactory.eINSTANCE.createQOccurrence();
 			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
 			pathway.setName(name);
-			pathway.setPercentage("");
 			pathway.setQuantity(size);
 			qOccurrence.setPathway(pathway);
 			eQuery.getEMethod().add(qOccurrence);
@@ -43,7 +42,6 @@ public class QOccurrenceService {
 						QOccurrence qOccurrence = Query_metamodelFactory.eINSTANCE.createQOccurrence();
 						Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
 						pathway.setName(key.getName());
-						pathway.setPercentage("");
 						pathway.setQuantity(size);
 						qOccurrence.setPathway(pathway);
 						eQuery.getEMethod().add(qOccurrence);

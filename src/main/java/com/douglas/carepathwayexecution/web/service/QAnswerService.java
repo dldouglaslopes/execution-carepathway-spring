@@ -43,7 +43,6 @@ public class QAnswerService {
 															eQuery.getEAttribute().getRange());				
 					Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
 					pathway.setName(carePathway.getName());
-					pathway.setPercentage("");
 					pathway.setQuantity(0);
 					QAnswer qAnswer = Query_metamodelFactory.eINSTANCE.createQAnswer();
 					qAnswer.setPathway(pathway);					
@@ -63,7 +62,6 @@ public class QAnswerService {
 													eQuery.getEAttribute().getRange());
 			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
 			pathway.setName(carePathway.getName());
-			pathway.setPercentage("");
 			pathway.setQuantity(0);
 			QAnswer qAnswer = Query_metamodelFactory.eINSTANCE.createQAnswer();
 			qAnswer.setPathway(pathway);					

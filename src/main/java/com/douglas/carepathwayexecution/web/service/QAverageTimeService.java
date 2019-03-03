@@ -48,7 +48,6 @@ public class QAverageTimeService {
 			qAverageTime.setAverage(avg / 60);
 			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
 			pathway.setName(CarePathway.getByName(key).getName());
-			pathway.setPercentage("");
 			pathway.setQuantity(quantity.get(key));	
 			eQuery.getEMethod().add(qAverageTime);
 		}	

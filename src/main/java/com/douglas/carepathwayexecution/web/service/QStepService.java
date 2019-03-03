@@ -54,7 +54,6 @@ public class QStepService {
 					}
 					Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
 					pathway.setName(carePathway.getName());
-					pathway.setPercentage("");
 					pathway.setQuantity(0);
 					pathway.setVersion(0);
 					qStep.setPathway(pathway);
@@ -90,7 +89,6 @@ public class QStepService {
 					}
 					Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
 					pathway.setName(carePathway.getName());
-					pathway.setPercentage("");
 					pathway.setQuantity(0);
 					pathway.setVersion(i);
 					qStep.setPathway(pathway);
@@ -124,7 +122,6 @@ public class QStepService {
 			}
 			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
 			pathway.setName(carePathway.getName());
-			pathway.setPercentage("");
 			pathway.setQuantity(0);
 			pathway.setVersion(version);
 			qStep.setPathway(pathway);
@@ -148,10 +145,10 @@ public class QStepService {
 					if (!stepsDoc.isEmpty()) {
 						addSteps(stepsDoc, stepStr, version);
 					}
-				}
-				if (numVersion < version) {
-					numVersion = version;
-				}
+				}	
+			}
+			if (numVersion < version) {
+				numVersion = version;
 			}
 		}		
 	}

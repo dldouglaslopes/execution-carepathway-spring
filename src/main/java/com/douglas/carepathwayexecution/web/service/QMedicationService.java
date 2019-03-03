@@ -24,81 +24,143 @@ public class QMedicationService {
 	@Autowired
 	private QCarePathwayService service;
 	
-	private Map<String, Integer> medicationsMap = new HashMap<>();
-	private Map<String, Double> percentMap = new HashMap<>();
+	private Map<String, Integer> medicationsMap;
+	private List<Integer> ids;
+	private int numVersion;
+	private int qtdMedications;
 	
-	public EQuery getMedications(EQuery eQuery, String name) {
+	public EQuery getMedications(EQuery eQuery, String name, int version) {
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
 			for (CarePathway carePathway : CarePathway.VALUES) {
-				eQuery.getEAttribute().getCarePathway().setName(carePathway);
-				List<Document> docs = service.filterDocuments(eQuery);
-				if (!docs.isEmpty()) {
-					List<Entry<String, Double>> medications = getMedicationInPathways(docs,
-																					name,
-																					eQuery.getEAttribute().getRange());
-					QMedication qMedication =  Query_metamodelFactory.eINSTANCE.createQMedication();
-					for (Entry<String, Double> entry : medications) {
-						Medication medication = Query_metamodelFactory.eINSTANCE.createMedication();
-						medication.setName(entry.getKey());
-						medication.setPercentage(percentMap.get(entry.getKey()) + "%");
-						medication.setQuantity(medicationsMap.get(entry.getKey()));;
-						qMedication.getMedications().add(medication);
+				if (!carePathway.equals(CarePathway.NONE)) {
+					eQuery.getEAttribute().getCarePathway().setName(carePathway);
+					List<Document> docs = service.filterDocuments(eQuery);
+					this.numVersion = 1;
+					for (int i = 1; i < numVersion + 1; i++) {
+						this.qtdMedications = 0;
+						medicationsMap = new HashMap<>();
+						ids = new ArrayList<>();
+						List<QMedication> list = getData(
+								docs, 
+								name,
+								eQuery.getEAttribute().getRange(),
+								i, 
+								carePathway);
+						for (QMedication qMedication : list) {
+							eQuery.getEMethod().add(qMedication);
+						}
 					}
-					if (!medications.isEmpty()) {
-						Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
-						pathway.setName(carePathway.getName());
-						pathway.setPercentage("");
-						pathway.setQuantity(medications.size());
-						qMedication.setPathway(pathway);
-						eQuery.getEMethod().add(qMedication);
-					}
+				}
+			}
+		}
+		else if(version == 0) {
+			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
+			List<Document> docs = service.filterDocuments(eQuery);
+			this.numVersion = 1;
+			for (int i = 1; i < numVersion + 1; i++) {
+				this.qtdMedications = 0;
+				medicationsMap = new HashMap<>();
+				List<QMedication> list = getData(
+						docs, 
+						name,
+						eQuery.getEAttribute().getRange(),
+						i, 
+						carePathway);
+				for (QMedication qMedication : list) {
+					eQuery.getEMethod().add(qMedication);
 				}
 			}
 		}
 		else{
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
 			List<Document> docs = service.filterDocuments(eQuery);
-			if (!docs.isEmpty()) {
-				List<Entry<String, Double>> medications = getMedicationInPathways(docs,
-																				name,
-																				eQuery.getEAttribute().getRange());
-				QMedication qMedication =  Query_metamodelFactory.eINSTANCE.createQMedication();
-				for (Entry<String, Double> entry : medications) {
-					Medication medication = Query_metamodelFactory.eINSTANCE.createMedication();
-					medication.setName(entry.getKey());
-					medication.setPercentage(percentMap.get(entry.getKey()) + "%");
-					medication.setQuantity(medicationsMap.get(entry.getKey()));;
-					qMedication.getMedications().add(medication);
-				}
-				if (!medications.isEmpty()) {
-					Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
-					pathway.setName(carePathway.getName());
-					pathway.setPercentage("");
-					pathway.setQuantity(medications.size());
-					qMedication.setPathway(pathway);
-					eQuery.getEMethod().add(qMedication);
-				}
+			this.qtdMedications = 0;
+			medicationsMap = new HashMap<>();
+			List<QMedication> list = getData(
+					docs, 
+					name,
+					eQuery.getEAttribute().getRange(),
+					version, 
+					carePathway);
+			for (QMedication qMedication : list) {
+				eQuery.getEMethod().add(qMedication);
 			}
-		}
-		
+		}		
 		return eQuery;
 	}
 	
-	public List<Entry<String, Double>> getMedicationInPathways(List<Document> docs, String name, ARange range) { //the medication in executed step or conduct complementary
-		medicationsMap = new HashMap<>();
+	private List<QMedication> getData(List<Document> docs, 
+								String name, 
+								ARange range, 
+								int version, 
+								CarePathway carePathway) {
+		List<QMedication> qMedications = new ArrayList<>();
+		if (!docs.isEmpty()) {
+			QMedication qMedication = Query_metamodelFactory.eINSTANCE.createQMedication();
+			List<Entry<String, Double>> medications = 
+					getMedicationInPathways(docs,
+											name,
+											range,
+											version);				
+			for (Entry<String, Double> entry : medications) {
+				Medication medication = Query_metamodelFactory.eINSTANCE.createMedication();
+				String[] medicationsArr = entry.getKey().split("-");
+				if (medicationsArr.length > 1) {
+					medication.setName(medicationsArr[1]);
+				}
+				else {
+					medication.setName("");
+				}
+				medication.setId(medicationsArr[0]);				
+				medication.setPercentage(service.decimalFormat(entry.getValue()) + "%");
+				medication.setQuantity(medicationsMap.get(entry.getKey()));
+				qMedication.getMedications().add(medication);
+			}
+			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
+			pathway.setName(carePathway.getName());
+			pathway.setQuantity(qMedication.getMedications().size());
+			pathway.setVersion(version);
+			qMedication.setPathway(pathway);
+			qMedications.add(qMedication);			
+		}
+		return qMedications; 
+	}
+	
+	public List<Entry<String, Double>> getMedicationInPathways(List<Document> docs, 
+																String name, 
+																ARange range, 
+																int number) { //the medication in executed step or conduct complementary
 		for( Document doc : docs) {
-			List<Document> complementaryConducts = doc.get( "complementaryConducts", new ArrayList<Document>());			
-			if( !complementaryConducts.isEmpty()) {				
-				getMedicationInComplementaryConducts(complementaryConducts, name);
-			}	
-			List<Document> executedSteps = doc.get( "executedSteps", new ArrayList<Document>());
-			if (!executedSteps.isEmpty()) {
-				getMedicationsInSteps(executedSteps, name);
-			}							
-		}		
-		percentMap = new HashMap<>();
+			int version = doc.get( "pathway", new Document()).getInteger("version");		
+			if (number == 0) {
+				List<Document> complementaryConducts = doc.get( "complementaryConducts", new ArrayList<Document>());			
+				if( !complementaryConducts.isEmpty()) {				
+					getMedicationInComplementaryConducts(complementaryConducts, name);
+				}	
+				List<Document> executedSteps = doc.get( "executedSteps", new ArrayList<Document>());
+				if (!executedSteps.isEmpty()) {
+					getMedicationsInSteps(executedSteps, name);
+				}	
+			}
+			else {
+				if (version == number) {
+					List<Document> complementaryConducts = doc.get( "complementaryConducts", new ArrayList<Document>());			
+					if( !complementaryConducts.isEmpty()) {				
+						getMedicationInComplementaryConducts(complementaryConducts, name);
+					}	
+					List<Document> executedSteps = doc.get( "executedSteps", new ArrayList<Document>());
+					if (!executedSteps.isEmpty()) {
+						getMedicationsInSteps(executedSteps, name);
+					}
+				}
+				if (numVersion < version) {
+					numVersion = version;
+				}
+			}
+		}
+		Map<String, Double> percentMap = new HashMap<>();
 		for (String key : medicationsMap.keySet()) {
-			double value = service.rate( medicationsMap.get(key), medicationsMap.size());
+			double value = service.rate( medicationsMap.get(key), qtdMedications);
 			percentMap.put( key, value);
 		}		
 		List<Entry<String, Double>> list = new LinkedList<>( percentMap.entrySet());		
@@ -118,13 +180,14 @@ public class QMedicationService {
 				
 				for (Document document : prescribedMedication) {
 					Document medication = document.get( "medication", new Document());
-					String key = medication.getString( "name");							
+					String key = medication.getInteger("_id") + "-" + 
+								medication.getString( "name");				
 					if (name == null) {
-						add(key);
+						add(key);						
 					}			
 					else {
 						if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
-							add(key);
+							add(key);							
 						}
 					}							
 				}					
@@ -135,13 +198,14 @@ public class QMedicationService {
 				
 				for (Document document : prescribedPrescription) {
 					Document prescription = document.get( "prescription", new Document());
-					String key = prescription.getString( "medication");							
+					String key = prescription.getInteger("_id") + "-" + 
+								prescription.getString( "medication");				
 					if (name == null) {
-						add(key);
+						add(key);						
 					}			
 					else {
 						if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
-							add(key);
+							add(key);							
 						}
 					}
 				}
@@ -154,13 +218,15 @@ public class QMedicationService {
 			Document prescribedResource = complementaryConduct.get( "prescribedresource", new Document());
 									
 			if( complementaryConduct.getString( "type").equals( "MedicamentoComplementar")) {
-				String key = prescribedResource.getString( "name");
+				String key = prescribedResource.getInteger( "_id") + "-" +
+								prescribedResource.getString( "name");
+				
 				if (name == null) {
-					add(key);
+					add(key);					
 				}			
 				else {
 					if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
-						add(key);
+						add(key);						
 					}
 				}
 			}	
@@ -172,9 +238,11 @@ public class QMedicationService {
 			if (medicationsMap.containsKey( key)) {
 				int value = medicationsMap.get(key) + 1;
 				medicationsMap.replace( key, value);
+				qtdMedications++;
 			}
 			else {
 				medicationsMap.put( key, 1);
+				qtdMedications++;
 			}
 		}
 	}

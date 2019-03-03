@@ -73,7 +73,6 @@ public class QStatusService {
 			qStatus.setInProgress(inProgress.get(key));
 			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
 			pathway.setName(CarePathway.getByName(key).getName());
-			pathway.setPercentage("");
 			pathway.setQuantity(0);
 			qStatus.setPathway(pathway);
 			eQuery.getEMethod().add(qStatus);

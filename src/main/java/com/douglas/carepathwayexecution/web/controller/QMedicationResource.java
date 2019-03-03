@@ -41,7 +41,7 @@ public class QMedicationResource {
 			method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllMedicationsToOnePathway(
-		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "id", required=true) int idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -51,7 +51,7 @@ public class QMedicationResource {
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+		eQuery = service.setAtribbutte( idPathway,
 										conductStr,				
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
@@ -61,7 +61,41 @@ public class QMedicationResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = medicationService.getMedications(eQuery, null);
+		eQuery = medicationService.getMedications(eQuery, null, 0);
+		queryDTO.setMethod( eQuery.getEMethod());
+		return ResponseEntity.ok().body(queryDTO);
+	}
+	
+	@ApiOperation(value = "Show the prescribed medications of a specified care pathway id")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/medications" }, 
+			method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<EQueryDTO> getAllMedicationsToOnePathway(
+		@PathVariable( value = "id", required=true) int idPathway,
+		@PathVariable( value = "version", required=true) int version,
+		@RequestParam( value = "conduct", required=false) String conductStr,
+		@RequestParam( value = "status", required=false) String statusStr,
+		@RequestParam( value = "age", required=false) String ageStr,
+		@RequestParam( value = "sex", required=false) String sexStr,
+		@RequestParam( value = "date", required=false) String dateStr,
+		@RequestParam( value = "range", required=false) String rangeStr,
+		Model model) throws ParseException{			
+	
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		eQuery = service.setAtribbutte( idPathway,
+										conductStr,				
+										service.splitBy( statusStr, ","),
+										service.splitBy( ageStr, ","),
+										sexStr, 
+										service.splitBy( dateStr, ","),
+										service.splitBy( rangeStr, ","));
+			
+		EQueryDTO queryDTO = new EQueryDTO();
+		queryDTO.setAttribute(eQuery.getEAttribute());
+		eQuery = medicationService.getMedications(eQuery, null, version);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
@@ -93,7 +127,7 @@ public class QMedicationResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = medicationService.getMedications(eQuery, null);
+		eQuery = medicationService.getMedications(eQuery, null, 0);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
@@ -106,7 +140,7 @@ public class QMedicationResource {
 			method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getOneMedicationToOnePathway(
-		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "id", required=true) int idPathway,
 		@PathVariable( value = "name", required=true) String nameMedication,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
@@ -117,7 +151,7 @@ public class QMedicationResource {
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+		eQuery = service.setAtribbutte( idPathway,
 										conductStr,				
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
@@ -127,7 +161,42 @@ public class QMedicationResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = medicationService.getMedications(eQuery, nameMedication);
+		eQuery = medicationService.getMedications(eQuery, nameMedication, 0);
+		queryDTO.setMethod( eQuery.getEMethod());
+		return ResponseEntity.ok().body(queryDTO);
+	}
+	
+	@ApiOperation(value = "Show the specified prescribed medication of a specified care pathway id")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/medications/{name}" }, 
+			method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<EQueryDTO> getOneMedicationToOnePathwayByVersion(
+		@PathVariable( value = "id", required=true) int idPathway,
+		@PathVariable( value = "version", required=true) int version,
+		@PathVariable( value = "name", required=true) String nameMedication,
+		@RequestParam( value = "conduct", required=false) String conductStr,
+		@RequestParam( value = "status", required=false) String statusStr,
+		@RequestParam( value = "age", required=false) String ageStr,
+		@RequestParam( value = "sex", required=false) String sexStr,
+		@RequestParam( value = "date", required=false) String dateStr,
+		@RequestParam( value = "range", required=false) String rangeStr,
+		Model model) throws ParseException{			
+	
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		eQuery = service.setAtribbutte( idPathway,
+										conductStr,				
+										service.splitBy( statusStr, ","),
+										service.splitBy( ageStr, ","),
+										sexStr, 
+										service.splitBy( dateStr, ","),
+										service.splitBy( rangeStr, ","));
+			
+		EQueryDTO queryDTO = new EQueryDTO();
+		queryDTO.setAttribute(eQuery.getEAttribute());
+		eQuery = medicationService.getMedications(eQuery, nameMedication, version);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
@@ -160,7 +229,7 @@ public class QMedicationResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = medicationService.getMedications(eQuery, nameMedication);
+		eQuery = medicationService.getMedications(eQuery, nameMedication, 0);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}

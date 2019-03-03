@@ -61,7 +61,6 @@ public class QConductsService {
 			qConduct.setWithConduct(withConduct.get(key));
 			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
 			pathway.setName(CarePathway.getByName(key).getName());
-			pathway.setPercentage("");
 			pathway.setQuantity(0);
 			qConduct.setPathway(pathway);
 			eQuery.getEMethod().add(qConduct);
