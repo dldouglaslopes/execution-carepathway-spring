@@ -1,8 +1,6 @@
 package com.douglas.carepathwayexecution.web.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,38 +17,92 @@ public class QAverageTimeService {
 	@Autowired
 	private QCarePathwayService service;
 	
-	public EQuery getAverageByTime(EQuery eQuery) {	
-		//querying the average time
-		List<Document> docs = service.filterDocuments(eQuery);
-		
-		Map<String, Double> times = new HashMap<>();
-		Map<String, Integer> quantity = new HashMap<>();
-		
-		for (Document document : docs) {
-			Document pathway = document.get("pathway", new Document());
-			String name = pathway.getString("name");
-			
-			if ( times.containsKey(name)) {
-				int cont = quantity.get(name) + 1; 
-				double sum = times.get(name) + document.getDouble("timeExecution");
-				times.replace( name, sum);
-				quantity.replace( name, cont);
-			}	
-			else {
-				times.put(name, document.getDouble("timeExecution"));
-				quantity.put(name, 1);
+	private double times;
+	private int quantity;
+	private int numVersion;
+	private String idPathway = "";
+	
+	public EQuery getAverageByTime(EQuery eQuery, int version) {	//querying the average time
+		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
+			for (CarePathway carePathway : CarePathway.VALUES) {
+				this.numVersion = 1;
+				eQuery.getEAttribute().getCarePathway().setName(carePathway);
+				List<Document> docs = service.filterDocuments(eQuery);
+				if (!docs.isEmpty()) {
+					for (int i = 1; i < numVersion + 1; i++) {
+						this.times = 0;
+						this.quantity = 0;
+						getTime(docs, i);
+						QAverageTime qAverageTime = getData(carePathway, i);
+						if (qAverageTime.getPathway() != null) {
+							eQuery.getEMethod().add(qAverageTime);
+						}
+					}
+				}
 			}
 		}
-	
-		for (String key : times.keySet()) { //getting the average time
-			double avg = times.get(key) / quantity.get(key);			
-			QAverageTime qAverageTime = Query_metamodelFactory.eINSTANCE.createQAverageTime();		
-			qAverageTime.setAverage(avg / 60);
-			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
-			pathway.setName(CarePathway.getByName(key).getName());
-			pathway.setQuantity(quantity.get(key));	
-			eQuery.getEMethod().add(qAverageTime);
-		}	
+		else if(version == 0) {
+			this.numVersion = 1;
+			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
+			List<Document> docs = service.filterDocuments(eQuery);
+			if (!docs.isEmpty()) {
+				for (int i = 1; i < numVersion + 1; i++) {
+					this.times = 0;
+					this.quantity = 0;
+					getTime(docs, i);
+					QAverageTime qAverageTime = getData(carePathway, i);
+					if (qAverageTime.getPathway() != null) {
+						eQuery.getEMethod().add(qAverageTime);
+					}
+				}
+			}
+		}
+		else {
+			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
+			this.times = 0;
+			this.quantity = 0;	
+			List<Document> docs = service.filterDocuments(eQuery);
+			if (!docs.isEmpty()) {
+				getTime(docs, version);
+				QAverageTime qAverageTime = getData(carePathway, version);
+				if (qAverageTime.getPathway() != null) {
+					eQuery.getEMethod().add(qAverageTime);
+				}			
+			}
+		}		
 		return eQuery;
+	}
+	
+	private QAverageTime getData(CarePathway carePathway, int number) {		
+		QAverageTime qAverageTime = Query_metamodelFactory.eINSTANCE.createQAverageTime();		
+		Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();			
+		qAverageTime.setAverage(times / 60);
+		pathway.setQuantity(quantity);
+		pathway.setName(carePathway.getName());	
+		pathway.setId(this.idPathway);
+		pathway.setVersion(number);
+		qAverageTime.setPathway(pathway);
+		return qAverageTime;
+	}
+	
+	private void getTime(List<Document> docs, int number) {
+		for (Document document : docs) {
+			Document pathway = document.get("pathway", new Document());
+			this.idPathway = pathway.getInteger("_id") + "";
+			int version = pathway.getInteger("version");
+			if (number == 0) {
+				times =+ document.getDouble("timeExecution");
+				this.quantity++;
+			}
+			else {
+				if (number == version) {
+					times =+ document.getDouble("timeExecution");
+					this.quantity++;
+				}
+				if (this.numVersion < version) {
+					this.numVersion = version;
+				}
+			}
+		}
 	}
 }
