@@ -3,6 +3,7 @@ package com.douglas.carepathwayexecution.web.controller;
 import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,10 +39,11 @@ public class QStepResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/steps" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getRecurrentStepToOnePathway(
-		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "id", required=true) int idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -51,7 +53,7 @@ public class QStepResource {
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+		eQuery = service.setAtribbutte( idPathway,
 										conductStr,
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
@@ -72,7 +74,8 @@ public class QStepResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/steps" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getRecurrentStepToOnePathwayByVersion(
 		@PathVariable( value = "id", required=true) int idPathway,
@@ -107,7 +110,8 @@ public class QStepResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/steps" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getRecurrentStepToAllPathways(
 		@RequestParam( value = "conduct", required=false) String conductStr,
@@ -139,7 +143,8 @@ public class QStepResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/steps/{name}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getRecurrentStepToAllPathwaysAndOneStep(
 		@PathVariable( value = "name", required=true) String step,
@@ -172,7 +177,8 @@ public class QStepResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/steps/{name}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getRecurrentStepToOnePathwayAndOneStep(
 		@PathVariable( value = "id", required=true) int idPathway,
@@ -206,7 +212,8 @@ public class QStepResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/steps/{name}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getRecurrentStepToOnePathwayByVersionAndOneStep(
 		@PathVariable( value = "id", required=true) int idPathway,

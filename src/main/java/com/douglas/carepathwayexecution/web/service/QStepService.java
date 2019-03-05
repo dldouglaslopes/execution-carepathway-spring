@@ -29,15 +29,17 @@ public class QStepService {
 	public EQuery getRecurrentSteps(EQuery eQuery, String stepStr, int version) {
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
 			for (CarePathway carePathway : CarePathway.VALUES) {
-				stepsMap = new HashMap<>();
-				count = 0;
-				this.numVersion = 1;
-				eQuery.getEAttribute().getCarePathway().setName(carePathway);
-				List<Document> docs = service.filterDocuments(eQuery);
-				for (int i = 1; i < numVersion + 1; i++) {
-					QStep qStep = getData(docs, carePathway, i, stepStr);
-					if (qStep.getPathway() != null) {
-						eQuery.getEMethod().add(qStep);
+				if (!carePathway.equals(CarePathway.NONE)) {
+					stepsMap = new HashMap<>();
+					count = 0;
+					this.numVersion = 1;
+					eQuery.getEAttribute().getCarePathway().setName(carePathway);
+					List<Document> docs = service.filterDocuments(eQuery);
+					for (int i = 1; i < numVersion + 1; i++) {
+						QStep qStep = getData(docs, carePathway, i, stepStr);
+						if (qStep.getPathway() != null) {
+							eQuery.getEMethod().add(qStep);
+						}
 					}
 				}
 			}	

@@ -3,6 +3,7 @@ package com.douglas.carepathwayexecution.web.controller;
 import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +39,8 @@ public class QMedicationResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/medications" }, 
-			method = RequestMethod.GET)
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllMedicationsToOnePathway(
 		@PathVariable( value = "id", required=true) int idPathway,
@@ -71,7 +73,8 @@ public class QMedicationResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/medications" }, 
-			method = RequestMethod.GET)
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllMedicationsToOnePathwayByVersion(
 		@PathVariable( value = "id", required=true) int idPathway,
@@ -105,7 +108,8 @@ public class QMedicationResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/medications" }, 
-			method = RequestMethod.GET)
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllMedicationsToAllPathways(
 		@RequestParam( value = "conduct", required=false) String conductStr,

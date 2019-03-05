@@ -25,17 +25,19 @@ public class QAverageTimeService {
 	public EQuery getAverageByTime(EQuery eQuery, int version) {	//querying the average time
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
 			for (CarePathway carePathway : CarePathway.VALUES) {
-				this.numVersion = 1;
-				eQuery.getEAttribute().getCarePathway().setName(carePathway);
-				List<Document> docs = service.filterDocuments(eQuery);
-				if (!docs.isEmpty()) {
-					for (int i = 1; i < numVersion + 1; i++) {
-						this.times = 0;
-						this.quantity = 0;
-						getTime(docs, i);
-						QAverageTime qAverageTime = getData(carePathway, i);
-						if (qAverageTime.getPathway() != null) {
-							eQuery.getEMethod().add(qAverageTime);
+				if (!carePathway.equals(CarePathway.NONE)) {
+					this.numVersion = 1;
+					eQuery.getEAttribute().getCarePathway().setName(carePathway);
+					List<Document> docs = service.filterDocuments(eQuery);
+					if (!docs.isEmpty()) {
+						for (int i = 1; i < numVersion + 1; i++) {
+							this.times = 0;
+							this.quantity = 0;
+							getTime(docs, i);
+							QAverageTime qAverageTime = getData(carePathway, i);
+							if (qAverageTime.getPathway() != null) {
+								eQuery.getEMethod().add(qAverageTime);
+							}
 						}
 					}
 				}
@@ -75,7 +77,7 @@ public class QAverageTimeService {
 	
 	private QAverageTime getData(CarePathway carePathway, int number) {		
 		QAverageTime qAverageTime = Query_metamodelFactory.eINSTANCE.createQAverageTime();		
-		Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();			
+		Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();	
 		qAverageTime.setAverage(times / 60);
 		pathway.setQuantity(quantity);
 		pathway.setName(carePathway.getName());	
@@ -89,20 +91,14 @@ public class QAverageTimeService {
 		for (Document document : docs) {
 			Document pathway = document.get("pathway", new Document());
 			this.idPathway = pathway.getInteger("_id") + "";
-			int version = pathway.getInteger("version");
-			if (number == 0) {
+			int version = pathway.getInteger("version");			
+			if (number == version) {
 				times =+ document.getDouble("timeExecution");
 				this.quantity++;
 			}
-			else {
-				if (number == version) {
-					times =+ document.getDouble("timeExecution");
-					this.quantity++;
-				}
-				if (this.numVersion < version) {
-					this.numVersion = version;
-				}
-			}
+			if (this.numVersion < version) {
+				this.numVersion = version;
+			}			
 		}
 	}
 }

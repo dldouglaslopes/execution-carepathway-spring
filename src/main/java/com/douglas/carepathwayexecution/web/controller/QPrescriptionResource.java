@@ -3,6 +3,7 @@ package com.douglas.carepathwayexecution.web.controller;
 import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +37,8 @@ public class QPrescriptionResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/prescriptions" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllPrescriptionsToAllPathways(
 		@RequestParam( value = "conduct", required=false) String conductStr,
@@ -68,10 +70,11 @@ public class QPrescriptionResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/prescriptions" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllPrescriptionsToOnePathway(
-		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "id", required=true) int idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -81,7 +84,7 @@ public class QPrescriptionResource {
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+		eQuery = service.setAtribbutte( idPathway,
 										conductStr,
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
@@ -102,7 +105,8 @@ public class QPrescriptionResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/prescriptions/{name}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getOnePrescriptionToAllPathways(
 		@PathVariable( value = "name", required=true) String prescription,
@@ -136,10 +140,11 @@ public class QPrescriptionResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/prescriptions/{name}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getOnePrescriptionToOnePathway(
-		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "id", required=true) int idPathway,
 		@PathVariable( value = "name", required=true) String prescription,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
@@ -150,7 +155,7 @@ public class QPrescriptionResource {
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+		eQuery = service.setAtribbutte( idPathway,
 										conductStr,
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),

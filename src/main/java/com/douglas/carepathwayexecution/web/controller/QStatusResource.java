@@ -3,6 +3,7 @@ package com.douglas.carepathwayexecution.web.controller;
 import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,10 +39,11 @@ public class QStatusResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/status" }, 
-			method = RequestMethod.GET)
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getCountStatusToOnePathway(
-		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "id", required=true) int idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -50,7 +52,7 @@ public class QStatusResource {
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+		eQuery = service.setAtribbutte( idPathway,
 										conductStr,						
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
@@ -71,7 +73,8 @@ public class QStatusResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/status" }, 
-			method = RequestMethod.GET)
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getStatusToAllPathway(
 		@RequestParam( value = "conduct", required=false) String conductStr,

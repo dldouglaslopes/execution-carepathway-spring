@@ -3,6 +3,7 @@ package com.douglas.carepathwayexecution.web.controller;
 import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,10 +37,11 @@ public class QReturnResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/return/patients" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllPatientsToOnePathway(
-		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "id", required=true) int idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -49,7 +51,7 @@ public class QReturnResource {
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+		eQuery = service.setAtribbutte( idPathway,
 										conductStr,
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
@@ -69,7 +71,8 @@ public class QReturnResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/return/patients" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllPatientsToAllPathways(
 		@RequestParam( value = "conduct", required=false) String conductStr,
@@ -101,10 +104,11 @@ public class QReturnResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/return/patients/{code}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getOnePatientToOnePathway(
-		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "id", required=true) int idPathway,
 		@PathVariable( value = "code", required=true) String codePatient,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
@@ -115,7 +119,7 @@ public class QReturnResource {
 		Model model) throws ParseException{			
 	
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+		eQuery = service.setAtribbutte( idPathway,
 										conductStr,
 										service.splitBy( statusStr, ","),
 										service.splitBy( ageStr, ","),
@@ -135,7 +139,8 @@ public class QReturnResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/return/patients/{code}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getOnePatientToAllPathways(
 		@PathVariable( value = "code", required=true) String codePatient,

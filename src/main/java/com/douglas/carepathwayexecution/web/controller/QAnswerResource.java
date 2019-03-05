@@ -3,6 +3,7 @@ package com.douglas.carepathwayexecution.web.controller;
 import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +39,8 @@ public class QAnswerResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/answers" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndAllQuestions(
 		@PathVariable( value = "id", required=true) int idPathway,
@@ -72,7 +74,8 @@ public class QAnswerResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/answers/{type}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndAllQuestionsByType(
 		@PathVariable( value = "id", required=true) int idPathway,
@@ -107,7 +110,8 @@ public class QAnswerResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/answers" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndAllQuestionsByVersion(
 		@PathVariable( value = "id", required=true) int idPathway,
@@ -143,7 +147,8 @@ public class QAnswerResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/answers/{type}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndAllQuestionsByVersionAndType(
 		@PathVariable( value = "id", required=true) int idPathway,
@@ -173,15 +178,14 @@ public class QAnswerResource {
 
 		return ResponseEntity.ok().body(queryDTO);
 	}
-
-	
 	
 	@ApiOperation(value = "Calculate the answer occurrences of all care pathway and one question")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/answers/questions/{name}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToAllPathwaysAndOneQuestion(
 		@PathVariable( value = "name", required=true) String question,
@@ -214,7 +218,8 @@ public class QAnswerResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/answers/{type}/questions/{name}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToAllPathwaysAndOneQuestionByType(
 		@PathVariable( value = "name", required=true) String question,
@@ -248,7 +253,8 @@ public class QAnswerResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/answers/{type}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToAllPathwaysAndAllQuestionsByType(
 		@PathVariable( value = "type", required=false) String type,
@@ -281,7 +287,8 @@ public class QAnswerResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/answers" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToAllPathwaysAndAllQuestions(
 		@RequestParam( value = "conduct", required=false) String conductStr,
@@ -313,7 +320,8 @@ public class QAnswerResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/answers/questions/{name}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndOneQuestion(
 		@PathVariable( value = "id", required=true) int idPathway,
@@ -347,7 +355,8 @@ public class QAnswerResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/answers/{type}/questions/{name}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndOneQuestionByType(
 		@PathVariable( value = "id", required=true) int idPathway,
@@ -382,7 +391,8 @@ public class QAnswerResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/answers/questions/{name}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndOneQuestionByVersion(
 		@PathVariable( value = "id", required=true) int idPathway,
@@ -417,7 +427,8 @@ public class QAnswerResource {
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/answers/{type}/questions/{name}" }, 
-					method = RequestMethod.GET)
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndOneQuestionByVersionAndType(
 		@PathVariable( value = "id", required=true) int idPathway,

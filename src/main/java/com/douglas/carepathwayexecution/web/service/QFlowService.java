@@ -33,18 +33,20 @@ public class QFlowService {
 	public EQuery getRecurrentFlows(EQuery eQuery, int version) {			
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {			
 			for (CarePathway carePathway : CarePathway.VALUES) {
-				this.numVersion = 1;
-				eQuery.getEAttribute().getCarePathway().setName(carePathway);
-				List<Document> docs = service.filterDocuments(eQuery);	
-				for (int i = 1; i < numVersion + 1; i++) {
-					flowMap = new HashMap<>();
-					numFlows = 0;
-					QFlow qFlow = getData(docs, 
-										carePathway, 
-										i, 
-										eQuery.getEAttribute().getRange());
-					if (qFlow.getPathway() != null) {
-						eQuery.getEMethod().add(qFlow);
+				if (!carePathway.equals(CarePathway.NONE)) {
+					this.numVersion = 1;
+					eQuery.getEAttribute().getCarePathway().setName(carePathway);
+					List<Document> docs = service.filterDocuments(eQuery);	
+					for (int i = 1; i < numVersion + 1; i++) {
+						flowMap = new HashMap<>();
+						numFlows = 0;
+						QFlow qFlow = getData(docs, 
+											carePathway, 
+											i, 
+											eQuery.getEAttribute().getRange());
+						if (qFlow.getPathway() != null) {
+							eQuery.getEMethod().add(qFlow);
+						}
 					}
 				}
 			}			
