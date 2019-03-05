@@ -37,7 +37,7 @@ public class QAnswerResource {
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/{type}answers" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/answers/{type}" }, 
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndAllQuestions(
@@ -62,21 +62,59 @@ public class QAnswerResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = answerService.getOccorrencesAnswer(eQuery, null, type);
+		eQuery = answerService.getOccorrencesAnswer(eQuery, null, type, 0);
 		queryDTO.setMethod( eQuery.getEMethod());
 
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
+	@ApiOperation(value = "Calculate the answer occorrences of a specified care pathway id and the all questions")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/answers/{type}" }, 
+					method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndAllQuestionsByVersion(
+		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "type", required=false) String type,
+		@PathVariable( value = "version", required=false) int version,
+		@RequestParam( value = "conduct", required=false) String conductStr,
+		@RequestParam( value = "status", required=false) String statusStr,
+		@RequestParam( value = "age", required=false) String ageStr,
+		@RequestParam( value = "sex", required=false) String sexStr,
+		@RequestParam( value = "date", required=false) String dateStr,
+		@RequestParam( value = "range", required=false) String rangeStr,
+		Model model) throws ParseException{			
+	
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+										conductStr,
+										service.splitBy( statusStr, ","),
+										service.splitBy( ageStr, ","),
+										sexStr, 
+										service.splitBy( dateStr, ","),
+										service.splitBy( rangeStr, ","));
+			
+		EQueryDTO queryDTO = new EQueryDTO();
+		queryDTO.setAttribute(eQuery.getEAttribute());
+		eQuery = answerService.getOccorrencesAnswer(eQuery, null, type, version);
+		queryDTO.setMethod( eQuery.getEMethod());
+
+		return ResponseEntity.ok().body(queryDTO);
+	}
+
+	
 	@ApiOperation(value = "Calculate the answer occurrences of all care pathway and one question")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/answers/questions/{name}" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/answers/{type}/questions/{name}" }, 
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToAllPathwaysAndOneQuestion(
 		@PathVariable( value = "name", required=true) String question,
+		@PathVariable( value = "type", required=false) String type,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -96,7 +134,7 @@ public class QAnswerResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = answerService.getOccorrencesAnswer(eQuery, question, null);
+		eQuery = answerService.getOccorrencesAnswer(eQuery, question, type, 0);
 		queryDTO.setMethod( eQuery.getEMethod());		
 		return ResponseEntity.ok().body(queryDTO);
 	}
@@ -105,7 +143,7 @@ public class QAnswerResource {
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/{type}answers" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/answers/{type}" }, 
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToAllPathwaysAndAllQuestions(
@@ -129,7 +167,7 @@ public class QAnswerResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = answerService.getOccorrencesAnswer(eQuery, null, type);
+		eQuery = answerService.getOccorrencesAnswer(eQuery, null, type, 0);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
@@ -138,11 +176,12 @@ public class QAnswerResource {
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/answers/questions/{name}" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/answers/{type}/questions/{name}" }, 
 					method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndOneQuestion(
 		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "type", required=false) String type,
 		@PathVariable( value = "name", required=true) String question,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
@@ -163,9 +202,44 @@ public class QAnswerResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = answerService.getOccorrencesAnswer(eQuery, question, null);
+		eQuery = answerService.getOccorrencesAnswer(eQuery, question, type, 0);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
-
+	
+	@ApiOperation(value = "Calculate the answer occorrences of each care pathway and one question")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/answers/{type}/questions/{name}" }, 
+					method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<EQueryDTO> getAllAnswersToOnePathwayAndOneQuestionByVersion(
+		@PathVariable( value = "id", required=true) String idPathway,
+		@PathVariable( value = "type", required=false) String type,
+		@PathVariable( value = "name", required=true) String question,
+		@PathVariable( value = "version", required=true) int version,
+		@RequestParam( value = "conduct", required=false) String conductStr,
+		@RequestParam( value = "status", required=false) String statusStr,
+		@RequestParam( value = "age", required=false) String ageStr,
+		@RequestParam( value = "sex", required=false) String sexStr,
+		@RequestParam( value = "date", required=false) String dateStr,
+		@RequestParam( value = "range", required=false) String rangeStr,
+		Model model) throws ParseException{			
+	
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		eQuery = service.setAtribbutte( Integer.parseInt(idPathway),
+										conductStr,
+										service.splitBy( statusStr, ","),
+										service.splitBy( ageStr, ","),
+										sexStr, 
+										service.splitBy( dateStr, ","),
+										service.splitBy( rangeStr, ","));
+			
+		EQueryDTO queryDTO = new EQueryDTO();
+		queryDTO.setAttribute(eQuery.getEAttribute());
+		eQuery = answerService.getOccorrencesAnswer(eQuery, question, type, version);
+		queryDTO.setMethod( eQuery.getEMethod());
+		return ResponseEntity.ok().body(queryDTO);
+	}
 }

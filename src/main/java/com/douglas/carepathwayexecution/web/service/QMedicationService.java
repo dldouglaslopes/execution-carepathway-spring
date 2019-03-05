@@ -25,9 +25,9 @@ public class QMedicationService {
 	private QCarePathwayService service;
 	
 	private Map<String, Integer> medicationsMap;
-	private List<Integer> ids;
 	private int numVersion;
 	private int qtdMedications;
+	private int idPathway = 0; 
 	
 	public EQuery getMedications(EQuery eQuery, String name, int version) {
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
@@ -39,7 +39,6 @@ public class QMedicationService {
 					for (int i = 1; i < numVersion + 1; i++) {
 						this.qtdMedications = 0;
 						medicationsMap = new HashMap<>();
-						ids = new ArrayList<>();
 						List<QMedication> list = getData(
 								docs, 
 								name,
@@ -120,8 +119,9 @@ public class QMedicationService {
 			pathway.setName(carePathway.getName());
 			pathway.setQuantity(qMedication.getMedications().size());
 			pathway.setVersion(version);
+			pathway.setId(this.idPathway + "");
 			qMedication.setPathway(pathway);
-			qMedications.add(qMedication);			
+			qMedications.add(qMedication);
 		}
 		return qMedications; 
 	}
@@ -131,6 +131,7 @@ public class QMedicationService {
 																ARange range, 
 																int number) { //the medication in executed step or conduct complementary
 		for( Document doc : docs) {
+			this.idPathway = doc.get("pathway", new Document()).getInteger("_id");
 			int version = doc.get( "pathway", new Document()).getInteger("version");		
 			if (number == 0) {
 				List<Document> complementaryConducts = doc.get( "complementaryConducts", new ArrayList<Document>());			
@@ -172,40 +173,36 @@ public class QMedicationService {
 	public void getMedicationsInSteps(List<Document> executedSteps, String name) { //the medication in executed step
 		for( Document step : executedSteps) {				
 			Document prescribedResource = step.get( "step", new Document());
-			
 			if ( prescribedResource.getString("type").equals("Tratamento") || 
-				 prescribedResource.getString("type").equals("Receita")) {
-				
+				 prescribedResource.getString("type").equals("Receita")) {				
 				List<Document> prescribedMedication = step.get( "pmedication", new ArrayList<Document>());
-				
 				for (Document document : prescribedMedication) {
 					Document medication = document.get( "medication", new Document());
 					String key = medication.getInteger("_id") + "-" + 
 								medication.getString( "name");				
 					if (name == null) {
-						add(key);						
+						add(key);
+						
 					}			
 					else {
 						if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
-							add(key);							
+							add(key);
 						}
 					}							
 				}					
-			}
-			
+			}			
 			if (prescribedResource.getString("type").equals("Receita")) {
-				List<Document> prescribedPrescription = step.get( "pprescription", new ArrayList<Document>());
-				
+				List<Document> prescribedPrescription = step.get( "pprescription", new ArrayList<Document>());				
 				for (Document document : prescribedPrescription) {
 					Document prescription = document.get( "prescription", new Document());
 					String key = prescription.getInteger("_id") + "-" + 
 								prescription.getString( "medication");				
 					if (name == null) {
-						add(key);						
+						add(key);
 					}			
 					else {
 						if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
-							add(key);							
+							add(key);
 						}
 					}
 				}
@@ -215,18 +212,16 @@ public class QMedicationService {
 	
 	public void getMedicationInComplementaryConducts(List<Document> complementaryConducts, String name) { //the medication in conduct complementary
 		for( Document complementaryConduct : complementaryConducts) {
-			Document prescribedResource = complementaryConduct.get( "prescribedresource", new Document());
-									
+			Document prescribedResource = complementaryConduct.get( "prescribedresource", new Document());									
 			if( complementaryConduct.getString( "type").equals( "MedicamentoComplementar")) {
 				String key = prescribedResource.getInteger( "_id") + "-" +
-								prescribedResource.getString( "name");
-				
+								prescribedResource.getString( "name");				
 				if (name == null) {
-					add(key);					
+					add(key);
 				}			
 				else {
 					if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
-						add(key);						
+						add(key);
 					}
 				}
 			}	
