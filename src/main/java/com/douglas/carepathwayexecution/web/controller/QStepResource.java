@@ -67,7 +67,7 @@ public class QStepResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
-	@ApiOperation(value = "Calculate the reccurrent step of a specified care pathway id")
+	@ApiOperation(value = "Calculate the reccurrent step of a specified care pathway id by pathway version")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
@@ -201,7 +201,7 @@ public class QStepResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
-	@ApiOperation(value = "Calculate the reccurrent step of each care pathway")
+	@ApiOperation(value = "Calculate the reccurrent step of each care pathway by pathway version")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))

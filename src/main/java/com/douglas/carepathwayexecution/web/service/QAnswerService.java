@@ -44,13 +44,13 @@ public class QAnswerService {
 					List<Document> docs = service.filterDocuments(eQuery);
 					numVersion = 1;
 					for (int i = 1; i < numVersion + 1; i++) {
-						List<QAnswer> qAnswers = getData(docs, 
-														questionStr, 
-														type, 
-														eQuery.getEAttribute().getRange(), 
-														carePathway, 
-														i);
-						for (QAnswer qAnswer : qAnswers) {
+						QAnswer qAnswer = getData(docs, 
+								questionStr, 
+								type, 
+								eQuery.getEAttribute().getRange(), 
+								carePathway, 
+								i);
+						if (qAnswer.getPathway() != null) {
 							eQuery.getEMethod().add(qAnswer);
 						}
 					}
@@ -63,13 +63,13 @@ public class QAnswerService {
 			List<Document> docs = service.filterDocuments(eQuery);
 			numVersion = 1;
 			for (int i = 1; i < numVersion + 1; i++) {
-				List<QAnswer> qAnswers = getData(docs, 
-												questionStr, 
-												type, 
-												eQuery.getEAttribute().getRange(), 
-												carePathway, 
-												i);
-				for (QAnswer qAnswer : qAnswers) {
+				QAnswer qAnswer = getData(docs, 
+						questionStr, 
+						type, 
+						eQuery.getEAttribute().getRange(), 
+						carePathway, 
+						i);
+				if (qAnswer.getPathway() != null) {
 					eQuery.getEMethod().add(qAnswer);
 				}
 			}		
@@ -78,26 +78,26 @@ public class QAnswerService {
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
 			eQuery.getEAttribute().getCarePathway().setName(carePathway);
 			List<Document> docs = service.filterDocuments(eQuery);
-			List<QAnswer> qAnswers = getData(docs, 
-											questionStr, 
-											type, 
-											eQuery.getEAttribute().getRange(), 
-											carePathway, 
-											version);
-			for (QAnswer qAnswer : qAnswers) {
+			QAnswer qAnswer = getData(docs, 
+										questionStr, 
+										type, 
+										eQuery.getEAttribute().getRange(), 
+										carePathway, 
+										version);
+			if (qAnswer.getPathway() != null) {
 				eQuery.getEMethod().add(qAnswer);
 			}										
 		}
 		return eQuery;
 	}
 	
-	private List<QAnswer> getData(List<Document> docs, 
+	private QAnswer getData(List<Document> docs, 
 								String name,
 								String type,
 								ARange range, 
 								CarePathway carePathway, 
 								int version) {
-		List<QAnswer> qAnswers = new ArrayList<>();
+		QAnswer qAnswer = Query_metamodelFactory.eINSTANCE.createQAnswer();
 		this.yesMap = new HashMap<>();
 		this.noMap = new HashMap<>();	
 		this.numericMap = new HashMap<>();
@@ -111,14 +111,12 @@ public class QAnswerService {
 			pathway.setQuantity(questions.size());
 			pathway.setVersion(version);
 			pathway.setId(this.idPathway + "");
-			QAnswer qAnswer = Query_metamodelFactory.eINSTANCE.createQAnswer();
 			qAnswer.setPathway(pathway);					
 			for (Question question : questions) {
 				qAnswer.getQuestion().add(question);
 			}
-			qAnswers.add(qAnswer);
 		}
-		return qAnswers;
+		return qAnswer;
 	}
 	
 	private List<Question> getQuestions( ARange range) {
@@ -186,7 +184,7 @@ public class QAnswerService {
 						}		
 						if (number == 0) {
 							if (questionStr == null) {
-								if (type.isEmpty()) {
+								if (type == null) {
 									add(text, data);
 								}
 								else {
@@ -209,7 +207,7 @@ public class QAnswerService {
 						else {							
 							if (version == number) {
 								if (questionStr == null) {
-									if (type.isEmpty()) {
+									if (type == null) {
 										add(text, data);
 									}
 									else {

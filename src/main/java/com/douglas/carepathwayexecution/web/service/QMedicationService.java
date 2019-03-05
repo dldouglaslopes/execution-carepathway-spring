@@ -39,13 +39,12 @@ public class QMedicationService {
 					for (int i = 1; i < numVersion + 1; i++) {
 						this.qtdMedications = 0;
 						medicationsMap = new HashMap<>();
-						List<QMedication> list = getData(
-								docs, 
+						QMedication qMedication = getData(	docs, 
 								name,
 								eQuery.getEAttribute().getRange(),
 								i, 
 								carePathway);
-						for (QMedication qMedication : list) {
+						if (qMedication.getPathway() != null) {
 							eQuery.getEMethod().add(qMedication);
 						}
 					}
@@ -59,13 +58,12 @@ public class QMedicationService {
 			for (int i = 1; i < numVersion + 1; i++) {
 				this.qtdMedications = 0;
 				medicationsMap = new HashMap<>();
-				List<QMedication> list = getData(
-						docs, 
+				QMedication qMedication = getData(	docs, 
 						name,
 						eQuery.getEAttribute().getRange(),
 						i, 
 						carePathway);
-				for (QMedication qMedication : list) {
+				if (qMedication.getPathway() != null) {
 					eQuery.getEMethod().add(qMedication);
 				}
 			}
@@ -75,27 +73,25 @@ public class QMedicationService {
 			List<Document> docs = service.filterDocuments(eQuery);
 			this.qtdMedications = 0;
 			medicationsMap = new HashMap<>();
-			List<QMedication> list = getData(
-					docs, 
-					name,
-					eQuery.getEAttribute().getRange(),
-					version, 
-					carePathway);
-			for (QMedication qMedication : list) {
+			QMedication qMedication = getData(	docs, 
+												name,
+												eQuery.getEAttribute().getRange(),
+												version, 
+												carePathway);
+			if (qMedication.getPathway() != null) {
 				eQuery.getEMethod().add(qMedication);
 			}
 		}		
 		return eQuery;
 	}
 	
-	private List<QMedication> getData(List<Document> docs, 
+	private QMedication getData(List<Document> docs, 
 								String name, 
 								ARange range, 
 								int version, 
 								CarePathway carePathway) {
-		List<QMedication> qMedications = new ArrayList<>();
+		QMedication qMedication = Query_metamodelFactory.eINSTANCE.createQMedication();
 		if (!docs.isEmpty()) {
-			QMedication qMedication = Query_metamodelFactory.eINSTANCE.createQMedication();
 			List<Entry<String, Double>> medications = 
 					getMedicationInPathways(docs,
 											name,
@@ -121,9 +117,8 @@ public class QMedicationService {
 			pathway.setVersion(version);
 			pathway.setId(this.idPathway + "");
 			qMedication.setPathway(pathway);
-			qMedications.add(qMedication);
 		}
-		return qMedications; 
+		return qMedication; 
 	}
 	
 	public List<Entry<String, Double>> getMedicationInPathways(List<Document> docs, 

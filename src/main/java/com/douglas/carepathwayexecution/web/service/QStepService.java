@@ -23,85 +23,57 @@ public class QStepService {
 	
 	private Map<String, Integer> stepsMap;
 	private int count;
-	private int numVersion = 1;
+	private int numVersion;
+	private String idPathway = ""; 
 	
 	public EQuery getRecurrentSteps(EQuery eQuery, String stepStr, int version) {
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
 			for (CarePathway carePathway : CarePathway.VALUES) {
 				stepsMap = new HashMap<>();
-				count = 0; 
+				count = 0;
+				this.numVersion = 1;
 				eQuery.getEAttribute().getCarePathway().setName(carePathway);
 				List<Document> docs = service.filterDocuments(eQuery);
-				if (!docs.isEmpty()) {		
-					QStep qStep = Query_metamodelFactory.eINSTANCE.createQStep();
-					getSteps(docs, stepStr, 0);
-					for (String key : stepsMap.keySet()) {
-						Step step = Query_metamodelFactory.eINSTANCE.createStep();
-						String[] stepArr = key.split("-");
-						step.setId(stepArr[1]);
-						step.setType(stepArr[2]);
-						step.setName(stepArr[3]);
-						step.setQuantity(stepsMap.get(key));
-						double percentage = service.rate(stepsMap.get(key), count);
-						step.setPercentage(service.decimalFormat(percentage) + "%");
-						if (stepArr.length > 4) {
-							step.setDescription(stepArr[4]);
-						}
-						else {
-							step.setDescription("");
-						}
-						qStep.getStep().add(step);
+				for (int i = 1; i < numVersion + 1; i++) {
+					QStep qStep = getData(docs, carePathway, i, stepStr);
+					if (qStep.getPathway() != null) {
+						eQuery.getEMethod().add(qStep);
 					}
-					Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
-					pathway.setName(carePathway.getName());
-					pathway.setQuantity(0);
-					pathway.setVersion(0);
-					qStep.setPathway(pathway);
-					eQuery.getEMethod().add(qStep);
-				}			
+				}
 			}	
 		}
 		else if (version == 0){
 			stepsMap = new HashMap<>();
-			count = 0; 
+			count = 0;
+			this.numVersion = 1;
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
 			List<Document> docs = service.filterDocuments(eQuery);
-			if (!docs.isEmpty()) {
-				for (int i = 1; i < numVersion + 1; i++) {
-					QStep qStep = Query_metamodelFactory.eINSTANCE.createQStep();
-					getSteps(docs, stepStr, i);
-					for (String key : stepsMap.keySet()) {
-						Step step = Query_metamodelFactory.eINSTANCE.createStep();
-						String[] stepArr = key.split("-");
-						step.setId(stepArr[1]);
-						step.setType(stepArr[2]);
-						step.setName(stepArr[3]);
-						step.setQuantity(stepsMap.get(key));
-						double percentage = service.rate(stepsMap.get(key), count);
-						step.setPercentage(service.decimalFormat(percentage) + "%");
-						if (stepArr.length > 4) {
-							step.setDescription(stepArr[4]);
-						}
-						else {
-							step.setDescription("");
-						}
-						qStep.getStep().add(step);
-					}
-					Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
-					pathway.setName(carePathway.getName());
-					pathway.setQuantity(0);
-					pathway.setVersion(i);
-					qStep.setPathway(pathway);
+			for (int i = 1; i < numVersion + 1; i++) {
+				QStep qStep = getData(docs, carePathway, i, stepStr);
+				if (qStep.getPathway() != null) {
 					eQuery.getEMethod().add(qStep);
 				}
 			}		
 		}
 		else {
 			stepsMap = new HashMap<>();
-			count = 0; 
+			count = 0;
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
 			List<Document> docs = service.filterDocuments(eQuery);
-			QStep qStep = Query_metamodelFactory.eINSTANCE.createQStep();
+			QStep qStep = getData(docs, carePathway, version, stepStr);
+			if (qStep.getPathway() != null) {
+				eQuery.getEMethod().add(qStep);
+			}					
+		}
+		return eQuery;
+	}
+	
+	private QStep getData(List<Document> docs,
+							CarePathway carePathway,
+							int version,
+							String stepStr) {
+		QStep qStep = Query_metamodelFactory.eINSTANCE.createQStep();
+		if (!docs.isEmpty()) {		
 			getSteps(docs, stepStr, version);
 			for (String key : stepsMap.keySet()) {
 				Step step = Query_metamodelFactory.eINSTANCE.createStep();
@@ -122,16 +94,17 @@ public class QStepService {
 			}
 			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
 			pathway.setName(carePathway.getName());
-			pathway.setQuantity(0);
+			pathway.setQuantity(stepsMap.size());
 			pathway.setVersion(version);
+			pathway.setId(this.idPathway);
 			qStep.setPathway(pathway);
-			eQuery.getEMethod().add(qStep);			
-		}
-		return eQuery;
+		}		
+		return qStep;
 	}
 	
 	private void getSteps(List<Document> docs, String stepStr, int number) {
 		for (Document doc : docs) {
+			this.idPathway = doc.get("pathway", new Document()).getInteger("_id") + "";
 			int version = doc.get("pathway", new Document()).getInteger("version");
 			if (number == 0) {
 				List<Document> stepsDoc = doc.get( "executedSteps", new ArrayList<Document>());
@@ -146,10 +119,10 @@ public class QStepService {
 						addSteps(stepsDoc, stepStr, version);
 					}
 				}	
-			}
-			if (numVersion < version) {
-				numVersion = version;
-			}
+				if (numVersion < version) {
+					numVersion = version;
+				}
+			}			
 		}		
 	}
 

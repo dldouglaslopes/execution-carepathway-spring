@@ -66,14 +66,14 @@ public class QMedicationResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
-	@ApiOperation(value = "Show the prescribed medications of a specified care pathway id")
+	@ApiOperation(value = "Show the prescribed medications of a specified care pathway id by pathway version")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
 	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/medications" }, 
 			method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> getAllMedicationsToOnePathway(
+	public ResponseEntity<EQueryDTO> getAllMedicationsToOnePathwayByVersion(
 		@PathVariable( value = "id", required=true) int idPathway,
 		@PathVariable( value = "version", required=true) int version,
 		@RequestParam( value = "conduct", required=false) String conductStr,
@@ -166,7 +166,7 @@ public class QMedicationResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
-	@ApiOperation(value = "Show the specified prescribed medication of a specified care pathway id")
+	@ApiOperation(value = "Show the specified prescribed medication of a specified care pathway id by pathway version")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))

@@ -61,11 +61,45 @@ public class QFlowResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = flowService.getRecurrentFlows(eQuery);
+		eQuery = flowService.getRecurrentFlows(eQuery, 0);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
 
+	@ApiOperation(value = "Calculate the reccurrent flows of a specified care pathway id by pathway version")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/flows" }, 
+					method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<EQueryDTO> getRecurrentFlowToOnePathwayByVersion(
+		@PathVariable( value = "id", required=true) int idPathway,
+		@PathVariable( value = "version", required=true) int version,
+		@RequestParam( value = "conduct", required=false) String conductStr,
+		@RequestParam( value = "status", required=false) String statusStr,
+		@RequestParam( value = "age", required=false) String ageStr,
+		@RequestParam( value = "sex", required=false) String sexStr,
+		@RequestParam( value = "date", required=false) String dateStr,
+		@RequestParam( value = "range", required=false) String rangeStr,
+		Model model) throws ParseException{			
+	
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		eQuery = service.setAtribbutte( idPathway,
+										conductStr,
+										service.splitBy( statusStr, ","),
+										service.splitBy( ageStr, ","),
+										sexStr, 
+										service.splitBy( dateStr, ","),
+										service.splitBy( rangeStr, ","));
+			
+		EQueryDTO queryDTO = new EQueryDTO();
+		queryDTO.setAttribute(eQuery.getEAttribute());
+		eQuery = flowService.getRecurrentFlows(eQuery, version);
+		queryDTO.setMethod( eQuery.getEMethod());
+		return ResponseEntity.ok().body(queryDTO);
+	}
+	
 	@ApiOperation(value = "Calculate the reccurrent flows of each care pathway")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
@@ -93,7 +127,7 @@ public class QFlowResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = flowService.getRecurrentFlows(eQuery);
+		eQuery = flowService.getRecurrentFlows(eQuery, 0);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
