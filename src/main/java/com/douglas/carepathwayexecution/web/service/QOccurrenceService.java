@@ -17,38 +17,71 @@ public class QOccurrenceService {
 	@Autowired
 	private QCarePathwayService service;
 	
-	public EQuery countOccurrences(EQuery eQuery) {
-		//finding all the documents
-		List<Document> occurrencesDocs = service.filterDocuments(eQuery);	
-		if (!eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
-			String field = "name";
-			String name = eQuery.getEAttribute().getCarePathway().getName().getName(); 
-			String key = eQuery.getEAttribute().getCarePathway().getName().getLiteral();
-			int size = service.count( field, key, occurrencesDocs);
-			QOccurrence qOccurrence = Query_metamodelFactory.eINSTANCE.createQOccurrence();
-			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
-			pathway.setName(name);
-			pathway.setQuantity(size);
-			qOccurrence.setPathway(pathway);
-			eQuery.getEMethod().add(qOccurrence);
+	private int numVersion;
+	
+	public EQuery getOccurrences(EQuery eQuery, int version) {	
+		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
+			for (CarePathway carePathway : CarePathway.VALUES) {	
+				eQuery.getEAttribute().getCarePathway().setName(carePathway);
+				if (!carePathway.equals(CarePathway.NONE)) {
+					this.numVersion = 1;		
+					List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
+					for (int i = 1; i < numVersion + 1; i++) {
+						QOccurrence qOccurrence = getData(docs, carePathway, i);
+						if (qOccurrence.getPathway() != null) {
+							eQuery.getEMethod().add(qOccurrence);
+						}
+					}
+				}
+			}
 		}
-		else {
-			for (CarePathway key : CarePathway.VALUES) {	
-				if (!key.equals(CarePathway.NONE)) {
-					String field = "name";
-					int size = service.count( field, key.getLiteral(), occurrencesDocs);
-
-					if (size > 0) {
-						QOccurrence qOccurrence = Query_metamodelFactory.eINSTANCE.createQOccurrence();
-						Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
-						pathway.setName(key.getName());
-						pathway.setQuantity(size);
-						qOccurrence.setPathway(pathway);
+		else if (version == 0) {
+			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
+			if (!carePathway.equals(CarePathway.NONE)) {
+				this.numVersion = 1;		
+				List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
+				for (int i = 1; i < numVersion + 1; i++) {
+					QOccurrence qOccurrence = getData(docs, carePathway, i);
+					if (qOccurrence.getPathway() != null) {
 						eQuery.getEMethod().add(qOccurrence);
 					}
 				}
-			}				
+			}
+		}
+		else {
+			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
+			List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
+			QOccurrence qOccurrence = getData(docs, carePathway, version);
+			if (qOccurrence.getPathway() != null) {
+				eQuery.getEMethod().add(qOccurrence);
+			}							
 		}
 		return eQuery;
+	}
+	
+	private QOccurrence getData(List<Document> docs, CarePathway carePathway, int version) {
+		QOccurrence qOccurrence = Query_metamodelFactory.eINSTANCE.createQOccurrence();
+		int id = 0;		
+		int size = 0;
+		for (Document document : docs) {
+			Document pathway = document.get("pathway", new Document());
+			id = pathway.getInteger("_id");
+			int number = pathway.getInteger("version");
+			if (number == version) {
+				size++;
+			}
+			if (this.numVersion < number) {
+				this.numVersion = number;
+			}
+		}
+		if (size > 0) {
+			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
+			pathway.setName(carePathway.getName());
+			pathway.setQuantity(size);
+			pathway.setId(id + "");
+			pathway.setVersion(version);
+			qOccurrence.setPathway(pathway);
+		}		
+		return qOccurrence;
 	}
 }

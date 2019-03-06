@@ -62,7 +62,41 @@ public class QConductsResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = conductsService.countConducts(eQuery);
+		eQuery = conductsService.getConducts(eQuery, 0);
+		queryDTO.setMethod( eQuery.getEMethod());
+		return ResponseEntity.ok().body(queryDTO);
+	}
+	
+	@ApiOperation(value = "Calculate the conduct rating of a specified care pathway id by pathway version")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/conducts" }, 
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<EQueryDTO> getConductsToOnePathwayByVersion(
+		@PathVariable( value = "id", required=true) int idPathway,
+		@PathVariable( value = "version", required=true) int version,
+		@RequestParam( value = "conduct", required=false) String conductStr,
+		@RequestParam( value = "status", required=false) String statusStr,
+		@RequestParam( value = "age", required=false) String ageStr,
+		@RequestParam( value = "sex", required=false) String sexStr,
+		@RequestParam( value = "date", required=false) String dateStr,
+		Model model) throws ParseException{			
+	
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		eQuery = service.setAtribbutte( idPathway,
+										conductStr,
+										service.splitBy( statusStr, ","),
+										service.splitBy( ageStr, ","),
+										sexStr, 
+										service.splitBy( dateStr, ","),
+										null);
+			
+		EQueryDTO queryDTO = new EQueryDTO();
+		queryDTO.setAttribute(eQuery.getEAttribute());
+		eQuery = conductsService.getConducts(eQuery, version);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
@@ -94,7 +128,7 @@ public class QConductsResource {
 			
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = conductsService.countConducts(eQuery);
+		eQuery = conductsService.getConducts(eQuery, 0);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
