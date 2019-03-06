@@ -1,8 +1,6 @@
 package com.douglas.carepathwayexecution.web.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,65 +17,102 @@ public class QStatusService {
 	@Autowired
 	private QCarePathwayService service;
 	
-	public EQuery countStatus(EQuery eQuery) {
-		
-		//finding all the documents
-		List<Document> statusDoc = service.filterDocuments(eQuery);		
-		Map<String, Integer> aborted = new HashMap<>();
-		Map<String, Integer> completed = new HashMap<>();
-		Map<String, Integer> inProgress = new HashMap<>();
-		
-		//counting the occurrences of each status types
-		for (Document document : statusDoc) {
-			Document pathway = document.get("pathway", new Document());
-			String key = pathway.getString("name");
-			
-			if (document.getBoolean("aborted")) {
-				if (aborted.containsKey(key)) {
-					int value = aborted.get(key) + 1;
-					aborted.replace(key, value);
-				}
-				else {
-					aborted.put(key, 1);
-					completed.put(key, 0);
-					inProgress.put(key,	0);
-				}
-			}
-			else if (document.getBoolean( "completed")) {
-				if (completed.containsKey(key)) {
-					int value = completed.get(key) + 1;
-					completed.replace(key, value);
-				}
-				else {
-					completed.put(key, 1);
-					aborted.put(key, 0);
-					inProgress.put(key, 0);
-				}
-			}
-			else{
-				if (inProgress.containsKey(key)) {
-					int value = inProgress.get(key) + 1;
-					inProgress.replace(key, value);
-				}
-				else {
-					inProgress.put(key, 1);
-					aborted.put(key, 0);
-					completed.put(key, 0);
+	private int numVersion;
+	private int aborted;
+	private int completed;
+	private int inProgress;
+	
+	public EQuery getStatus(EQuery eQuery, int version) {		
+		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
+			for (CarePathway carePathway : CarePathway.VALUES) {
+				if (!carePathway.equals(CarePathway.NONE)) {
+					eQuery.getEAttribute().getCarePathway().setName(carePathway);
+					List<Document> docs = service.filterDocuments(eQuery); //finding all the documents		
+					this.numVersion = 1;
+					if (!docs.isEmpty()) {
+						for (int i = 1; i < numVersion + 1; i++) {
+							this.aborted = 0;
+							this.completed = 0;
+							this.inProgress = 0;
+							QStatus qStatus = getData(docs, carePathway, i);
+							if (qStatus.getPathway() != null) {
+								eQuery.getEMethod().add(qStatus);
+							}
+						}
+					}
 				}
 			}
 		}
-		for (String key : aborted.keySet()) {
-			QStatus qStatus = Query_metamodelFactory.eINSTANCE.createQStatus();
-			qStatus.setAborted(aborted.get(key));
-			qStatus.setCompleted(completed.get(key));
-			qStatus.setInProgress(inProgress.get(key));
-			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
-			pathway.setName(CarePathway.getByName(key).getName());
-			pathway.setQuantity(0);
-			qStatus.setPathway(pathway);
-			eQuery.getEMethod().add(qStatus);
+		else if (version == 0) {
+			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
+			List<Document> docs = service.filterDocuments(eQuery); //finding all the documents		
+			this.numVersion = 1;
+			if (!docs.isEmpty()) {
+				for (int i = 1; i < numVersion + 1; i++) {
+					this.aborted = 0;
+					this.completed = 0;
+					this.inProgress = 0;
+					QStatus qStatus = getData(docs, carePathway, i);
+					if (qStatus.getPathway() != null) {
+						eQuery.getEMethod().add(qStatus);
+					}
+				}
+			}
 		}
-		
+		else {
+			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
+			List<Document> docs = service.filterDocuments(eQuery); //finding all the documents		
+			this.numVersion = 1;
+			if (!docs.isEmpty()) {
+				this.aborted = 0;
+				this.completed = 0;
+				this.inProgress = 0;
+				QStatus qStatus = getData(docs, carePathway, version);
+				if (qStatus.getPathway() != null) {
+					eQuery.getEMethod().add(qStatus);
+				}
+			}
+		}		
 		return eQuery;				
 	}
+	
+	private QStatus getData(List<Document> docs, CarePathway carePathway, int number) {
+		QStatus qStatus = Query_metamodelFactory.eINSTANCE.createQStatus();
+		int idPathway = 0;
+		for (Document document : docs) { //counting the occurrences of each status types
+			Document pathway = document.get("pathway", new Document());
+			idPathway = pathway.getInteger("_id");
+			String key = pathway.getString("name");
+			int version = pathway.getInteger("version");
+			if (version == number) {
+				add(document, key);
+			}
+			if (this.numVersion < version) {
+				this.numVersion = version;
+			}
+		}
+		qStatus.setAborted(aborted);
+		qStatus.setCompleted(completed);
+		qStatus.setInProgress(inProgress);
+		Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
+		pathway.setName(carePathway.getName());
+		pathway.setQuantity(this.aborted + this.completed + this.inProgress);
+		pathway.setId(idPathway + "");
+		pathway.setVersion(number);
+		qStatus.setPathway(pathway);
+		return qStatus;
+	}	
+	
+	private void add(Document document, String key) {
+		if (document.getBoolean("aborted")) {
+			this.aborted++;
+		}
+		else if (document.getBoolean( "completed")) {
+			this.completed++;
+		}
+		else{
+			this.inProgress++;
+		}
+	}
 }
+	

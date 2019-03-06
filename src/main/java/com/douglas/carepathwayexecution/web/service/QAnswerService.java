@@ -181,8 +181,8 @@ public class QAnswerService {
 						else if (answer.getString("type").equals("RespostaSimOuNao")) {
 							data = answer.getString("type") + "-" +
 									value.getBoolean("value");
-						}		
-						if (number == 0) {
+						}
+						if (version == number) {
 							if (questionStr == null) {
 								if (type == null) {
 									add(text, data);
@@ -204,32 +204,8 @@ public class QAnswerService {
 								}
 							}
 						}
-						else {							
-							if (version == number) {
-								if (questionStr == null) {
-									if (type == null) {
-										add(text, data);
-									}
-									else {
-										if (type.equals("boolean") && 
-												answer.getString("type").equals("RespostaSimOuNao")) {
-											add(text, data);
-										}
-										else if(type.equals("numeric") && 
-												answer.getString("type").equals("RespostaNumerica")) {
-											add(text, data);
-										}
-									}
-								}
-								else {		
-									if (text.toLowerCase().matches(".*" + questionStr.toLowerCase() + ".*")) {
-										add(text, data);
-									}
-								}
-							}
-							if (numVersion < version) {
-								numVersion = version;
-							}
+						if (numVersion < version) {
+							numVersion = version;
 						}
 					}
 				}

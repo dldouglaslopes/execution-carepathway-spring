@@ -159,17 +159,12 @@ public class QFlowService {
 						"-" + stepDoc.getInteger("_id") +
 						"-" + stepDoc.getString("name") + 
 						"-" + stepDoc.getString("description") + "#";
-			}								
-			if (number == 0) {
-				add(flow);
 			}
-			else {
-				if (number == version) {
-					add(flow); 
-				}
-				if (this.numVersion < version) {
-					this.numVersion = version;
-				}
+			if (number == version) {
+				add(flow); 
+			}
+			if (this.numVersion < version) {
+				this.numVersion = version;
 			}
 		}				
 		Map<String, Double> percentMap = new HashMap<>();

@@ -108,22 +108,14 @@ public class QStepService {
 		for (Document doc : docs) {
 			this.idPathway = doc.get("pathway", new Document()).getInteger("_id") + "";
 			int version = doc.get("pathway", new Document()).getInteger("version");
-			if (number == 0) {
+			if (version == number) {
 				List<Document> stepsDoc = doc.get( "executedSteps", new ArrayList<Document>());
 				if (!stepsDoc.isEmpty()) {
 					addSteps(stepsDoc, stepStr, version);
 				}
-			}
-			else {
-				if (version == number) {
-					List<Document> stepsDoc = doc.get( "executedSteps", new ArrayList<Document>());
-					if (!stepsDoc.isEmpty()) {
-						addSteps(stepsDoc, stepStr, version);
-					}
-				}	
-				if (numVersion < version) {
-					numVersion = version;
-				}
+			}	
+			if (numVersion < version) {
+				numVersion = version;
 			}			
 		}		
 	}

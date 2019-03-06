@@ -62,7 +62,42 @@ public class QStatusResource {
 		
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = statusService.countStatus(eQuery);
+		eQuery = statusService.getStatus(eQuery, 0);
+		queryDTO.setMethod( eQuery.getEMethod());
+		
+		return ResponseEntity.ok().body(queryDTO);
+	}
+	
+	@ApiOperation(value = "Calculate the status rating of a specified care pathway id by pathway version")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/status" }, 
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<EQueryDTO> getCountStatusToOnePathwayByVersion(
+		@PathVariable( value = "id", required=true) int idPathway,
+		@PathVariable( value = "version", required=true) int version,
+		@RequestParam( value = "conduct", required=false) String conductStr,
+		@RequestParam( value = "status", required=false) String statusStr,
+		@RequestParam( value = "age", required=false) String ageStr,
+		@RequestParam( value = "sex", required=false) String sexStr,
+		@RequestParam( value = "date", required=false) String dateStr,
+		Model model) throws ParseException{			
+	
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		eQuery = service.setAtribbutte( idPathway,
+										conductStr,						
+										service.splitBy( statusStr, ","),
+										service.splitBy( ageStr, ","),
+										sexStr, 
+										service.splitBy( dateStr, ","),
+										null);
+		
+		EQueryDTO queryDTO = new EQueryDTO();
+		queryDTO.setAttribute(eQuery.getEAttribute());
+		eQuery = statusService.getStatus(eQuery, version);
 		queryDTO.setMethod( eQuery.getEMethod());
 		
 		return ResponseEntity.ok().body(queryDTO);
@@ -95,7 +130,7 @@ public class QStatusResource {
 		
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
-		eQuery = statusService.countStatus(eQuery);
+		eQuery = statusService.getStatus(eQuery, 0);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}

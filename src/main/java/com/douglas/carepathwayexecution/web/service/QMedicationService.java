@@ -128,7 +128,7 @@ public class QMedicationService {
 		for( Document doc : docs) {
 			this.idPathway = doc.get("pathway", new Document()).getInteger("_id");
 			int version = doc.get( "pathway", new Document()).getInteger("version");		
-			if (number == 0) {
+			if (version == number) {
 				List<Document> complementaryConducts = doc.get( "complementaryConducts", new ArrayList<Document>());			
 				if( !complementaryConducts.isEmpty()) {				
 					getMedicationInComplementaryConducts(complementaryConducts, name);
@@ -136,22 +136,10 @@ public class QMedicationService {
 				List<Document> executedSteps = doc.get( "executedSteps", new ArrayList<Document>());
 				if (!executedSteps.isEmpty()) {
 					getMedicationsInSteps(executedSteps, name);
-				}	
+				}
 			}
-			else {
-				if (version == number) {
-					List<Document> complementaryConducts = doc.get( "complementaryConducts", new ArrayList<Document>());			
-					if( !complementaryConducts.isEmpty()) {				
-						getMedicationInComplementaryConducts(complementaryConducts, name);
-					}	
-					List<Document> executedSteps = doc.get( "executedSteps", new ArrayList<Document>());
-					if (!executedSteps.isEmpty()) {
-						getMedicationsInSteps(executedSteps, name);
-					}
-				}
-				if (numVersion < version) {
-					numVersion = version;
-				}
+			if (numVersion < version) {
+				numVersion = version;
 			}
 		}
 		Map<String, Double> percentMap = new HashMap<>();
