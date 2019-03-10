@@ -23,7 +23,7 @@ public class Translator {
 	
 	private void jsonToXmi() {
 		try {
-			String folderStr = "C:/Users/dldou/Dropbox/Pesquisa/ArquivosExecucao/Novo/ProtocolosExecutados/";	//path of JSON folder
+			String folderStr = "C:/Users/dldou/OneDrive/Documentos/Protocolos/";	//path of JSON folder
 			File folder = new File(folderStr);	
 			String[] namesStr = folder.list(); // names of folders that contain in JSON folder
 			
@@ -38,7 +38,7 @@ public class Translator {
 				}
 				
 				FileConfig fileConfig = new FileConfig(); //configure files
-				fileConfig.setResource("./xmi/" +  namesStr[i] + ".xmi");
+				fileConfig.setResource("C:/Users/dldou/OneDrive/Documentos/ProtocolosXMI/" +  namesStr[i] + ".xmi");
 				
 				EPathwayTranslator translator = new EPathwayTranslator();				
 				

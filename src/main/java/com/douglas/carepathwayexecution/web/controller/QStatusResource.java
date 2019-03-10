@@ -42,7 +42,7 @@ public class QStatusResource {
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> getCountStatusToOnePathway(
+	public ResponseEntity<EQueryDTO> getStatusToOnePathway(
 		@PathVariable( value = "id", required=true) int idPathway,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
@@ -76,7 +76,7 @@ public class QStatusResource {
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> getCountStatusToOnePathwayByVersion(
+	public ResponseEntity<EQueryDTO> getStatusToOnePathwayByVersion(
 		@PathVariable( value = "id", required=true) int idPathway,
 		@PathVariable( value = "version", required=true) int version,
 		@RequestParam( value = "conduct", required=false) String conductStr,
@@ -134,5 +134,4 @@ public class QStatusResource {
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
-
 }

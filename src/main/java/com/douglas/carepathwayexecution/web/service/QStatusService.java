@@ -76,7 +76,9 @@ public class QStatusService {
 		return eQuery;				
 	}
 	
-	private QStatus getData(List<Document> docs, CarePathway carePathway, int number) {
+	private QStatus getData(List<Document> docs, 
+							CarePathway carePathway, 
+							int number) {
 		QStatus qStatus = Query_metamodelFactory.eINSTANCE.createQStatus();
 		int idPathway = 0;
 		for (Document document : docs) { //counting the occurrences of each status types
@@ -93,7 +95,7 @@ public class QStatusService {
 		}
 		qStatus.setAborted(aborted);
 		qStatus.setCompleted(completed);
-		qStatus.setInProgress(inProgress);
+		qStatus.setInProgress(inProgress);		
 		Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
 		pathway.setName(carePathway.getName());
 		pathway.setQuantity(this.aborted + this.completed + this.inProgress);
