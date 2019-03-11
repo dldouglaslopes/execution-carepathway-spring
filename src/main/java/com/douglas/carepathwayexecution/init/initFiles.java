@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class initFiles {
 	public static void main(String[] args) throws JSONException, Exception {
 		String url = "";
-		for (int j = 0; j < 5; j++) {			
+		for (int j = 0; j < 40; j++) {			
 			if (url != null) {
 				System.out.println(url);
 				JSONObject json = new JSONObject(getText(url)); 
@@ -28,13 +28,12 @@ public class initFiles {
 					JSONObject result = results.getJSONObject(i);
 					String name = "" + result.get("id");
 					System.out.println(name);
-					if (!name.equals("3998") && !name.equals("3939")
-							&& !name.equals("4000")
-							&& !name.equals("4019")) {
-						String urlResult = result.getString("url") + "resumo/?format=json";
-						JSONObject jsonResult = new JSONObject(getText(urlResult)); 
+					String urlResult = result.getString("url") + "resumo/?format=json";
+					String text = getText(urlResult);
+					if (text != null) {
+						JSONObject jsonResult = new JSONObject(); 
 						createFile( name, jsonResult.toString());
-					}
+					}					
 				}
 				url = json.getString("next");
 			}	
@@ -47,19 +46,24 @@ public class initFiles {
 		Files.write(file, lines, Charset.forName("UTF-8"));
 	}
 	
-	private static String getText(String url) throws Exception {
-        URL website = new URL(url);
-        URLConnection connection = website.openConnection();
-        BufferedReader in = new BufferedReader( new InputStreamReader(connection.getInputStream(),"UTF8"));
+	private static String getText(String url) throws IOException {        
+        try {
+        	URL website = new URL(url);
+			URLConnection connection = website.openConnection();
+			
+			BufferedReader in = new BufferedReader( new InputStreamReader(connection.getInputStream(),"UTF8"));
 
-        StringBuilder response = new StringBuilder();
-        String inputLine;
+	        StringBuilder response = new StringBuilder();
+	        String inputLine;
 
-        while ((inputLine = in.readLine()) != null) 
-            response.append(inputLine);
+	        while ((inputLine = in.readLine()) != null) 
+	            response.append(inputLine);
 
-        in.close();
-
-        return response.toString();
+	        in.close();
+	        
+	        return response.toString();
+		} catch (IOException e) {
+			return null;
+		}	
     }
 }

@@ -529,7 +529,7 @@ public class ExecutedStep {
 		}
 		
 		if (!medicationJson.isNull("padrao")) {
-			medication.setStandard(medicationJson.getString("padrao"));
+			//medication.setStandard(medicationJson.getString("padrao"));
 		}			
 		
 		if (!medicationJson.isNull("categoria")) {

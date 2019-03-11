@@ -216,11 +216,11 @@ public class QMedicationService {
 			if (medicationsMap.containsKey( key)) {
 				int value = medicationsMap.get(key) + 1;
 				medicationsMap.replace( key, value);
-				qtdMedications++;
+				this.qtdMedications++;
 			}
 			else {
 				medicationsMap.put( key, 1);
-				qtdMedications++;
+				this.qtdMedications++;
 			}
 		}
 	}
