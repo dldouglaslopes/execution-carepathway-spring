@@ -173,23 +173,7 @@ public class QMedicationService {
 						}
 					}							
 				}					
-			}			
-			if (prescribedResource.getString("type").equals("Receita")) {
-				List<Document> prescribedPrescription = step.get( "pprescription", new ArrayList<Document>());				
-				for (Document document : prescribedPrescription) {
-					Document prescription = document.get( "prescription", new Document());
-					String key = prescription.getInteger("_id") + "-" + 
-								prescription.getString( "medication");				
-					if (name == null) {
-						add(key);
-					}			
-					else {
-						if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
-							add(key);
-						}
-					}
-				}
-			}
+			}						
 		}
 	}
 	

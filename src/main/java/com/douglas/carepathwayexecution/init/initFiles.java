@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class initFiles {
 	public static void main(String[] args) throws JSONException, Exception {
 		String url = "";
-		for (int j = 0; j < 40; j++) {			
+		for (int j = 0; j < 10; j++) {			
 			if (url != null) {
 				System.out.println(url);
 				JSONObject json = new JSONObject(getText(url)); 
@@ -31,7 +31,7 @@ public class initFiles {
 					String urlResult = result.getString("url") + "resumo/?format=json";
 					String text = getText(urlResult);
 					if (text != null) {
-						JSONObject jsonResult = new JSONObject(); 
+						JSONObject jsonResult = new JSONObject(text); 
 						createFile( name, jsonResult.toString());
 					}					
 				}
@@ -48,8 +48,8 @@ public class initFiles {
 	
 	private static String getText(String url) throws IOException {        
         try {
-        	URL website = new URL(url);
-			URLConnection connection = website.openConnection();
+        	URL api = new URL(url);
+			URLConnection connection = api.openConnection();
 			
 			BufferedReader in = new BufferedReader( new InputStreamReader(connection.getInputStream(),"UTF8"));
 
