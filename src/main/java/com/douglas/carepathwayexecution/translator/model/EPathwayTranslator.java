@@ -99,7 +99,7 @@ public class EPathwayTranslator {
 		
 		switch (type) {
 		case "MedicamentoComplementar":
-			ePathway.getComplementaryconducts().add(complementaryConduct.createComplementaryMedicamention(json));
+			ePathway.getComplementaryconducts().add(complementaryConduct.createComplementaryMedication(json));
 			break;
 		case "ProcedimentoComplementar":
 			ePathway.getComplementaryconducts().add(complementaryConduct.createComplementaryProcedure(json));

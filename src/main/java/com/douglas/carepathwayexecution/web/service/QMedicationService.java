@@ -161,11 +161,10 @@ public class QMedicationService {
 				List<Document> prescribedMedication = step.get( "pmedication", new ArrayList<Document>());
 				for (Document document : prescribedMedication) {
 					Document medication = document.get( "medication", new Document());
-					String key = medication.getInteger("_id") + "-" + 
+					String key = medication.getInteger("idMedication") + "-" + 
 								medication.getString( "name");				
 					if (name == null) {
-						add(key);
-						
+						add(key);						
 					}			
 					else {
 						if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
@@ -181,7 +180,7 @@ public class QMedicationService {
 		for( Document complementaryConduct : complementaryConducts) {
 			Document prescribedResource = complementaryConduct.get( "prescribedresource", new Document());									
 			if( complementaryConduct.getString( "type").equals( "MedicamentoComplementar")) {
-				String key = prescribedResource.getInteger( "_id") + "-" +
+				String key = prescribedResource.getInteger( "idMedication") + "-" +
 								prescribedResource.getString( "name");				
 				if (name == null) {
 					add(key);

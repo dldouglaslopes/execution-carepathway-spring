@@ -235,11 +235,11 @@ public class ExecutedStep {
 		}
 		
 		//set prescribed paediatric medication 
-//		JSONArray idsPPaediatricMedicationJson = json.getJSONArray("medicamentos_pediatricos_prescritos_ids");		
-//		for (int i = 0; i < idsPPaediatricMedicationJson.length(); i++) {
-//			System.out.println("PEDIATRICO");
-//			eTreatment.getIdsPPaediatricMedication().add(idsPPaediatricMedicationJson.optInt(i));
-//		}
+		JSONArray idsPPaediatricMedicationJson = json.getJSONArray("medicamentos_pediatricos_prescritos_ids");		
+		for (int i = 0; i < idsPPaediatricMedicationJson.length(); i++) {
+			System.out.println("PEDIATRICO");
+			//eTreatment.getIdsPPaediatricMedication().add(idsPPaediatricMedicationJson.optInt(i));
+		}
 		
 		//save prescribed medication
 		JSONArray pMedicationsJson = json.getJSONArray("medicamentos_prescritos");
@@ -504,16 +504,18 @@ public class ExecutedStep {
 	//set prescribed medication
 	private PMedication setPMedication(JSONObject json, PMedication pMedication) throws ParseException, JSONException {
 		JSONObject medicationJson = json.getJSONObject("medicamento");
+		JSONObject medJson = medicationJson.getJSONObject("medicamento");
 		JSONObject unitJson = medicationJson.getJSONObject("unidade");
 		JSONObject accessJson = medicationJson.getJSONObject("via_acesso");
 
 		//set medicament
 		Medication medication = Execution_metamodelFactory.eINSTANCE.createMedication();
 		medication.setId(medicationJson.getInt("id"));
-		medication.setName(medicationJson.getString("nome"));
-		medication.setCode(medicationJson.getString("codigo"));
-		medication.setDescription(medicationJson.getString("descricao"));
-		medication.setBrand(medicationJson.getString("marca"));
+		medication.setIdMedication(medJson.getInt("id"));
+		medication.setName(medJson.getString("nome"));
+		medication.setCode(medJson.getBigInteger("codigo") + "");
+		medication.setDescription(medJson.getString("descricao"));
+		medication.setBrand(medJson.getString("marca"));
 		medication.setDailyDosage(medicationJson.getInt("dose_diaria"));
 		medication.setCycles(medicationJson.getInt("ciclos"));
 		medication.setFrequency(medicationJson.getInt("frequencia"));

@@ -1,6 +1,8 @@
 package com.douglas.carepathwayexecution.web.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,22 @@ public class QOccurrenceService {
 	private int numVersion;
 	
 	public EQuery getOccurrences(EQuery eQuery, int version) {	
+		Set<String> names = new HashSet<>();
+		for (Document doc : service.filterDocuments(eQuery)) {
+			boolean verificado = false;
+			String name = doc.get("pathway", new Document()).getString("name");
+			for (CarePathway carePathway : CarePathway.VALUES) {
+				if (carePathway.getLiteral().equals(name)) {
+					verificado = true;
+				}
+			}
+			if (!verificado) {
+				names.add(name);
+			}
+		}
+		for (String string : names) {
+			System.out.println(string);
+		}
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
 			for (CarePathway carePathway : CarePathway.VALUES) {	
 				eQuery.getEAttribute().getCarePathway().setName(carePathway);

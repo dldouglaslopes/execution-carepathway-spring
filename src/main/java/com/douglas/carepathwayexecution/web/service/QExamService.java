@@ -18,6 +18,7 @@ import QueryMetamodel.Exam;
 import QueryMetamodel.Pathway;
 import QueryMetamodel.QExam;
 import QueryMetamodel.Query_metamodelFactory;
+import QueryMetamodel.Step;
 
 @Service
 public class QExamService {
@@ -27,6 +28,7 @@ public class QExamService {
 	private int numVersion;
 	private int idPathway = 0;
 	private Map<String, Integer> examsMap;
+	private Map<String, Map<String, Integer>> stepsMap;
 	private int qtdExams;
 	
 	public EQuery getRecurrentExam(EQuery eQuery, String exam, int version) {
@@ -88,6 +90,7 @@ public class QExamService {
 						int version) {
 		QExam qExam = Query_metamodelFactory.eINSTANCE.createQExam();
 		this.examsMap = new HashMap<>();
+		this.stepsMap = new HashMap<>();
 		this.qtdExams = 0;
 		if (!docs.isEmpty()) {			
 			List<Entry<String, Double>> list = getExams(docs, examStr, version, range);
@@ -98,7 +101,24 @@ public class QExamService {
 				exam.setId(examArr[0]);
 				exam.setName(examArr[1]);
 				exam.setQuantity(examsMap.get(key));
-				exam.setPercentage(entry.getValue() + "%");
+				exam.setPercentage(service.decimalFormat(entry.getValue()) + "%");
+				for (String stepStr : stepsMap.get(key).keySet()) {
+					Step step = Query_metamodelFactory.eINSTANCE.createStep();
+					String[] stepArr = stepStr.split("%");
+					step.setId(stepArr[0]);
+					step.setType(stepArr[2]);
+					step.setName(stepArr[1]);
+					if (stepArr[2].equals("ExameComplementar")) {
+						exam.setName(examArr[1].split(":")[1]);
+					}
+					double percentage = service.rate(stepsMap.get(key).get(stepStr), examsMap.get(key));
+					step.setPercentage(service.decimalFormat(percentage) + "%");
+					if (stepArr.length > 3) {
+						step.setDescription(stepArr[3]);
+					}
+					step.setQuantity(stepsMap.get(key).get(stepStr));
+					exam.getStep().add(step);
+				}
 				qExam.getExam().add(exam);
 			}
 			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
@@ -138,20 +158,24 @@ public class QExamService {
 	
 	private void getExamsInTreatement(List<Document> eSteps, String name) {
 		for (Document eStep : eSteps) { 
-			Document step = eStep.get("step", new Document());
-			String typeStr = step.getString("type");				
+			Document step = eStep.get("step", new Document());			
+			String typeStr = step.getString("type");			
 			if (typeStr.equals("Tratamento")) {
-				List<Document> pExaminations = step.get("pexamination", new ArrayList<>());
+				List<Document> pExaminations = eStep.get("pexamination", new ArrayList<Document>());
 				for (Document pExamination : pExaminations) {
 					Document examination = pExamination.get("examination", new Document());
-					String key = examination.getInteger("_id") + "-" +
+					String key = examination.getInteger("idExamination") + "-" +
 								examination.getString("name");
+					String stepStr = step.getInteger("_id") + "%" +
+							step.getString("name") + "%" + 
+							step.getString("type") + "%" +
+							step.getString("description");
 					if (name == null) {
-						add(key);
+						add(key, stepStr);
 					}			
 					else {
 						if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
-							add(key);
+							add(key, stepStr);
 						}
 					}
 				}
@@ -163,22 +187,26 @@ public class QExamService {
 		for (Document compConduct : compConducts) { 
 			String type = compConduct.getString("type");
 			if (type.equals("ExameComplementar")) {
-				Document conduct = compConduct.get("prescribedresource", new Document());
-				String key = conduct.getInteger("_id") + "-" +
-							conduct.getString("name");
+				Document conduct = compConduct.get("examinationprescribedresource", new Document());
+				String key = conduct.getInteger("idExam") + "-" +
+							conduct.getString("exam");
+				String step = compConduct.getInteger("_id") + "%" +
+						 	compConduct.getString("resource") + "%" + 
+							type + "%" +
+							compConduct.getString("justification");
 				if (name == null) {
-					add(key);
+					add(key, step);
 				}			
 				else {
 					if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
-						add(key);
+						add(key, step);
 					}
 				}			
 			}
 		}
 	}
 
-	private void add(String key) {
+	private void add(String key, String step) {
 		if (examsMap.containsKey(key)) {
 			int value = examsMap.get(key) + 1;
 			examsMap.replace(key, value);
@@ -187,6 +215,24 @@ public class QExamService {
 		else {
 			examsMap.put(key, 1);
 			this.qtdExams++;
+		}
+		if (stepsMap.containsKey(key)) {
+			if (stepsMap.get(key).containsKey(step)) {
+				Map<String, Integer> value = stepsMap.get(key);
+				int sum = value.get(step) + 1;
+				value.replace(step, sum);
+				stepsMap.put(key, value);
+			}
+			else {
+				Map<String, Integer> value = stepsMap.get(key);
+				value.put(step, 1);
+				stepsMap.put(key, value);
+			}
+		}
+		else {
+			Map<String, Integer> value = new HashMap<>();
+			value.put(step, 1);
+			stepsMap.put(key, value);
 		}
 	}
 }

@@ -28,6 +28,7 @@ public class ExecutedPathway {
 		pathway.setName(pathwayJson.getString("nome"));				
 		pathway.setVersion(pathwayJson.getInt("versao"));
 		pathway.setCompleted(pathwayJson.getBoolean("finalizado"));
+		pathway.setIdPathway(pathwayJson.getInt("repositorio_id"));
 		
 		//set audit
 		Audit audit = Execution_metamodelFactory.eINSTANCE.createAudit();
@@ -59,7 +60,6 @@ public class ExecutedPathway {
 			String conclusionStr = json.getString("data_conclusao");
 			conclusionDate = dateFormat.parse(conclusionStr);
 		}
-		
 		
 		//set attendance
 		JSONObject attendanceJson = json.getJSONObject("atendimento");

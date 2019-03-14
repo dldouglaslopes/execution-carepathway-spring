@@ -59,7 +59,7 @@ public class ComplementaryConduct {
 		return complementaryConducts;
 	}
 	
-	public ComplementaryMedication createComplementaryMedicamention(JSONObject json) throws ParseException, JSONException {
+	public ComplementaryMedication createComplementaryMedication(JSONObject json) throws ParseException, JSONException {
 		ComplementaryMedication complementaryMedication = Execution_metamodelFactory.eINSTANCE.createComplementaryMedication();
 		complementaryMedication = (ComplementaryMedication) createComplementaryConducts(json, complementaryMedication);
 		

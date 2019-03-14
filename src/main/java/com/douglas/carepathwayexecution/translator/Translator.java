@@ -18,7 +18,7 @@ public class Translator {
 	
 	public void translate() {		
 		jsonToXmi();		
-		saveEPathway(new DBConfig(), new DBOperations());	
+		//saveEPathway(new DBConfig(), new DBOperations());	
 	}
 	
 	private void jsonToXmi() {
@@ -28,7 +28,7 @@ public class Translator {
 			String[] namesStr = folder.list(); // names of folders that contain in JSON folder
 			
 			for (int i = 0; i < namesStr.length; i++) {
-				System.out.println(namesStr[i] + ".xmi ---> TRANSLATE...");
+				System.out.println(namesStr[i] + "---> TRANSLATE...");
 				String pathStr = folderStr + namesStr[i]; //create the path of each folder in JSON folder
 				//System.out.println(namesStr[i]);
 				

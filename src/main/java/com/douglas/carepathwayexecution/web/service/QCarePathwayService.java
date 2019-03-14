@@ -24,8 +24,8 @@ import QueryMetamodel.ADate;
 import QueryMetamodel.ARange;
 import QueryMetamodel.ASex;
 import QueryMetamodel.AStatus;
-import QueryMetamodel.BooleanConduct;
 import QueryMetamodel.CarePathway;
+import QueryMetamodel.Conduct;
 import QueryMetamodel.EAttribute;
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Gender;
@@ -51,12 +51,12 @@ public class QCarePathwayService {
 											carePathway.getName().getLiteral()));
 		}			
 		
-		if (carePathway.getConduct() == BooleanConduct.TRUE) {
+		if (carePathway.getConduct() == Conduct.TRUE) {
 			docs = docs.filter( Filters.or( Filters.exists( "complementaryConducts.prescribedresource"), 
 											Filters.exists( "complementaryConducts.procedureprescribedresource"), 
 											Filters.exists( "complementaryConducts.examinationprescribedresource")));
 		}
-		else if (carePathway.getConduct() == BooleanConduct.FALSE) {
+		else if (carePathway.getConduct() == Conduct.FALSE) {
 			docs = docs.filter( Filters.nor( Filters.exists( "complementaryConducts.prescribedresource"), 
 											Filters.exists( "complementaryConducts.procedureprescribedresource"), 
 											Filters.exists( "complementaryConducts.examinationprescribedresource")));
@@ -156,10 +156,10 @@ public class QCarePathwayService {
 		
 		if (conduct != null && !conduct.isEmpty()) {
 			if (Integer.parseInt(conduct) == 0) {
-				eCarePathway.setConduct(BooleanConduct.FALSE);
+				eCarePathway.setConduct(Conduct.FALSE);
 			}
 			if (Integer.parseInt(conduct) == 1) {
-				eCarePathway.setConduct(BooleanConduct.TRUE);
+				eCarePathway.setConduct(Conduct.TRUE);
 			}
 		}
 		

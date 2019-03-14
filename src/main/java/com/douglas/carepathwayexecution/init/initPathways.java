@@ -1,7 +1,6 @@
 package com.douglas.carepathwayexecution.init;
 
 import java.io.BufferedReader;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -13,37 +12,20 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class initFiles {
+public class initPathways {
 	public static void main(String[] args) throws JSONException, Exception {
-		String url = "";
-		for (int j = 0; j < 10; j++) {			
-			if (url != null) {
-				System.out.println(url);
-				JSONObject json = new JSONObject(getText(url)); 
-				JSONArray results = json.getJSONArray("results");
-				for (int i = 0; i < results.length(); i++) {
-					JSONObject result = results.getJSONObject(i);
-					String name = "" + result.get("id");
-					System.out.println(name);
-					String urlResult = result.getString("url") + "resumo/?format=json";
-					String text = getText(urlResult);
-					if (text != null) {
-						JSONObject jsonResult = new JSONObject(text); 
-						createFile( name, jsonResult.toString());
-					}					
-				}
-				url = json.getString("next");
-			}	
-		}			
+		String url = "http://app-desenv.hapvida.com.br/api/protocolo/hospitalar/protmed/autoria/repositorios/?format=json";
+		
+		JSONObject json = new JSONObject(getText(url)); 
+		createFile( "names", json.toString());	
 	}
 	
 	private static void createFile(String name, String text) throws IOException {
 		List<String> lines = Arrays.asList(text);
-		Path file = Paths.get("C:/Users/dldou/OneDrive/Documentos/Protocolos/" + name + ".json");
+		Path file = Paths.get("C:/Users/dldou/OneDrive/Documentos/ProtocolosArquivos/" + name + ".json");
 		Files.write(file, lines, Charset.forName("UTF-8"));
 	}
 	
