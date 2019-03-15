@@ -18,8 +18,7 @@ import QueryMetamodel.Flow;
 import QueryMetamodel.Pathway;
 import QueryMetamodel.QFlow;
 import QueryMetamodel.Query_metamodelFactory;
-import QueryMetamodel.Sequence;
-
+import QueryMetamodel.Step;
 @Service
 public class QFlowService {
 	@Autowired
@@ -118,23 +117,27 @@ public class QFlowService {
 			flow.setQuantity( flowMap.get( list.get(i).getKey()));
 			for (int j = 0; j < flowArr.length; j++) {
 				String[] oneFlow = flowArr[j].split("-");
-				Sequence sequence = Query_metamodelFactory.eINSTANCE.createSequence();
-				sequence.setType( oneFlow[0]);
-				sequence.setId( oneFlow[1]);
-				if (oneFlow.length > 2) {
-					sequence.setName(oneFlow[2]);
-					if (oneFlow.length > 3) {
-						sequence.setDescription(oneFlow[3]);
+				if (oneFlow.length > 1) {
+					Step step = Query_metamodelFactory.eINSTANCE.createStep();
+					step.setType( oneFlow[0]);
+					step.setId( oneFlow[1]);
+					if (oneFlow.length > 2) {
+						step.setName(oneFlow[2]);
+						if (oneFlow.length > 3) {
+							step.setDescription(oneFlow[3]);
+						}
+						else {
+							step.setDescription("");
+						}
 					}
 					else {
-						sequence.setDescription("");
+						step.setName("");
+						step.setDescription("");
 					}
-				}
-				else {
-					sequence.setName("");
-					sequence.setDescription("");
-				}
-				flow.getSequences().add(sequence);				
+					step.setPercentage("");
+					step.setQuantity(0);
+					flow.getStep().add(step);
+				}				
 			}		
 			flows.add(flow);
 		}		

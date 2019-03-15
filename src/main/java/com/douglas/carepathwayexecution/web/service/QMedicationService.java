@@ -130,9 +130,6 @@ public class QMedicationService {
 					step.setId(stepArr[0]);
 					step.setType(stepArr[2]);
 					step.setName(stepArr[1]);
-					//if (stepArr[2].equals("ExameComplementar")) {
-						//medication.setName(medicationArr[1].split(":")[1]);
-					//}
 					double percentage = service.rate(stepsMap.get(key).get(stepStr), medicationsMap.get(key));
 					step.setPercentage(service.decimalFormat(percentage) + "%");
 					if (stepArr.length > 3) {

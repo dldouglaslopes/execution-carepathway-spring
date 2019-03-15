@@ -20,6 +20,7 @@ import QueryMetamodel.Pathway;
 import QueryMetamodel.QAnswer;
 import QueryMetamodel.Query_metamodelFactory;
 import QueryMetamodel.Question;
+import QueryMetamodel.Step;
 
 @Service
 public class QAnswerService {
@@ -32,6 +33,7 @@ public class QAnswerService {
 	private Map<String, Map<String,Double>> numericMap;
 	private int numVersion;
 	private int idPathway = 0;
+	private Map<String, Map<String, Integer>> stepsMap;
 	
 	public EQuery getOccorrencesAnswer(EQuery eQuery, 
 										String questionStr, 
@@ -102,6 +104,7 @@ public class QAnswerService {
 		this.noMap = new HashMap<>();	
 		this.numericMap = new HashMap<>();
 		this.variablesMap = new HashMap<>();
+		this.stepsMap = new HashMap<>();
 		if (!docs.isEmpty()) {
 			getVariables(docs, name, type, version);	
 			getAnswers();
@@ -133,6 +136,19 @@ public class QAnswerService {
 			question.setPercentage("");
 			question.setId(questionArr[0]);
 			question.getAnswer().add(aBoolean);
+			for (String stepStr : stepsMap.get(key).keySet()) {
+				Step step = Query_metamodelFactory.eINSTANCE.createStep();
+				String[] stepArr = stepStr.split("%");
+				step.setId(stepArr[0]);
+				step.setType(stepArr[2]);
+				step.setName(stepArr[1]);
+				step.setPercentage("");
+				if (stepArr.length > 3) {
+					step.setDescription(stepArr[3]);
+				}
+				step.setQuantity(stepsMap.get(key).get(stepStr));
+				question.getStep().add(step);
+			}
 			questions.add(question);
 		}
 		for ( String key : numericMap.keySet()) {
@@ -151,7 +167,24 @@ public class QAnswerService {
 				aNumeric.setQuantity( listKey.get(i).getValue().intValue());
 				aNumeric.setValue(Double.parseDouble(listKey.get(i).getKey()));
 				question.getAnswer().add(aNumeric);
-			}			
+			}
+			for (String stepStr : stepsMap.get(key).keySet()) {
+				Step step = Query_metamodelFactory.eINSTANCE.createStep();
+				String[] stepArr = stepStr.split("%");
+				step.setId(stepArr[0]);
+				step.setType(stepArr[2]);
+				step.setName(stepArr[1]);
+				//if (stepArr[2].equals("ExameComplementar")) {
+					//medication.setName(medicationArr[1].split(":")[1]);
+				//}
+				//double percentage = service.rate(stepsMap.get(key).get(stepStr), yesMap.get(key));
+				step.setPercentage("");
+				if (stepArr.length > 3) {
+					step.setDescription(stepArr[3]);
+				}
+				step.setQuantity(stepsMap.get(key).get(stepStr));
+				question.getStep().add(step);
+			}
 			questions.add(question);
 		}
 		return questions;
@@ -173,6 +206,10 @@ public class QAnswerService {
 						Document value = answer.get("value", new Document());
 						String text = idQuestion + "-" +
 										question.getString("text");
+						String stepStr = step.getInteger("_id") + "%" +
+								step.getString("name") + "%" + 
+								step.getString("type") + "%" +
+								step.getString("description");
 						String data = "";
 						if (answer.getString("type").equals("RespostaNumerica")) {
 							data = answer.getString("type") + "-" +
@@ -185,22 +222,22 @@ public class QAnswerService {
 						if (version == number) {
 							if (questionStr == null) {
 								if (type == null) {
-									add(text, data);
+									add(text, data, stepStr);
 								}
 								else {
 									if (type.equals("boolean") && 
 											answer.getString("type").equals("RespostaSimOuNao")) {
-										add(text, data);
+										add(text, data, stepStr);
 									}
 									else if(type.equals("numeric") && 
 											answer.getString("type").equals("RespostaNumerica")) {
-										add(text, data);
+										add(text, data, stepStr);
 									}
 								}
 							}
 							else {		
 								if (text.toLowerCase().matches(".*" + questionStr.toLowerCase() + ".*")) {
-									add(text, data);
+									add(text, data, stepStr);
 								}
 							}
 						}
@@ -272,7 +309,7 @@ public class QAnswerService {
 		}		
 	}
 		
-	private void add(String key, String value) {
+	private void add(String key, String value, String step) {
 		if (variablesMap.containsKey(key)) {
 			List<String> variables = variablesMap.get(key);
 			variables.add(value);
@@ -282,6 +319,24 @@ public class QAnswerService {
 			List<String> variables = new ArrayList<>();
 			variables.add(value);
 			variablesMap.put(key, variables);
+		}
+		if (stepsMap.containsKey(key)) {
+			if (stepsMap.get(key).containsKey(step)) {
+				Map<String, Integer> valueMap = stepsMap.get(key);
+				int sum = valueMap.get(step) + 1;
+				valueMap.replace(step, sum);
+				stepsMap.put(key, valueMap);
+			}
+			else {
+				Map<String, Integer> valueMap = stepsMap.get(key);
+				valueMap.put(step, 1);
+				stepsMap.put(key, valueMap);
+			}
+		}
+		else {
+			Map<String, Integer> valueMap = new HashMap<>();
+			valueMap.put(step, 1);
+			stepsMap.put(key, valueMap);
 		}
 	}
 }
