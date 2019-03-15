@@ -237,7 +237,7 @@ public class ExecutedStep {
 		//set prescribed paediatric medication 
 		JSONArray idsPPaediatricMedicationJson = json.getJSONArray("medicamentos_pediatricos_prescritos_ids");		
 		for (int i = 0; i < idsPPaediatricMedicationJson.length(); i++) {
-			System.out.println("PEDIATRICO");
+			System.out.println("###################PEDIATRICO###############");
 			//eTreatment.getIdsPPaediatricMedication().add(idsPPaediatricMedicationJson.optInt(i));
 		}
 		

@@ -18,6 +18,7 @@ import QueryMetamodel.Medication;
 import QueryMetamodel.Pathway;
 import QueryMetamodel.QMedication;
 import QueryMetamodel.Query_metamodelFactory;
+import QueryMetamodel.Step;
 
 @Service
 public class QMedicationService {
@@ -25,6 +26,7 @@ public class QMedicationService {
 	private QCarePathwayService service;
 	
 	private Map<String, Integer> medicationsMap;
+	private Map<String, Map<String, Integer>> stepsMap;
 	private int numVersion;
 	private int qtdMedications;
 	private int idPathway = 0; 
@@ -39,6 +41,7 @@ public class QMedicationService {
 					for (int i = 1; i < numVersion + 1; i++) {
 						this.qtdMedications = 0;
 						medicationsMap = new HashMap<>();
+						stepsMap = new HashMap<>();
 						QMedication qMedication = getData(	docs, 
 								name,
 								eQuery.getEAttribute().getRange(),
@@ -58,6 +61,7 @@ public class QMedicationService {
 			for (int i = 1; i < numVersion + 1; i++) {
 				this.qtdMedications = 0;
 				medicationsMap = new HashMap<>();
+				stepsMap = new HashMap<>();
 				QMedication qMedication = getData(	docs, 
 						name,
 						eQuery.getEAttribute().getRange(),
@@ -73,6 +77,7 @@ public class QMedicationService {
 			List<Document> docs = service.filterDocuments(eQuery);
 			this.qtdMedications = 0;
 			medicationsMap = new HashMap<>();
+			stepsMap = new HashMap<>();
 			QMedication qMedication = getData(	docs, 
 												name,
 												eQuery.getEAttribute().getRange(),
@@ -99,16 +104,43 @@ public class QMedicationService {
 											version);				
 			for (Entry<String, Double> entry : medications) {
 				Medication medication = Query_metamodelFactory.eINSTANCE.createMedication();
+				String key = entry.getKey();
 				String[] medicationsArr = entry.getKey().split("-");
-				if (medicationsArr.length > 1) {
+				int size = medicationsArr.length;
+				if (size > 3) {
 					medication.setName(medicationsArr[1]);
+					medication.setOutpatient(Boolean.parseBoolean(medicationsArr[2]));
+					medication.setBrand(medicationsArr[3]);					
 				}
-				else {
-					medication.setName("");
+				else if (size > 2) {
+					medication.setName(medicationsArr[1]);
+					medication.setOutpatient(Boolean.parseBoolean(medicationsArr[2]));
+					medication.setBrand("");
 				}
-				medication.setId(medicationsArr[0]);				
+				else if (size > 1) {
+					medication.setName(medicationsArr[1]);
+					medication.setBrand("");
+				}
+				medication.setId(medicationsArr[0]);						
 				medication.setPercentage(service.decimalFormat(entry.getValue()) + "%");
 				medication.setQuantity(medicationsMap.get(entry.getKey()));
+				for (String stepStr : stepsMap.get(key).keySet()) {
+					Step step = Query_metamodelFactory.eINSTANCE.createStep();
+					String[] stepArr = stepStr.split("%");
+					step.setId(stepArr[0]);
+					step.setType(stepArr[2]);
+					step.setName(stepArr[1]);
+					//if (stepArr[2].equals("ExameComplementar")) {
+						//medication.setName(medicationArr[1].split(":")[1]);
+					//}
+					double percentage = service.rate(stepsMap.get(key).get(stepStr), medicationsMap.get(key));
+					step.setPercentage(service.decimalFormat(percentage) + "%");
+					if (stepArr.length > 3) {
+						step.setDescription(stepArr[3]);
+					}
+					step.setQuantity(stepsMap.get(key).get(stepStr));
+					medication.getStep().add(step);
+				}
 				qMedication.getMedications().add(medication);
 			}
 			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
@@ -162,13 +194,19 @@ public class QMedicationService {
 				for (Document document : prescribedMedication) {
 					Document medication = document.get( "medication", new Document());
 					String key = medication.getInteger("idMedication") + "-" + 
-								medication.getString( "name");				
-					if (name == null) {
-						add(key);						
+								medication.getString( "name") + "-" +
+								medication.getBoolean( "outpatient")  + "-" +
+								medication.getString( "brand");				
+					String stepStr = step.get("step", new Document()).getInteger("_id") + "%" +
+							step.get("step", new Document()).getString("name") + "%" + 
+							step.get("step", new Document()).getString("type") + "%" +
+							step.get("step", new Document()).getString("description");
+					if (name == null) {						
+						add(key, stepStr);						
 					}			
 					else {
 						if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
-							add(key);
+							add(key, stepStr);
 						}
 					}							
 				}					
@@ -182,19 +220,23 @@ public class QMedicationService {
 			if( complementaryConduct.getString( "type").equals( "MedicamentoComplementar")) {
 				String key = prescribedResource.getInteger( "idMedication") + "-" +
 								prescribedResource.getString( "name");				
+				String step = complementaryConduct.getInteger("_id") + "%" +
+					 	complementaryConduct.getString("resource") + "%" + 
+					 	complementaryConduct.getString( "type") + "%" +
+						complementaryConduct.getString("justification");
 				if (name == null) {
-					add(key);
+					add(key, step);
 				}			
 				else {
 					if (key.toLowerCase().matches(".*" + name.toLowerCase() + ".*")) {
-						add(key);
+						add(key, step);
 					}
 				}
 			}	
 		}
 	}
 	
-	private void add(String key) {
+	private void add(String key, String step) {
 		if ( key != null && !key.isEmpty()) {
 			if (medicationsMap.containsKey( key)) {
 				int value = medicationsMap.get(key) + 1;
@@ -205,6 +247,24 @@ public class QMedicationService {
 				medicationsMap.put( key, 1);
 				this.qtdMedications++;
 			}
+		}
+		if (stepsMap.containsKey(key)) {
+			if (stepsMap.get(key).containsKey(step)) {
+				Map<String, Integer> value = stepsMap.get(key);
+				int sum = value.get(step) + 1;
+				value.replace(step, sum);
+				stepsMap.put(key, value);
+			}
+			else {
+				Map<String, Integer> value = stepsMap.get(key);
+				value.put(step, 1);
+				stepsMap.put(key, value);
+			}
+		}
+		else {
+			Map<String, Integer> value = new HashMap<>();
+			value.put(step, 1);
+			stepsMap.put(key, value);
 		}
 	}
 }

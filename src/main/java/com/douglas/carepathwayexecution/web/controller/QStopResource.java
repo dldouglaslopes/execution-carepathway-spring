@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@Api(value = "Stop", 
+@Api(value = "Prescriptions", 
 	description = "Show the recurrent stop step of the care pathway execution",
 	produces ="application/json")
 @Controller

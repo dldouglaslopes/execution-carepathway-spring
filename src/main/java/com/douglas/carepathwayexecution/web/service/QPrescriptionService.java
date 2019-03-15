@@ -108,8 +108,7 @@ public class QPrescriptionService {
 					String[] medicationArr = medicationStr.split("-");
 					Medication medication = Query_metamodelFactory.eINSTANCE.createMedication();
 					medication.setBrand("");
-					medication.setDescription("");
-					medication.setFrequency("");
+					medication.setOutpatient(false);
 					medication.setId(medicationArr[0]);
 					medication.setName(medicationArr[1]);
 					medication.setPercentage("");
@@ -155,7 +154,7 @@ public class QPrescriptionService {
 			Document step = eStep.get("step", new Document());
 			String typeStr = step.getString("type");				
 			if (typeStr.equals("Receita")) {
-				List<Document> prescribedPrescription = step.get( "pprescription", new ArrayList<Document>());				
+				List<Document> prescribedPrescription = step.get( "pprescription", new ArrayList<Document>());
 				for (Document document : prescribedPrescription) {
 					Document prescription = document.get( "prescription", new Document());
 					String key = prescription.getInteger("_id") + "-" + 
