@@ -23,7 +23,7 @@ import MetamodelExecution.Suspension;
 
 public class ComplementaryConduct {
 	public ComplementaryConducts createComplementaryConducts(JSONObject json, ComplementaryConducts complementaryConducts) throws ParseException, JSONException {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSS", Locale.getDefault());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
 		
 		//set date
 		String creationStr = json.getString("data_criacao");

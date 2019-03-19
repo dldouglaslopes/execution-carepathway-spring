@@ -97,21 +97,20 @@ public class QPrescriptionService {
 			for (Entry<String, Double> entry : list) {
 				Prescription prescription = Query_metamodelFactory.eINSTANCE.createPrescription();
 				String key = entry.getKey();
-				String[] prescriptionArr = key.split("-");
+				String[] prescriptionArr = key.split("%");
 				prescription.setId(prescriptionArr[0]);
 				prescription.setName(prescriptionArr[1]);
 				prescription.setQuantity(prescriptionsMap.get(key));
-				prescription.setPercentage(entry.getValue() + "%");
+				prescription.setPercentage(service.decimalFormat(entry.getValue()) + "%");
 				qPrescription.getPrescription().add(prescription);
 				Map<String, Integer> medications = medicationsMap.get(key);
 				for (String	medicationStr : medications.keySet()) {
-					String[] medicationArr = medicationStr.split("-");
+					String[] medicationArr = medicationStr.split("%");
 					Medication medication = Query_metamodelFactory.eINSTANCE.createMedication();
-					medication.setBrand("");
-					medication.setOutpatient(false);
 					medication.setId(medicationArr[0]);
 					medication.setName(medicationArr[1]);
-					medication.setPercentage("");
+					double percentage = service.rate(medications.get(medicationStr), prescriptionsMap.get(key));
+					medication.setPercentage(service.decimalFormat(percentage) + "%");
 					medication.setQuantity(medications.get(medicationStr));
 					prescription.getMedication().add(medication);
 				}
@@ -154,12 +153,12 @@ public class QPrescriptionService {
 			Document step = eStep.get("step", new Document());
 			String typeStr = step.getString("type");				
 			if (typeStr.equals("Receita")) {
-				List<Document> prescribedPrescription = step.get( "pprescription", new ArrayList<Document>());
+				List<Document> prescribedPrescription = eStep.get( "pprescription", new ArrayList<Document>());
 				for (Document document : prescribedPrescription) {
 					Document prescription = document.get( "prescription", new Document());
-					String key = prescription.getInteger("_id") + "-" + 
-								prescription.getString( "name");				
-					String medication = prescription.getInteger("idMedication") + "-" + 
+					String key = step.getInteger("_id") + "%" + 
+								step.getString( "name");	
+					String medication = prescription.getInteger("idMedication") + "%" + 
 										prescription.getString( "medication");
 					if (name == null) {
 						add(key, medication);

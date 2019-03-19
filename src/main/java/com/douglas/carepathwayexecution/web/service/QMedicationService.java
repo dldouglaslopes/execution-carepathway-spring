@@ -107,15 +107,9 @@ public class QMedicationService {
 				String key = entry.getKey();
 				String[] medicationsArr = entry.getKey().split("-");
 				int size = medicationsArr.length;
-				if (size > 3) {
+				if (size > 2) {
 					medication.setName(medicationsArr[1]);
-					medication.setOutpatient(Boolean.parseBoolean(medicationsArr[2]));
-					medication.setBrand(medicationsArr[3]);					
-				}
-				else if (size > 2) {
-					medication.setName(medicationsArr[1]);
-					medication.setOutpatient(Boolean.parseBoolean(medicationsArr[2]));
-					medication.setBrand("");
+					medication.setBrand(medicationsArr[2]);					
 				}
 				else if (size > 1) {
 					medication.setName(medicationsArr[1]);
@@ -192,7 +186,6 @@ public class QMedicationService {
 					Document medication = document.get( "medication", new Document());
 					String key = medication.getInteger("idMedication") + "-" + 
 								medication.getString( "name") + "-" +
-								medication.getBoolean( "outpatient")  + "-" +
 								medication.getString( "brand");				
 					String stepStr = step.get("step", new Document()).getInteger("_id") + "%" +
 							step.get("step", new Document()).getString("name") + "%" + 
@@ -216,7 +209,8 @@ public class QMedicationService {
 			Document prescribedResource = complementaryConduct.get( "prescribedresource", new Document());									
 			if( complementaryConduct.getString( "type").equals( "MedicamentoComplementar")) {
 				String key = prescribedResource.getInteger( "idMedication") + "-" +
-								prescribedResource.getString( "name");				
+								prescribedResource.getString( "name") + "-" +
+								prescribedResource.getString( "brand");				
 				String step = complementaryConduct.getInteger("_id") + "%" +
 					 	complementaryConduct.getString("resource") + "%" + 
 					 	complementaryConduct.getString( "type") + "%" +

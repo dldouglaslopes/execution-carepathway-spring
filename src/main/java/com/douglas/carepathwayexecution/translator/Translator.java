@@ -30,7 +30,6 @@ public class Translator {
 			for (int i = 0; i < namesStr.length; i++) {
 				System.out.println(namesStr[i] + "---> TRANSLATE...");
 				String pathStr = folderStr + namesStr[i]; //create the path of each folder in JSON folder
-				//System.out.println(namesStr[i]);
 				
 				int pos = namesStr[i].lastIndexOf(".");
 				if (pos > 0 && pos < (namesStr[i].length() - 1)) {

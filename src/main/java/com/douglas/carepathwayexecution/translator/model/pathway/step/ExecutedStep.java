@@ -43,7 +43,7 @@ import MetamodelExecution.YesOrNo;
 
 public class ExecutedStep {
 	public EStep createEElement(JSONObject json, EStep eElement) throws ParseException, JSONException {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSS", Locale.getDefault());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
 		
 		//set step
 		JSONObject stepJson = json.getJSONObject("passo");
@@ -434,8 +434,7 @@ public class ExecutedStep {
 		for (int i = 0; i < pPrescriptionJson.length(); i++) {			
 			Prescription prescription = Execution_metamodelFactory.eINSTANCE.createPrescription();
 			
-			JSONObject prescriptionJson = pPrescriptionJson.getJSONObject(i);
-			
+			JSONObject prescriptionJson = pPrescriptionJson.getJSONObject(i);			
 			JSONObject itemJson = prescriptionJson.getJSONObject("item_receita");
 			prescription.setAccess( itemJson.getString("via_acesso"));
 			prescription.setFrequency(itemJson.getInt("quantidade_frequencia_uso"));
@@ -555,7 +554,7 @@ public class ExecutedStep {
 	//set prescription result
 	private PrescriptionResult createPrescriptionResult(JSONObject json) throws ParseException, JSONException {
 		PrescriptionResult prescription = Execution_metamodelFactory.eINSTANCE.createPrescriptionResult();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSS", Locale.getDefault());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
 		JSONObject prescriptionJson = json.getJSONObject("prescricao");			
 		prescription.setId(prescriptionJson.getInt("id"));
 		prescription.setSuccess(prescriptionJson.getBoolean("sucesso"));
@@ -569,7 +568,7 @@ public class ExecutedStep {
 	//set result
 	private Result createResult(JSONObject json) throws ParseException {
 		Result result = Execution_metamodelFactory.eINSTANCE.createResult();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSS", Locale.getDefault());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
 		JSONObject resultJson = json.getJSONObject("resultado");				
 		result.setId(resultJson.getInt("id"));
 		result.setSuccess(resultJson.getBoolean("sucesso"));

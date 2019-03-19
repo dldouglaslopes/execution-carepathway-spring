@@ -18,7 +18,7 @@ import MetamodelExecution.Pathway;
 
 public class ExecutedPathway {	
 	public EPathway addEPathway(JSONObject json, EPathway ePathway) throws ParseException, JSONException{
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSS", Locale.ROOT);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT);
 		
 		//Set pathway
 		JSONObject pathwayJson = json.getJSONObject("protocolo");
