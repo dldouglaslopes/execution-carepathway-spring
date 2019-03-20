@@ -18,12 +18,12 @@ public class Translator {
 	
 	public void translate() {		
 		jsonToXmi();		
-		//saveEPathway(new DBConfig(), new DBOperations());	
+		saveEPathway(new DBConfig(), new DBOperations());	
 	}
 	
 	private void jsonToXmi() {
 		try {
-			String folderStr = "C:/Users/dldou/OneDrive/Documentos/Protocolos/";	//path of JSON folder
+			String folderStr = "C:/Users/dldou/OneDrive/Documentos/Protocolos2/";	//path of JSON folder
 			File folder = new File(folderStr);	
 			String[] namesStr = folder.list(); // names of folders that contain in JSON folder
 			
