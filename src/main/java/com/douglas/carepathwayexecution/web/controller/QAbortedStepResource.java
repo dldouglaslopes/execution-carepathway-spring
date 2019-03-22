@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.douglas.carepathwayexecution.web.domain.EQueryDTO;
 import com.douglas.carepathwayexecution.web.service.QCarePathwayService;
-import com.douglas.carepathwayexecution.web.service.QStopStepService;
+import com.douglas.carepathwayexecution.web.service.QAbortedStepService;
 
 import QueryMetamodel.EMethod;
 import QueryMetamodel.EQuery;
@@ -33,13 +33,13 @@ public class QAbortedStepResource {
 	@Autowired
 	private QCarePathwayService service;
 	@Autowired
-	private QStopStepService stopService;
+	private QAbortedStepService stopService;
 	
 	@ApiOperation(value = "Calculate the reccurrent stop step of a specified care pathway id")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/stop/step" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/aborted/steps" }, 
 					method = RequestMethod.GET,
 					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -73,7 +73,7 @@ public class QAbortedStepResource {
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/stop/step" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/aborted/steps" }, 
 					method = RequestMethod.GET,
 					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -108,7 +108,7 @@ public class QAbortedStepResource {
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/stop/step" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/aborted/steps" }, 
 					method = RequestMethod.GET,
 					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -141,7 +141,7 @@ public class QAbortedStepResource {
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/stop/step/{name}" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/aborted/steps/{name}" }, 
 					method = RequestMethod.GET,
 					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -175,7 +175,7 @@ public class QAbortedStepResource {
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/stop/step/{name}" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/aborted/steps/{name}" }, 
 					method = RequestMethod.GET,
 					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -213,7 +213,7 @@ public class QAbortedStepResource {
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/stop/step/{name}" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/aborted/steps/{name}" }, 
 					method = RequestMethod.GET,
 					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody

@@ -37,7 +37,7 @@ public class Translator {
 				}
 				
 				FileConfig fileConfig = new FileConfig(); //configure files
-				fileConfig.setResource("C:/Users/dldou/OneDrive/Documentos/ProtocolosXMI/" +  namesStr[i] + ".xmi");
+				fileConfig.setResource("C:/Users/dldou/OneDrive/Documentos/ProtocolosXMI/" + namesStr[i] + ".xmi");
 				
 				EPathwayTranslator translator = new EPathwayTranslator();				
 				

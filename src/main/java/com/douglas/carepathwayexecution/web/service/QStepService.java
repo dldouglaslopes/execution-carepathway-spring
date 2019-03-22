@@ -15,6 +15,7 @@ import QueryMetamodel.Pathway;
 import QueryMetamodel.QStep;
 import QueryMetamodel.Query_metamodelFactory;
 import QueryMetamodel.Step;
+import QueryMetamodel.Version;
 
 @Service
 public class QStepService {
@@ -23,8 +24,6 @@ public class QStepService {
 	
 	private Map<String, Integer> stepsMap;
 	private int count;
-	private int numVersion;
-	private String idPathway = ""; 
 	
 	public EQuery getRecurrentSteps(EQuery eQuery, String stepStr, int version) {
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
@@ -32,10 +31,11 @@ public class QStepService {
 				if (!carePathway.equals(CarePathway.NONE)) {
 					stepsMap = new HashMap<>();
 					count = 0;
-					this.numVersion = 1;
+					int numVersion = Version.getByName(carePathway.getName()).getValue();
 					eQuery.getEAttribute().getCarePathway().setName(carePathway);
-					List<Document> docs = service.filterDocuments(eQuery);
 					for (int i = 1; i < numVersion + 1; i++) {
+						eQuery.getEAttribute().getCarePathway().setVersion(i);
+						List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
 						QStep qStep = getData(docs, carePathway, i, stepStr);
 						if (qStep.getPathway() != null) {
 							eQuery.getEMethod().add(qStep);
@@ -47,11 +47,13 @@ public class QStepService {
 		else if (version == 0){
 			stepsMap = new HashMap<>();
 			count = 0;
-			this.numVersion = 1;
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
-			List<Document> docs = service.filterDocuments(eQuery);
+			int numVersion = Version.getByName(carePathway.getName()).getValue();
 			for (int i = 1; i < numVersion + 1; i++) {
+				eQuery.getEAttribute().getCarePathway().setVersion(i);
+				List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
 				QStep qStep = getData(docs, carePathway, i, stepStr);
+				docs.clear();
 				if (qStep.getPathway() != null) {
 					eQuery.getEMethod().add(qStep);
 				}
@@ -61,8 +63,10 @@ public class QStepService {
 			stepsMap = new HashMap<>();
 			count = 0;
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
-			List<Document> docs = service.filterDocuments(eQuery);
+			eQuery.getEAttribute().getCarePathway().setVersion(version);
+			List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
 			QStep qStep = getData(docs, carePathway, version, stepStr);
+			docs.clear();
 			if (qStep.getPathway() != null) {
 				eQuery.getEMethod().add(qStep);
 			}					
@@ -98,7 +102,7 @@ public class QStepService {
 			pathway.setName(carePathway.getName());
 			pathway.setQuantity(stepsMap.size());
 			pathway.setVersion(version);
-			pathway.setId(this.idPathway);
+			pathway.setId(carePathway.getValue() + "");
 			qStep.setPathway(pathway);
 		}		
 		return qStep;
@@ -106,16 +110,12 @@ public class QStepService {
 	
 	private void getSteps(List<Document> docs, String stepStr, int number) {
 		for (Document doc : docs) {
-			this.idPathway = doc.get("pathway", new Document()).getInteger("_id") + "";
 			int version = doc.get("pathway", new Document()).getInteger("version");
 			if (version == number) {
 				List<Document> stepsDoc = doc.get( "executedSteps", new ArrayList<Document>());
 				if (!stepsDoc.isEmpty()) {
 					addSteps(stepsDoc, stepStr, version);
 				}
-			}	
-			if (numVersion < version) {
-				numVersion = version;
 			}			
 		}		
 	}

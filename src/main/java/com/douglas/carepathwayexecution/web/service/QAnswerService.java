@@ -21,6 +21,7 @@ import QueryMetamodel.QAnswer;
 import QueryMetamodel.Query_metamodelFactory;
 import QueryMetamodel.Question;
 import QueryMetamodel.Step;
+import QueryMetamodel.Version;
 
 @Service
 public class QAnswerService {
@@ -31,8 +32,6 @@ public class QAnswerService {
 	private Map<String, Integer> yesMap;
 	private Map<String, Integer> noMap;
 	private Map<String, Map<String,Double>> numericMap;
-	private int numVersion;
-	private int idPathway = 0;
 	private Map<String, Map<String, Integer>> stepsMap;
 	
 	public EQuery getOccorrencesAnswer(EQuery eQuery, 
@@ -43,9 +42,10 @@ public class QAnswerService {
 			for (CarePathway carePathway : CarePathway.VALUES) {
 				if (!carePathway.equals(CarePathway.NONE)) {
 					eQuery.getEAttribute().getCarePathway().setName(carePathway);
-					List<Document> docs = service.filterDocuments(eQuery);
-					numVersion = 1;
+					int numVersion = Version.getByName(carePathway.getName()).getValue();
 					for (int i = 1; i < numVersion + 1; i++) {
+						eQuery.getEAttribute().getCarePathway().setVersion(i);
+						List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
 						QAnswer qAnswer = getData(docs, 
 								questionStr, 
 								type, 
@@ -61,24 +61,26 @@ public class QAnswerService {
 		}
 		else if(version == 0) {
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
-			eQuery.getEAttribute().getCarePathway().setName(carePathway);
-			List<Document> docs = service.filterDocuments(eQuery);
-			numVersion = 1;
-			for (int i = 1; i < numVersion + 1; i++) {
-				QAnswer qAnswer = getData(docs, 
-						questionStr, 
-						type, 
-						eQuery.getEAttribute().getRange(), 
-						carePathway, 
-						i);
-				if (qAnswer.getPathway() != null) {
-					eQuery.getEMethod().add(qAnswer);
+			if (!carePathway.equals(CarePathway.NONE)) {
+				int numVersion = Version.getByName(carePathway.getName()).getValue();
+				for (int i = 1; i < numVersion + 1; i++) {
+					eQuery.getEAttribute().getCarePathway().setVersion(i);
+					List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
+					QAnswer qAnswer = getData(docs, 
+							questionStr, 
+							type, 
+							eQuery.getEAttribute().getRange(), 
+							carePathway, 
+							i);
+					if (qAnswer.getPathway() != null) {
+						eQuery.getEMethod().add(qAnswer);
+					}
 				}
 			}		
 		}
 		else {
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
-			eQuery.getEAttribute().getCarePathway().setName(carePathway);
+			eQuery.getEAttribute().getCarePathway().setVersion(version);
 			List<Document> docs = service.filterDocuments(eQuery);
 			QAnswer qAnswer = getData(docs, 
 										questionStr, 
@@ -113,7 +115,7 @@ public class QAnswerService {
 			pathway.setName(carePathway.getName());
 			pathway.setQuantity(questions.size());
 			pathway.setVersion(version);
-			pathway.setId(this.idPathway + "");
+			pathway.setId(carePathway.getValue() + "");
 			qAnswer.setPathway(pathway);					
 			for (Question question : questions) {
 				qAnswer.getQuestion().add(question);
@@ -193,7 +195,6 @@ public class QAnswerService {
 	private void getVariables(List<Document> docs, String questionStr, String type, int number) {
 		for (Document document : docs) {
 			int version = document.get("pathway", new Document()).getInteger("version");
-			this.idPathway = document.get("pathway", new Document()).getInteger("_id");
 			List<Document> eSteps = document.get("executedSteps", new ArrayList<>());			
 			for (Document eStep : eSteps) { 
 				Document step = eStep.get("step", new Document());
@@ -240,9 +241,6 @@ public class QAnswerService {
 									add(text, data, stepStr);
 								}
 							}
-						}
-						if (numVersion < version) {
-							numVersion = version;
 						}
 					}
 				}

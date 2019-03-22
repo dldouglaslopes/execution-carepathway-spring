@@ -42,74 +42,77 @@ public class QCarePathwayService {
 		AAge age = eQuery.getEAttribute().getAge();
 		ADate date = eQuery.getEAttribute().getDate();
 		ASex sex = eQuery.getEAttribute().getSex();
-		AStatus status = eQuery.getEAttribute().getStatus();
-		
-		FindIterable<Document> docs = dbConfig.getCollection().find();		
-			
-		if(carePathway.getName() != CarePathway.NONE) {			
-			docs = docs.filter( Filters.eq( "name", 
-											carePathway.getName().getLiteral()));
-		}			
-		
-		if (carePathway.getConduct() == Conduct.TRUE) {
-			docs = docs.filter( Filters.or( Filters.exists( "complementaryConducts.prescribedresource"), 
-											Filters.exists( "complementaryConducts.procedureprescribedresource"), 
-											Filters.exists( "complementaryConducts.examinationprescribedresource")));
-		}
-		else if (carePathway.getConduct() == Conduct.FALSE) {
-			docs = docs.filter( Filters.nor( Filters.exists( "complementaryConducts.prescribedresource"), 
-											Filters.exists( "complementaryConducts.procedureprescribedresource"), 
-											Filters.exists( "complementaryConducts.examinationprescribedresource")));
-		}					
+		AStatus status = eQuery.getEAttribute().getStatus();		
 				
-		if (sex.getSex() != Gender.ALL) {
-			docs = docs.filter( Filters.eq( "medicalcare.sex", sex.getSex()));
-		}												
-		
-		if (status.getMessage() != Message.ALL) {
-			docs = docs.filter( Filters.eq( status.getMessage().getName(), status.isValue()));
-		}		 
-	
-		if (age.getFrom() > 0 && age.getTo() == 0) {
-			docs = docs.filter( Filters.gte( "medicalcare.age", 
-										age.getFrom()));
-		}		
-		else if (age.getFrom() >= 0 && age.getTo() > 0 && age.getTo() >= age.getFrom()) {
-			docs = docs.filter( Filters.and( Filters.gte( "medicalcare.age", 
-											age.getFrom()),
-									Filters.lte( "medicalcare.age", 
-											age.getTo())));
-		}		
-		
+		FindIterable<Document> docs = dbConfig.getCollection().find().filter( 
+				Filters.and(Filters.eq( "name", carePathway.getName().getLiteral()),
+							Filters.eq( "pathway.version", carePathway.getVersion())));
 		List<Document> docList = new ArrayList<>();
 		
-		for (Document document : docs) {		
+		if (docs.first() != null) {
+			if (carePathway.getConduct() == Conduct.TRUE) {
+				docs = docs.filter( Filters.or( Filters.exists( "complementaryConducts.prescribedresource"), 
+												Filters.exists( "complementaryConducts.procedureprescribedresource"), 
+												Filters.exists( "complementaryConducts.examinationprescribedresource")));
+			}
+			else if (carePathway.getConduct() == Conduct.FALSE) {
+				docs = docs.filter( Filters.nor( Filters.exists( "complementaryConducts.prescribedresource"), 
+												Filters.exists( "complementaryConducts.procedureprescribedresource"), 
+												Filters.exists( "complementaryConducts.examinationprescribedresource")));
+			}					
+					
+			if (sex.getSex() != Gender.ALL) {
+				docs = docs.filter( Filters.eq( "medicalcare.sex", sex.getSex()));
+			}
+			if (status.getMessage() != Message.ALL) {
+				docs = docs.filter( Filters.eq( status.getMessage().getName(), status.isValue()));
+			}
+			if (age.getFrom() > 0 && age.getTo() == 0) {
+				docs = docs.filter( Filters.gte( "medicalcare.age", 
+											age.getFrom()));
+			}		
+			else if (age.getFrom() >= 0 && age.getTo() > 0 && age.getTo() >= age.getFrom()) {
+				docs = docs.filter( Filters.and( Filters.gte( "medicalcare.age", 
+												age.getFrom()),
+										Filters.lte( "medicalcare.age", 
+												age.getTo())));
+			}			
+					
 			if (date.getFrom() != null && date.getTo() != null) {
-				if(document.getDate("creation").after(date.getFrom())) {
+				for (Document document : docs) {
+					if(document.getDate("creation").after(date.getFrom())) {
+						if (document.getDate("conclusion") != null) {
+							if (document.getDate("conclusion").before(date.getTo())) {
+								docList.add(document);
+							}						
+						}
+					}
+				}								
+			}	
+			else if (date.getFrom() != null && date.getTo() == null) {
+				for (Document document : docs) {
+					if(document.getDate("creation").after(date.getFrom())) {
+						docList.add(document);
+					}
+				}				
+			}
+			else if (date.getFrom() == null && date.getTo() != null) {
+				for (Document document : docs) {
 					if (document.getDate("conclusion") != null) {
 						if (document.getDate("conclusion").before(date.getTo())) {
 							docList.add(document);
 						}						
 					}
-				}					
-			}	
-			else if (date.getFrom() != null && date.getTo() == null) {
-				if(document.getDate("creation").after(date.getFrom())) {
+				}								
+			}
+			else {	
+				for (Document document : docs) {
+					
 					docList.add(document);
-				}					
+				}
 			}
-			else if (date.getFrom() == null && date.getTo() != null) {
-				if (document.getDate("conclusion") != null) {
-					if (document.getDate("conclusion").before(date.getTo())) {
-						docList.add(document);
-					}						
-				}					
-			}
-			else {
-				docList.add(document);
-			}
-		}	
-	
+		}
+		docs = null;
 		return docList;
 	}		
 	

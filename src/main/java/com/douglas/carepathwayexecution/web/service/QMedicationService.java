@@ -19,6 +19,7 @@ import QueryMetamodel.Pathway;
 import QueryMetamodel.QMedication;
 import QueryMetamodel.Query_metamodelFactory;
 import QueryMetamodel.Step;
+import QueryMetamodel.Version;
 
 @Service
 public class QMedicationService {
@@ -27,26 +28,26 @@ public class QMedicationService {
 	
 	private Map<String, Integer> medicationsMap;
 	private Map<String, Map<String, Integer>> stepsMap;
-	private int numVersion;
 	private int qtdMedications;
-	private int idPathway = 0; 
 	
 	public EQuery getMedications(EQuery eQuery, String name, int version) {
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
 			for (CarePathway carePathway : CarePathway.VALUES) {
 				if (!carePathway.equals(CarePathway.NONE)) {
 					eQuery.getEAttribute().getCarePathway().setName(carePathway);
-					List<Document> docs = service.filterDocuments(eQuery);
-					this.numVersion = 1;
+					int numVersion = Version.getByName(carePathway.getName()).getValue();
 					for (int i = 1; i < numVersion + 1; i++) {
 						this.qtdMedications = 0;
 						medicationsMap = new HashMap<>();
 						stepsMap = new HashMap<>();
+						eQuery.getEAttribute().getCarePathway().setVersion(i);
+						List<Document> docs = service.filterDocuments(eQuery);
 						QMedication qMedication = getData(	docs, 
 								name,
 								eQuery.getEAttribute().getRange(),
 								i, 
 								carePathway);
+						docs.clear();
 						if (qMedication.getPathway() != null) {
 							eQuery.getEMethod().add(qMedication);
 						}
@@ -56,17 +57,19 @@ public class QMedicationService {
 		}
 		else if(version == 0) {
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
-			List<Document> docs = service.filterDocuments(eQuery);
-			this.numVersion = 1;
+			int numVersion = Version.getByName(carePathway.getName()).getValue();
 			for (int i = 1; i < numVersion + 1; i++) {
 				this.qtdMedications = 0;
 				medicationsMap = new HashMap<>();
 				stepsMap = new HashMap<>();
+				eQuery.getEAttribute().getCarePathway().setVersion(i);
+				List<Document> docs = service.filterDocuments(eQuery);
 				QMedication qMedication = getData(	docs, 
 						name,
 						eQuery.getEAttribute().getRange(),
 						i, 
 						carePathway);
+				docs.clear();
 				if (qMedication.getPathway() != null) {
 					eQuery.getEMethod().add(qMedication);
 				}
@@ -74,6 +77,7 @@ public class QMedicationService {
 		}
 		else{
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
+			eQuery.getEAttribute().getCarePathway().setVersion(version);
 			List<Document> docs = service.filterDocuments(eQuery);
 			this.qtdMedications = 0;
 			medicationsMap = new HashMap<>();
@@ -83,6 +87,7 @@ public class QMedicationService {
 												eQuery.getEAttribute().getRange(),
 												version, 
 												carePathway);
+			docs.clear();
 			if (qMedication.getPathway() != null) {
 				eQuery.getEMethod().add(qMedication);
 			}
@@ -100,8 +105,7 @@ public class QMedicationService {
 			List<Entry<String, Double>> medications = 
 					getMedicationInPathways(docs,
 											name,
-											range,
-											version);				
+											range);				
 			for (Entry<String, Double> entry : medications) {
 				Medication medication = Query_metamodelFactory.eINSTANCE.createMedication();
 				String key = entry.getKey();
@@ -138,7 +142,7 @@ public class QMedicationService {
 			pathway.setName(carePathway.getName());
 			pathway.setQuantity(qMedication.getMedications().size());
 			pathway.setVersion(version);
-			pathway.setId(this.idPathway + "");
+			pathway.setId(carePathway.getValue() + "");
 			qMedication.setPathway(pathway);
 		}
 		return qMedication; 
@@ -146,23 +150,15 @@ public class QMedicationService {
 	
 	public List<Entry<String, Double>> getMedicationInPathways(List<Document> docs, 
 																String name, 
-																ARange range, 
-																int number) { //the medication in executed step or conduct complementary
+																ARange range) { //the medication in executed step or conduct complementary
 		for( Document doc : docs) {
-			this.idPathway = doc.get("pathway", new Document()).getInteger("_id");
-			int version = doc.get( "pathway", new Document()).getInteger("version");		
-			if (version == number) {
-				List<Document> complementaryConducts = doc.get( "complementaryConducts", new ArrayList<Document>());			
-				if( !complementaryConducts.isEmpty()) {				
-					getMedicationInComplementaryConducts(complementaryConducts, name);
-				}	
-				List<Document> executedSteps = doc.get( "executedSteps", new ArrayList<Document>());
-				if (!executedSteps.isEmpty()) {
-					getMedicationsInSteps(executedSteps, name);
-				}
-			}
-			if (numVersion < version) {
-				numVersion = version;
+			List<Document> complementaryConducts = doc.get( "complementaryConducts", new ArrayList<Document>());			
+			if( !complementaryConducts.isEmpty()) {				
+				getMedicationInComplementaryConducts(complementaryConducts, name);
+			}	
+			List<Document> executedSteps = doc.get( "executedSteps", new ArrayList<Document>());
+			if (!executedSteps.isEmpty()) {
+				getMedicationsInSteps(executedSteps, name);
 			}
 		}
 		Map<String, Double> percentMap = new HashMap<>();

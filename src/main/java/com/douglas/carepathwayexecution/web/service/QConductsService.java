@@ -12,6 +12,7 @@ import QueryMetamodel.EQuery;
 import QueryMetamodel.Pathway;
 import QueryMetamodel.QConduct;
 import QueryMetamodel.Query_metamodelFactory;
+import QueryMetamodel.Version;
 
 @Service
 public class QConductsService {
@@ -20,18 +21,18 @@ public class QConductsService {
 	
 	private int withConduct;
 	private int noConduct;
-	private int numVersion;
 	
 	public EQuery getConducts(EQuery eQuery, int version) {
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
 			for (CarePathway carePathway : CarePathway.VALUES) {
 				if (!carePathway.equals(CarePathway.NONE)) {
 					eQuery.getEAttribute().getCarePathway().setName(carePathway);
-					List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
-					this.numVersion = 1;
+					int numVersion = Version.getByName(carePathway.getName()).getValue();
 					for (int i = 1; i < numVersion + 1; i++) {
 						this.noConduct = 0;
 						this.withConduct = 0;
+						eQuery.getEAttribute().getCarePathway().setVersion(i);
+						List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
 						QConduct qConduct = getData(docs, carePathway, i);
 						if (qConduct.getPathway() != null) {
 							eQuery.getEMethod().add(qConduct);
@@ -42,19 +43,23 @@ public class QConductsService {
 		}
 		else if (version == 0) {
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
-			List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
-			this.numVersion = 1;
-			for (int i = 1; i < numVersion + 1; i++) {
-				this.noConduct = 0;
-				this.withConduct = 0;
-				QConduct qConduct = getData(docs, carePathway, i);
-				if (qConduct.getPathway() != null) {
-					eQuery.getEMethod().add(qConduct);
+			if (!carePathway.equals(CarePathway.NONE)) {
+				int numVersion = Version.getByName(carePathway.getName()).getValue();
+				for (int i = 1; i < numVersion + 1; i++) {
+					this.noConduct = 0;
+					this.withConduct = 0;
+					eQuery.getEAttribute().getCarePathway().setVersion(i);
+					List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
+					QConduct qConduct = getData(docs, carePathway, i);
+					if (qConduct.getPathway() != null) {
+						eQuery.getEMethod().add(qConduct);
+					}
 				}
 			}
 		}
 		else {
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
+			eQuery.getEAttribute().getCarePathway().setVersion(version);
 			List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
 			this.noConduct = 0;
 			this.withConduct = 0;
@@ -81,9 +86,6 @@ public class QConductsService {
 				else {
 					this.withConduct++;
 				}
-			}
-			if (this.numVersion < version) {
-				this.numVersion = version;
 			}
 		}	
 		if (this.noConduct != 0 || this.withConduct != 0) {
