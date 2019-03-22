@@ -80,7 +80,7 @@ public class QAbortedStepService {
 			for (Document key : abortedMap.keySet()) {
 				Step step = Query_metamodelFactory.eINSTANCE.createStep();
 				step.setDescription(key.getString("description"));
-				step.setId(key.getString("_id"));
+				step.setId(key.getInteger("_id") + "");
 				step.setName(key.getString("name"));
 				double percentage = service.rate(abortedMap.get(key), sum);
 				step.setPercentage(service.decimalFormat(percentage) + "%");
@@ -102,15 +102,15 @@ public class QAbortedStepService {
 								int version, 
 								String stepStr) {
 		for (Document document : docs) {
-			List<Document> eSteps = document.get("step", new ArrayList<Document>());
+			List<Document> eSteps = document.get("executedSteps", new ArrayList<Document>());
 			for (Document eStep : eSteps) {			
 				boolean aborted = document.getBoolean("aborted");
 				boolean completed = document.getBoolean("completed");
-				if ((eStep.getString("next").isEmpty()) & 
-						aborted & 
-						completed) {
-					Document step = eStep.get("step", new Document());
-					add(step);
+				if (!eStep.containsKey("next")) {
+					if (aborted && completed) {
+						Document step = eStep.get("step", new Document());
+						add(step);						
+					}						
 				}
 			}
 		}
