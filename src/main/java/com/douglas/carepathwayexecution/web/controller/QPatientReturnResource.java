@@ -5,6 +5,7 @@ import java.text.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +24,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@Api(value = "PatientsReturn", 
+@Api(value = "PatientReturn", 
 	description = "Show the return patient of the care pathway execution",
 	produces ="application/json")
+@Controller
 public class QPatientReturnResource {
 	@Autowired
 	private QCarePathwayService service;
@@ -62,6 +64,41 @@ public class QPatientReturnResource {
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(eQuery.getEAttribute());
 		eQuery = returnService.getReturnPatient(eQuery, null, 0, 0);
+		queryDTO.setMethod( eQuery.getEMethod());
+		return ResponseEntity.ok().body(queryDTO);
+	}
+	
+	@ApiOperation(value = "Calculate the patients that return of a specified care pathway id by pathway version")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/return/patients" }, 
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<EQueryDTO> getAllPatientsToOnePathwayByVersion(
+		@PathVariable( value = "id", required=true) int idPathway,
+		@PathVariable( value = "version", required=true) int version,
+		@RequestParam( value = "conduct", required=false) String conductStr,
+		@RequestParam( value = "status", required=false) String statusStr,
+		@RequestParam( value = "age", required=false) String ageStr,
+		@RequestParam( value = "sex", required=false) String sexStr,
+		@RequestParam( value = "date", required=false) String dateStr,
+		@RequestParam( value = "range", required=false) String rangeStr,
+		Model model) throws ParseException{			
+	
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		eQuery = service.setAtribbutte( idPathway,
+										conductStr,
+										service.splitBy( statusStr, ","),
+										service.splitBy( ageStr, ","),
+										sexStr, 
+										service.splitBy( dateStr, ","),
+										service.splitBy( rangeStr, ","));
+			
+		EQueryDTO queryDTO = new EQueryDTO();
+		queryDTO.setAttribute(eQuery.getEAttribute());
+		eQuery = returnService.getReturnPatient(eQuery, null, version, 0);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}
@@ -205,7 +242,7 @@ public class QPatientReturnResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
-	@ApiOperation(value = "Calculate the patients that return of a specified care pathway id")
+	@ApiOperation(value = "Calculate the patients that return of a specified care pathway id by time interval")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
@@ -213,9 +250,9 @@ public class QPatientReturnResource {
 					method = RequestMethod.GET,
 					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<EQueryDTO> getAllPatientsToOnePathwayByTime(
+	public ResponseEntity<EQueryDTO> getAllPatientsToOnePathwayByHours(
 		@PathVariable( value = "id", required=true) int idPathway,
-		@RequestParam( value = "time", required=false) int hours,
+		@PathVariable( value = "time", required=false) int hours,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -240,8 +277,45 @@ public class QPatientReturnResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
+	@ApiOperation(value = "Calculate the patients that return of a specified care pathway id "
+			+ "by pathway version and time interval")
+	@ApiResponses(value= @ApiResponse(code=200, 
+										response= EQueryDTO.class, 
+										message = ""))
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/version/{version}/return/patients/hours/{time}" }, 
+					method = RequestMethod.GET,
+					produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<EQueryDTO> getAllPatientsToOnePathwayByVersionAndHours(
+		@PathVariable( value = "id", required=true) int idPathway,
+		@PathVariable( value = "time", required=false) int hours,
+		@RequestParam( value = "version", required=false) int version,
+		@RequestParam( value = "conduct", required=false) String conductStr,
+		@RequestParam( value = "status", required=false) String statusStr,
+		@RequestParam( value = "age", required=false) String ageStr,
+		@RequestParam( value = "sex", required=false) String sexStr,
+		@RequestParam( value = "date", required=false) String dateStr,
+		@RequestParam( value = "range", required=false) String rangeStr,
+		Model model) throws ParseException{			
+	
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		eQuery = service.setAtribbutte( idPathway,
+										conductStr,
+										service.splitBy( statusStr, ","),
+										service.splitBy( ageStr, ","),
+										sexStr, 
+										service.splitBy( dateStr, ","),
+										service.splitBy( rangeStr, ","));
+			
+		EQueryDTO queryDTO = new EQueryDTO();
+		queryDTO.setAttribute(eQuery.getEAttribute());
+		eQuery = returnService.getReturnPatient(eQuery, null, version, hours);
+		queryDTO.setMethod( eQuery.getEMethod());
+		return ResponseEntity.ok().body(queryDTO);
+	}
+	
 	@ApiOperation(value = "Calculate the patients that return of a specified care pathway id +"
-			+ "by pathway version and patient code")
+			+ "by pathway version, time interval and patient code")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
@@ -253,7 +327,7 @@ public class QPatientReturnResource {
 		@PathVariable( value = "id", required=true) int idPathway,
 		@PathVariable( value = "version", required=true) int version,
 		@PathVariable( value = "code", required=true) String code,
-		@RequestParam( value = "time", required=false) int hours,
+		@PathVariable( value = "time", required=false) int hours,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -278,7 +352,7 @@ public class QPatientReturnResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
-	@ApiOperation(value = "Calculate the patients that return of each care pathway")
+	@ApiOperation(value = "Calculate the patients that return of each care pathway by time interval")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
@@ -287,7 +361,7 @@ public class QPatientReturnResource {
 					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getAllPatientsToAllPathwaysByHours(
-		@RequestParam( value = "time", required=false) int hours,
+		@PathVariable( value = "time", required=false) int hours,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -312,18 +386,18 @@ public class QPatientReturnResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
-	@ApiOperation(value = "Calculate the patient that return of a specified care pathway id")
+	@ApiOperation(value = "Calculate the patient that return of a specified care pathway id by time interval")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/{id}/return/patients/{code}/time/{hours}" }, 
+	@RequestMapping(value = { "/medcare/execution/pathways/{id}/return/patients/{code}/hours/{time}" }, 
 					method = RequestMethod.GET,
 					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getOnePatientToOnePathwayByHours(
 		@PathVariable( value = "id", required=true) int idPathway,
 		@PathVariable( value = "code", required=true) String codePatient,
-		@RequestParam( value = "time", required=false) int hours,
+		@PathVariable( value = "time", required=false) int hours,
 		@RequestParam( value = "conduct", required=false) String conductStr,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
@@ -348,7 +422,7 @@ public class QPatientReturnResource {
 		return ResponseEntity.ok().body(queryDTO);
 	}
 	
-	@ApiOperation(value = "Calculate the patient that return of each care pathway")
+	@ApiOperation(value = "Calculate the patient that return of each care pathway by time interval")
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
@@ -358,8 +432,8 @@ public class QPatientReturnResource {
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getOnePatientToAllPathwaysByHours(
 		@PathVariable( value = "code", required=true) String codePatient,
+		@PathVariable( value = "time", required=false) int hours,
 		@RequestParam( value = "conduct", required=false) String conductStr,
-		@RequestParam( value = "time", required=false) int hours,
 		@RequestParam( value = "status", required=false) String statusStr,
 		@RequestParam( value = "age", required=false) String ageStr,
 		@RequestParam( value = "sex", required=false) String sexStr,

@@ -41,15 +41,18 @@ public class QMedicationService {
 						medicationsMap = new HashMap<>();
 						stepsMap = new HashMap<>();
 						eQuery.getEAttribute().getCarePathway().setVersion(i);
-						List<Document> docs = service.filterDocuments(eQuery);
-						QMedication qMedication = getData(	docs, 
-								name,
-								eQuery.getEAttribute().getRange(),
-								i, 
-								carePathway);
-						docs.clear();
-						if (qMedication.getPathway() != null) {
-							eQuery.getEMethod().add(qMedication);
+						List<Document> docs = new ArrayList<Document>();
+						while(true) {
+							docs = service.filterDocuments(eQuery);
+							if (docs != null) break;
+							QMedication qMedication = getData(	docs, 
+									name,
+									eQuery.getEAttribute().getRange(),
+									i, 
+									carePathway);
+							if (qMedication.getPathway() != null) {
+								eQuery.getEMethod().add(qMedication);
+							}
 						}
 					}
 				}

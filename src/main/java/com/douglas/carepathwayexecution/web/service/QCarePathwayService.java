@@ -106,8 +106,7 @@ public class QCarePathwayService {
 				}								
 			}
 			else {	
-				for (Document document : docs) {
-					
+				for (Document document : docs) {					
 					docList.add(document);
 				}
 			}
