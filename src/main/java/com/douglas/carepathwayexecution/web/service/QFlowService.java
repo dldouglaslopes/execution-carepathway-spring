@@ -29,6 +29,8 @@ public class QFlowService {
 	private int numFlows;
 
 	public EQuery getRecurrentFlows(EQuery eQuery, int version) {			
+		long start = System.currentTimeMillis();
+		//System.out.println(start);
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {			
 			for (CarePathway carePathway : CarePathway.VALUES) {
 				if (!carePathway.equals(CarePathway.NONE)) {
@@ -84,6 +86,7 @@ public class QFlowService {
 				eQuery.getEMethod().add(qFlow);
 			}			
 		}		
+		System.out.println("Total: "+(System.currentTimeMillis() - start));
 		return eQuery;
 	}	
 	

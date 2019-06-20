@@ -31,6 +31,7 @@ public class QMedicationService {
 	private int qtdMedications;
 	
 	public EQuery getMedications(EQuery eQuery, String name, int version) {
+		long start = System.currentTimeMillis();
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
 			for (CarePathway carePathway : CarePathway.VALUES) {
 				if (!carePathway.equals(CarePathway.NONE)) {
@@ -42,9 +43,8 @@ public class QMedicationService {
 						stepsMap = new HashMap<>();
 						eQuery.getEAttribute().getCarePathway().setVersion(i);
 						List<Document> docs = new ArrayList<Document>();
-						while(true) {
-							docs = service.filterDocuments(eQuery);
-							if (docs != null) break;
+						for (int j = 0; j < 100; j++) {
+							docs = service.filterDocuments(eQuery, j);
 							QMedication qMedication = getData(	docs, 
 									name,
 									eQuery.getEAttribute().getRange(),
@@ -52,7 +52,7 @@ public class QMedicationService {
 									carePathway);
 							if (qMedication.getPathway() != null) {
 								eQuery.getEMethod().add(qMedication);
-							}
+							}	
 						}
 					}
 				}
@@ -94,7 +94,8 @@ public class QMedicationService {
 			if (qMedication.getPathway() != null) {
 				eQuery.getEMethod().add(qMedication);
 			}
-		}		
+		}
+		System.out.println("Total: "+(System.currentTimeMillis() - start));
 		return eQuery;
 	}
 	

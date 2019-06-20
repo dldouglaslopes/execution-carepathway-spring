@@ -1,5 +1,6 @@
 package com.douglas.carepathwayexecution.web.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
@@ -28,12 +29,15 @@ public class QAverageTimeService {
 					int numVersion = Version.getByName(carePathway.getName()).getValue();
 					for (int i = 1; i < numVersion + 1; i++) {
 						eQuery.getEAttribute().getCarePathway().setVersion(i);
-						List<Document> docs = service.filterDocuments(eQuery);
+						List<Document> docs = new ArrayList<Document>();
 						this.times = 0;
-						getTime(docs);
-						QAverageTime qAverageTime = getData(carePathway, docs.size(), i);
-						if (qAverageTime.getPathway() != null) {
-							eQuery.getEMethod().add(qAverageTime);
+						for (int j = 0; j < 100; j++) {
+							docs = service.filterDocuments(eQuery, j);
+							getTime(docs);
+							QAverageTime qAverageTime = getData(carePathway, docs.size(), i, j);
+							if (qAverageTime.getPathway() != null) {
+								eQuery.getEMethod().add(qAverageTime);
+							}
 						}
 					}
 				}
@@ -48,7 +52,7 @@ public class QAverageTimeService {
 					List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
 					this.times = 0;
 					getTime(docs);
-					QAverageTime qAverageTime = getData(carePathway, docs.size(), i);
+					QAverageTime qAverageTime = getData(carePathway, docs.size(), i, 99);
 					if (qAverageTime.getPathway() != null) {
 						eQuery.getEMethod().add(qAverageTime);
 					}
@@ -61,7 +65,7 @@ public class QAverageTimeService {
 			eQuery.getEAttribute().getCarePathway().setVersion(version);
 			List<Document> docs = service.filterDocuments(eQuery);
 			getTime(docs);
-			QAverageTime qAverageTime = getData(carePathway, docs.size(), version);
+			QAverageTime qAverageTime = getData(carePathway, docs.size(), version, 99);
 			if (qAverageTime.getPathway() != null) {
 				eQuery.getEMethod().add(qAverageTime);
 			}
@@ -69,9 +73,9 @@ public class QAverageTimeService {
 		return eQuery;
 	}
 	
-	private QAverageTime getData(CarePathway carePathway, int size, int version) {		
+	private QAverageTime getData(CarePathway carePathway, int size, int version, int page) {		
 		QAverageTime qAverageTime = Query_metamodelFactory.eINSTANCE.createQAverageTime();		
-		if (size > 0) {
+		if (page == 99) {
 			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();	
 			qAverageTime.setAverage(times / 60);
 			pathway.setQuantity(size);

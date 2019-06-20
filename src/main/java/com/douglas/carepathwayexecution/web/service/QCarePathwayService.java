@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bson.Document;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.douglas.carepathwayexecution.query.DBConfig;
@@ -36,17 +37,32 @@ import QueryMetamodel.Query_metamodelFactory;
 @Service
 public class QCarePathwayService {
 	private DBConfig dbConfig = new DBConfig();	
-		
+	
 	public List<Document> filterDocuments(EQuery eQuery) {
+		List<Document> docList = new ArrayList<>();
+		
+		for (int i = 0; i < 100; i++) {
+			docList.addAll(filterDocuments(eQuery, i));
+		}
+		
+		return docList;
+	}
+		
+	public List<Document> filterDocuments(EQuery eQuery, int page) {
 		ACarePathway carePathway = eQuery.getEAttribute().getCarePathway();
 		AAge age = eQuery.getEAttribute().getAge();
 		ADate date = eQuery.getEAttribute().getDate();
 		ASex sex = eQuery.getEAttribute().getSex();
-		AStatus status = eQuery.getEAttribute().getStatus();		
-				
-		FindIterable<Document> docs = dbConfig.getCollection().find().filter( 
-				Filters.and(Filters.eq( "name", carePathway.getName().getLiteral()),
-							Filters.eq( "pathway.version", carePathway.getVersion())));
+		AStatus status = eQuery.getEAttribute().getStatus();
+		
+		FindIterable<Document> docs = dbConfig.getCollection()
+												.find()
+												.skip(page*1000)
+												.limit(1000)
+												.filter(
+														Filters.and(
+																Filters.eq( "name", carePathway.getName().getLiteral()),
+																Filters.eq( "pathway.version", carePathway.getVersion())));
 		List<Document> docList = new ArrayList<>();
 		
 		if (docs.first() != null) {
@@ -113,7 +129,12 @@ public class QCarePathwayService {
 		}
 		docs = null;
 		return docList;
-	}		
+	}
+	
+	public EQuery getResult(JSONObject jsonResult) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	public EQuery setAtribbutte( int idPathway, 
 								String conduct,

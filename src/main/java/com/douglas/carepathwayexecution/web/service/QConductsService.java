@@ -23,6 +23,8 @@ public class QConductsService {
 	private int noConduct;
 	
 	public EQuery getConducts(EQuery eQuery, int version) {
+		long start = System.currentTimeMillis();
+		//System.out.println(start);
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
 			for (CarePathway carePathway : CarePathway.VALUES) {
 				if (!carePathway.equals(CarePathway.NONE)) {
@@ -32,10 +34,13 @@ public class QConductsService {
 						this.noConduct = 0;
 						this.withConduct = 0;
 						eQuery.getEAttribute().getCarePathway().setVersion(i);
-						List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
-						QConduct qConduct = getData(docs, carePathway, i);
-						if (qConduct.getPathway() != null) {
-							eQuery.getEMethod().add(qConduct);
+						List<Document> docs = new ArrayList<Document>();
+						for (int j = 0; j < 100; j++) {
+							docs = service.filterDocuments(eQuery, j); //finding all the documents
+							QConduct qConduct = getData(docs, carePathway, i, j);
+							if (qConduct.getPathway() != null) {
+								eQuery.getEMethod().add(qConduct);
+							}
 						}
 					}
 				}
@@ -50,7 +55,7 @@ public class QConductsService {
 					this.withConduct = 0;
 					eQuery.getEAttribute().getCarePathway().setVersion(i);
 					List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
-					QConduct qConduct = getData(docs, carePathway, i);
+					QConduct qConduct = getData(docs, carePathway, i, 99);
 					if (qConduct.getPathway() != null) {
 						eQuery.getEMethod().add(qConduct);
 					}
@@ -63,15 +68,16 @@ public class QConductsService {
 			List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
 			this.noConduct = 0;
 			this.withConduct = 0;
-			QConduct qConduct = getData(docs, carePathway, version);
+			QConduct qConduct = getData(docs, carePathway, version, 99);
 			if (qConduct.getPathway() != null) {
 				eQuery.getEMethod().add(qConduct);
 			}
 		}	
+		System.out.print((System.currentTimeMillis() - start ) + " ");
 		return eQuery;
 	}
 	
-	private QConduct getData(List<Document> docs, CarePathway carePathway, int number) {
+	private QConduct getData(List<Document> docs, CarePathway carePathway, int number, int page) {
 		QConduct qConduct = Query_metamodelFactory.eINSTANCE.createQConduct();
 		int id = 0;
 		for (Document document : docs) {
@@ -89,14 +95,16 @@ public class QConductsService {
 			}
 		}	
 		if (this.noConduct != 0 || this.withConduct != 0) {
-			qConduct.setNoConduct(this.noConduct);
-			qConduct.setWithConduct(this.withConduct);
-			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
-			pathway.setName(carePathway.getName());
-			pathway.setQuantity(this.noConduct + this.withConduct);
-			pathway.setVersion(number);
-			pathway.setId(id + "");
-			qConduct.setPathway(pathway);
+			if (page == 99) {
+				qConduct.setNoConduct(this.noConduct);
+				qConduct.setWithConduct(this.withConduct);
+				Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
+				pathway.setName(carePathway.getName());
+				pathway.setQuantity(this.noConduct + this.withConduct);
+				pathway.setVersion(number);
+				pathway.setId(id + "");
+				qConduct.setPathway(pathway);
+			}
 		}
 		return qConduct;
 	}

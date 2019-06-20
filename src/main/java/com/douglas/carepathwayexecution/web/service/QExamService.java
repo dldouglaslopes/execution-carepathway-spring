@@ -28,6 +28,7 @@ public class QExamService {
 	
 	private Map<String, Integer> examsMap;
 	private Map<String, Map<String, Integer>> stepsMap;
+	private List<Entry<String, Double>> data;
 	private int qtdExams;
 	
 	public EQuery getRecurrentExam(EQuery eQuery, String exam, int version) {
@@ -37,16 +38,23 @@ public class QExamService {
 					eQuery.getEAttribute().getCarePathway().setName(carePathway);
 					int numVersion = Version.getByName(carePathway.getName()).getValue();
 					for (int i = 1; i < numVersion + 1; i++) {
+						this.examsMap = new HashMap<>();
+						this.stepsMap = new HashMap<>();
+						this.data = new ArrayList<Map.Entry<String,Double>>();
+						this.qtdExams = 0;
 						eQuery.getEAttribute().getCarePathway().setVersion(i);
-						List<Document> docs = service.filterDocuments(eQuery);
-						QExam qExam = getData(docs, 
-								exam, 
-								eQuery.getEAttribute().getRange(), 
-								carePathway, 
-								i);
-						docs.clear();
-						if (qExam.getPathway() != null) {
-							eQuery.getEMethod().add(qExam);
+						List<Document> docs = new ArrayList<Document>();
+						for (int j = 0; j < 100; j++) {
+							docs = service.filterDocuments(eQuery, j);
+							QExam qExam = getData(docs, 
+									exam, 
+									eQuery.getEAttribute().getRange(), 
+									carePathway, 
+									i,
+									j);
+							if (qExam.getPathway() != null) {
+								eQuery.getEMethod().add(qExam);
+							}
 						}
 					}
 				}							
@@ -57,13 +65,18 @@ public class QExamService {
 			eQuery.getEAttribute().getCarePathway().setName(carePathway);
 			int numVersion = Version.getByName(carePathway.getName()).getValue();
 			for (int i = 1; i < numVersion + 1; i++) {
+				this.examsMap = new HashMap<>();
+				this.stepsMap = new HashMap<>();
+				this.data = new ArrayList<Map.Entry<String,Double>>();
+				this.qtdExams = 0;
 				eQuery.getEAttribute().getCarePathway().setVersion(i);
 				List<Document> docs = service.filterDocuments(eQuery);
 				QExam qExam = getData(docs, 
 						exam, 
 						eQuery.getEAttribute().getRange(), 
 						carePathway, 
-						i);
+						i,
+						99);
 				docs.clear();
 				if (qExam.getPathway() != null) {
 					eQuery.getEMethod().add(qExam);
@@ -71,6 +84,10 @@ public class QExamService {
 			}		
 		}
 		else {
+			this.examsMap = new HashMap<>();
+			this.stepsMap = new HashMap<>();
+			this.data = new ArrayList<Map.Entry<String,Double>>();
+			this.qtdExams = 0;
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
 			eQuery.getEAttribute().getCarePathway().setVersion(version);
 			List<Document> docs = service.filterDocuments(eQuery);
@@ -78,7 +95,8 @@ public class QExamService {
 					exam, 
 					eQuery.getEAttribute().getRange(), 
 					carePathway, 
-					version);
+					version,
+					99);
 			docs.clear();
 			if (qExam.getPathway() != null) {
 				eQuery.getEMethod().add(qExam);
@@ -91,14 +109,13 @@ public class QExamService {
 						String examStr, 
 						ARange range, 
 						CarePathway carePathway, 
-						int version) {
+						int version,
+						int page) {
 		QExam qExam = Query_metamodelFactory.eINSTANCE.createQExam();
-		this.examsMap = new HashMap<>();
-		this.stepsMap = new HashMap<>();
-		this.qtdExams = 0;
-		if (!docs.isEmpty()) {			
-			List<Entry<String, Double>> list = getExams(docs, examStr, version, range);
-			for (Entry<String, Double> entry : list) {
+		data.addAll(getExams(docs, examStr, version, range));
+		
+		if (page == 99) {			
+			for (Entry<String, Double> entry : data) {
 				Exam exam = Query_metamodelFactory.eINSTANCE.createExam();
 				String key = entry.getKey();
 				String[] examArr = key.split("-");

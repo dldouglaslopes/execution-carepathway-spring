@@ -26,6 +26,8 @@ public class QStepService {
 	private int count;
 	
 	public EQuery getRecurrentSteps(EQuery eQuery, String stepStr, int version) {
+		long start = System.currentTimeMillis();
+		//System.out.println(start);
 		if (eQuery.getEAttribute().getCarePathway().getName().equals(CarePathway.NONE)) {
 			for (CarePathway carePathway : CarePathway.VALUES) {
 				if (!carePathway.equals(CarePathway.NONE)) {
@@ -71,6 +73,7 @@ public class QStepService {
 				eQuery.getEMethod().add(qStep);
 			}					
 		}
+		System.out.println("Total: "+(System.currentTimeMillis() - start));
 		return eQuery;
 	}
 	
