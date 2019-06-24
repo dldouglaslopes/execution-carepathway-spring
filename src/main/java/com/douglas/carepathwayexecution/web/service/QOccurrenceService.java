@@ -1,9 +1,13 @@
 package com.douglas.carepathwayexecution.web.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bson.Document;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -86,4 +90,42 @@ public class QOccurrenceService {
 		}		
 		return qOccurrence;
 	}
+
+	public EQuery getResults(JSONArray data) {
+		Map<String, Integer> map = new HashMap<>();
+		for (int i = 0; i < data.length(); i++) {
+			JSONObject object = data.getJSONObject(i);
+			String pathway = object.getJSONObject("pathway").getString("name");
+			int value = object.getJSONObject("pathway").getInt("quantity");
+			if (map.containsKey(pathway)) {
+				int sum = value +
+						map.get(pathway);
+				map.replace(pathway, sum);
+			}
+			else {
+				map.put(pathway, value);
+			}
+		}
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		for (String name : map.keySet()) {
+			QOccurrence qOccurrence = Query_metamodelFactory.eINSTANCE.createQOccurrence();
+			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
+			pathway.setName(name);
+			pathway.setQuantity(map.get(name));
+			pathway.setId("");
+			pathway.setVersion(0);
+			qOccurrence.setPathway(pathway);
+			eQuery.getEMethod().add(qOccurrence);
+		}
+		return eQuery;
+	}
 }
+
+
+
+
+
+
+
+
+

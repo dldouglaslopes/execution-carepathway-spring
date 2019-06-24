@@ -44,16 +44,25 @@ public class QAnswerService {
 					eQuery.getEAttribute().getCarePathway().setName(carePathway);
 					int numVersion = Version.getByName(carePathway.getName()).getValue();
 					for (int i = 1; i < numVersion + 1; i++) {
+						this.yesMap = new HashMap<>();
+						this.noMap = new HashMap<>();	
+						this.numericMap = new HashMap<>();
+						this.variablesMap = new HashMap<>();
+						this.stepsMap = new HashMap<>();
 						eQuery.getEAttribute().getCarePathway().setVersion(i);
-						List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
-						QAnswer qAnswer = getData(docs, 
-								questionStr, 
-								type, 
-								eQuery.getEAttribute().getRange(), 
-								carePathway, 
-								i);
-						if (qAnswer.getPathway() != null) {
-							eQuery.getEMethod().add(qAnswer);
+						List<Document> docs = new ArrayList<Document>();
+						for (int j = 0; j < 100; j++) {
+							docs = service.filterDocuments(eQuery, j); //finding all the documents
+							QAnswer qAnswer = getData(docs, 
+									questionStr, 
+									type, 
+									eQuery.getEAttribute().getRange(), 
+									carePathway, 
+									i,
+									j);
+							if (qAnswer.getPathway() != null) {
+								eQuery.getEMethod().add(qAnswer);
+							}
 						}
 					}
 				}							
@@ -64,6 +73,11 @@ public class QAnswerService {
 			if (!carePathway.equals(CarePathway.NONE)) {
 				int numVersion = Version.getByName(carePathway.getName()).getValue();
 				for (int i = 1; i < numVersion + 1; i++) {
+					this.yesMap = new HashMap<>();
+					this.noMap = new HashMap<>();	
+					this.numericMap = new HashMap<>();
+					this.variablesMap = new HashMap<>();
+					this.stepsMap = new HashMap<>();
 					eQuery.getEAttribute().getCarePathway().setVersion(i);
 					List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
 					QAnswer qAnswer = getData(docs, 
@@ -71,7 +85,8 @@ public class QAnswerService {
 							type, 
 							eQuery.getEAttribute().getRange(), 
 							carePathway, 
-							i);
+							i, 
+							99);
 					if (qAnswer.getPathway() != null) {
 						eQuery.getEMethod().add(qAnswer);
 					}
@@ -79,6 +94,11 @@ public class QAnswerService {
 			}		
 		}
 		else {
+			this.yesMap = new HashMap<>();
+			this.noMap = new HashMap<>();	
+			this.numericMap = new HashMap<>();
+			this.variablesMap = new HashMap<>();
+			this.stepsMap = new HashMap<>();
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
 			eQuery.getEAttribute().getCarePathway().setVersion(version);
 			List<Document> docs = service.filterDocuments(eQuery);
@@ -87,7 +107,8 @@ public class QAnswerService {
 										type, 
 										eQuery.getEAttribute().getRange(), 
 										carePathway, 
-										version);
+										version,
+										99);
 			if (qAnswer.getPathway() != null) {
 				eQuery.getEMethod().add(qAnswer);
 			}										
@@ -100,16 +121,12 @@ public class QAnswerService {
 								String type,
 								ARange range, 
 								CarePathway carePathway, 
-								int version) {
+								int version,
+								int page) {
 		QAnswer qAnswer = Query_metamodelFactory.eINSTANCE.createQAnswer();
-		this.yesMap = new HashMap<>();
-		this.noMap = new HashMap<>();	
-		this.numericMap = new HashMap<>();
-		this.variablesMap = new HashMap<>();
-		this.stepsMap = new HashMap<>();
-		if (!docs.isEmpty()) {
-			getVariables(docs, name, type, version);	
-			getAnswers();
+		getVariables(docs, name, type, version);	
+		getAnswers();
+		if (page == 99) {
 			List<Question> questions = getQuestions(range);				
 			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
 			pathway.setName(carePathway.getName());

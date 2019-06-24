@@ -112,9 +112,10 @@ public class QExamService {
 						int version,
 						int page) {
 		QExam qExam = Query_metamodelFactory.eINSTANCE.createQExam();
-		data.addAll(getExams(docs, examStr, version, range));
-		
-		if (page == 99) {			
+		List<Entry<String, Double>> list = getExams(docs, examStr, version, range, page);
+		if (list.size() > 0) {
+			data.addAll(list);
+				
 			for (Entry<String, Double> entry : data) {
 				Exam exam = Query_metamodelFactory.eINSTANCE.createExam();
 				String key = entry.getKey();
@@ -152,21 +153,28 @@ public class QExamService {
 		return qExam;
 	}
 	
-	private List<Entry<String, Double>> getExams(List<Document> docs, String examStr, int number, ARange range) {
+	private List<Entry<String, Double>> getExams(List<Document> docs, 
+												String examStr, 
+												int number, 
+												ARange range, 
+												int page) {
 		for (Document doc : docs) {
 			List<Document> eSteps = doc.get("executedSteps", new ArrayList<>());			
 			getExamsInTreatement(eSteps, examStr);			
 			List<Document> compConducts = doc.get("complementaryConducts", new ArrayList<>());			
 			getExamsInComplementaryConducts(compConducts, examStr);
 		}
-		Map<String, Double> percentMap = new HashMap<>();
-		for (String key : examsMap.keySet()) {
-			double value = service.rate( examsMap.get(key), this.qtdExams);
-			percentMap.put( key, value);
-		}		
-		List<Entry<String, Double>> list = new LinkedList<>( percentMap.entrySet());		
-		service.sort(list, range.getOrder()); //sorting the list with a comparator		
-		list = service.select( range.getQuantity(), list);						
+		List<Entry<String, Double>> list = new ArrayList<Map.Entry<String,Double>>();
+		if (page == 99) {
+			Map<String, Double> percentMap = new HashMap<>();
+			for (String key : examsMap.keySet()) {
+				double value = service.rate( examsMap.get(key), this.qtdExams);
+				percentMap.put( key, value);
+			}		
+			list = new LinkedList<>( percentMap.entrySet());		
+			service.sort(list, range.getOrder()); //sorting the list with a comparator		
+			list = service.select( range.getQuantity(), list);	
+		}					
 		return list;
 	}
 	

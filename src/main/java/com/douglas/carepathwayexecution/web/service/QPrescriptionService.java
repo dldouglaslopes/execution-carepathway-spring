@@ -38,15 +38,21 @@ public class QPrescriptionService {
 					int numVersion = Version.getByName(carePathway.getName()).getValue();
 					for (int i = 1; i < numVersion + 1; i++) {
 						eQuery.getEAttribute().getCarePathway().setVersion(i);
-						List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
-						QPrescription qPrescription = getData(docs, 
-								prescription, 
-								eQuery.getEAttribute().getRange(), 
-								carePathway, 
-								i);
-						docs.clear();
-						if (qPrescription.getPathway() != null) {
-							eQuery.getEMethod().add(qPrescription);
+						List<Document> docs = new ArrayList<Document>(); //finding all the documents
+						this.prescriptionsMap = new HashMap<>();
+						this.qtdPrescriptions = 0;
+						this.medicationsMap = new HashMap<>();
+						for (int j = 0; j < 100; j++) {
+							docs = service.filterDocuments(eQuery, j);
+							QPrescription qPrescription = getData(docs, 
+									prescription, 
+									eQuery.getEAttribute().getRange(), 
+									carePathway, 
+									i,
+									j);
+							if (qPrescription.getPathway() != null) {
+								eQuery.getEMethod().add(qPrescription);
+							}
 						}
 					}
 				}							
@@ -56,6 +62,9 @@ public class QPrescriptionService {
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
 			eQuery.getEAttribute().getCarePathway().setName(carePathway);
 			int numVersion = Version.getByName(carePathway.getName()).getValue();
+			this.prescriptionsMap = new HashMap<>();
+			this.qtdPrescriptions = 0;
+			this.medicationsMap = new HashMap<>();
 			for (int i = 1; i < numVersion + 1; i++) {
 				eQuery.getEAttribute().getCarePathway().setVersion(i);
 				List<Document> docs = service.filterDocuments(eQuery); //finding all the documents
@@ -63,7 +72,8 @@ public class QPrescriptionService {
 						prescription, 
 						eQuery.getEAttribute().getRange(), 
 						carePathway, 
-						i);
+						i,
+						99);
 				docs.clear();
 				if (qPrescription.getPathway() != null) {
 					eQuery.getEMethod().add(qPrescription);
@@ -71,6 +81,9 @@ public class QPrescriptionService {
 			}		
 		}
 		else {
+			this.prescriptionsMap = new HashMap<>();
+			this.qtdPrescriptions = 0;
+			this.medicationsMap = new HashMap<>();
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
 			eQuery.getEAttribute().getCarePathway().setName(carePathway);
 			List<Document> docs = service.filterDocuments(eQuery);
@@ -78,7 +91,8 @@ public class QPrescriptionService {
 					prescription, 
 					eQuery.getEAttribute().getRange(), 
 					carePathway, 
-					version);
+					version, 
+					99);
 			docs.clear();
 			if (qPrescription.getPathway() != null) {
 				eQuery.getEMethod().add(qPrescription);
@@ -91,13 +105,11 @@ public class QPrescriptionService {
 						String prescriptionStr, 
 						ARange range, 
 						CarePathway carePathway, 
-						int version) {
+						int version,
+						int page) {
 		QPrescription qPrescription = Query_metamodelFactory.eINSTANCE.createQPrescription();
-		this.prescriptionsMap = new HashMap<>();
-		this.qtdPrescriptions = 0;
-		this.medicationsMap = new HashMap<>();
-		if (!docs.isEmpty()) {			
-			List<Entry<String, Double>> list = getPrescriptions(docs, prescriptionStr, version, range);
+		List<Entry<String, Double>> list = getPrescriptions(docs, prescriptionStr, version, range, 99);
+		if (list.size() > 0) {			
 			for (Entry<String, Double> entry : list) {
 				Prescription prescription = Query_metamodelFactory.eINSTANCE.createPrescription();
 				String key = entry.getKey();
@@ -129,19 +141,26 @@ public class QPrescriptionService {
 		return qPrescription;
 	}
 	
-	private List<Entry<String, Double>> getPrescriptions(List<Document> docs, String prescriptionStr, int number, ARange range) {
+	private List<Entry<String, Double>> getPrescriptions(List<Document> docs, 
+															String prescriptionStr, 
+															int number, 
+															ARange range,
+															int page) {
 		for (Document doc : docs) {
 			List<Document> eSteps = doc.get("executedSteps", new ArrayList<>());			
 			getPrescriptionInStep(eSteps, prescriptionStr);
 		}
-		Map<String, Double> percentMap = new HashMap<>();
-		for (String key : prescriptionsMap.keySet()) {
-			double value = service.rate( prescriptionsMap.get(key), this.qtdPrescriptions);
-			percentMap.put( key, value);
-		}		
-		List<Entry<String, Double>> list = new LinkedList<>( percentMap.entrySet());		
-		service.sort(list, range.getOrder()); //sorting the list with a comparator		
-		list = service.select( range.getQuantity(), list);						
+		List<Entry<String, Double>> list = new LinkedList<>();		
+		if (page == 99) {
+			Map<String, Double> percentMap = new HashMap<>();
+			for (String key : prescriptionsMap.keySet()) {
+				double value = service.rate( prescriptionsMap.get(key), this.qtdPrescriptions);
+				percentMap.put( key, value);
+			}		
+			list = new LinkedList<>( percentMap.entrySet());		
+			service.sort(list, range.getOrder()); //sorting the list with a comparator		
+			list = service.select( range.getQuantity(), list);
+		}						
 		return list;
 	}
 	

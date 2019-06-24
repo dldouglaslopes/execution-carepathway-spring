@@ -2,6 +2,7 @@ package com.douglas.carepathwayexecution.web.controller;
 
 import java.io.IOException;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +33,14 @@ import com.douglas.carepathwayexecution.web.service.QStepService;
 
 import QueryMetamodel.EQuery;
 import QueryMetamodel.Query_metamodelFactory;
-import ch.qos.logback.core.joran.action.NewRuleAction;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+@Api(value = "CarePathway", 
+	description = "",
+	produces ="application/json")
 @Controller
 public class QCarePathwayResource {
 	@Autowired
@@ -71,30 +75,30 @@ public class QCarePathwayResource {
 	@ApiResponses(value= @ApiResponse(code=200, 
 										response= EQueryDTO.class, 
 										message = ""))
-	@RequestMapping(value = { "/medcare/execution/pathways/{method}" }, 
-					method = RequestMethod.POST,
+	@RequestMapping(value = { "/medcare/execution/pathways/compress/{method}" }, 
+					method = RequestMethod.GET,
 					produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getResults(
 			@PathVariable(value = "method") String method,
-			@RequestParam(value = "path") String path) throws IOException, JSONException {
+			@RequestParam(value = "path", required = true) String path) throws IOException, JSONException {
 
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
 		FileConfig config = new FileConfig();
-		JSONObject jsonObject = config.toJSONObject(path);
-		JSONObject jsonResult = new JSONObject();
+		JSONArray data = config.toJSONObject(path).getJSONArray("method");
 		
 		switch (method) {
 		case "status":
-			
+			eQuery = qStatusService.getResults(data);
 			break;
 		case "occurrence":
-			
+			eQuery = qOccurrenceService.getResults(data);
 			break;
 		case "conduct":
-			
+			eQuery = qConductsService.getResults(data);
 			break;
 		case "time":
-			
+			eQuery = qAverageTimeService.getResults(data);
 			break;
 		case "prescription":
 			
@@ -124,10 +128,8 @@ public class QCarePathwayResource {
 			break;
 		}
 		
-		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
 		EQueryDTO queryDTO = new EQueryDTO();
 		queryDTO.setAttribute(null);
-		eQuery = qCarePathwayService.getResult(jsonResult);
 		queryDTO.setMethod( eQuery.getEMethod());
 		return ResponseEntity.ok().body(queryDTO);
 	}

@@ -131,11 +131,6 @@ public class QCarePathwayService {
 		return docList;
 	}
 	
-	public EQuery getResult(JSONObject jsonResult) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	public EQuery setAtribbutte( int idPathway, 
 								String conduct,
 								String[] statusArr,

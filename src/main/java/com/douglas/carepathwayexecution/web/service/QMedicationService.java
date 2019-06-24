@@ -49,7 +49,8 @@ public class QMedicationService {
 									name,
 									eQuery.getEAttribute().getRange(),
 									i, 
-									carePathway);
+									carePathway,
+									j);
 							if (qMedication.getPathway() != null) {
 								eQuery.getEMethod().add(qMedication);
 							}	
@@ -71,7 +72,8 @@ public class QMedicationService {
 						name,
 						eQuery.getEAttribute().getRange(),
 						i, 
-						carePathway);
+						carePathway,
+						99);
 				docs.clear();
 				if (qMedication.getPathway() != null) {
 					eQuery.getEMethod().add(qMedication);
@@ -89,7 +91,8 @@ public class QMedicationService {
 												name,
 												eQuery.getEAttribute().getRange(),
 												version, 
-												carePathway);
+												carePathway,
+												99);
 			docs.clear();
 			if (qMedication.getPathway() != null) {
 				eQuery.getEMethod().add(qMedication);
@@ -103,13 +106,15 @@ public class QMedicationService {
 								String name, 
 								ARange range, 
 								int version, 
-								CarePathway carePathway) {
+								CarePathway carePathway,
+								int page) {
 		QMedication qMedication = Query_metamodelFactory.eINSTANCE.createQMedication();
-		if (!docs.isEmpty()) {
-			List<Entry<String, Double>> medications = 
-					getMedicationInPathways(docs,
-											name,
-											range);				
+		List<Entry<String, Double>> medications = 
+				getMedicationInPathways(docs,
+										name,
+										range,
+										page);
+		if (medications.size() > 0) {
 			for (Entry<String, Double> entry : medications) {
 				Medication medication = Query_metamodelFactory.eINSTANCE.createMedication();
 				String key = entry.getKey();
@@ -154,7 +159,8 @@ public class QMedicationService {
 	
 	public List<Entry<String, Double>> getMedicationInPathways(List<Document> docs, 
 																String name, 
-																ARange range) { //the medication in executed step or conduct complementary
+																ARange range,
+																int page) { //the medication in executed step or conduct complementary
 		for( Document doc : docs) {
 			List<Document> complementaryConducts = doc.get( "complementaryConducts", new ArrayList<Document>());			
 			if( !complementaryConducts.isEmpty()) {				
@@ -165,14 +171,17 @@ public class QMedicationService {
 				getMedicationsInSteps(executedSteps, name);
 			}
 		}
-		Map<String, Double> percentMap = new HashMap<>();
-		for (String key : medicationsMap.keySet()) {
-			double value = service.rate( medicationsMap.get(key), qtdMedications);
-			percentMap.put( key, value);
-		}		
-		List<Entry<String, Double>> list = new LinkedList<>( percentMap.entrySet());		
-		service.sort(list, range.getOrder()); //sorting the list with a comparator		
-		list = service.select( range.getQuantity(), list);						
+		List<Entry<String, Double>> list = new ArrayList<Map.Entry<String,Double>>();
+		if (page == 99) {
+			Map<String, Double> percentMap = new HashMap<>();
+			for (String key : medicationsMap.keySet()) {
+				double value = service.rate( medicationsMap.get(key), qtdMedications);
+				percentMap.put( key, value);
+			}		
+			list = new LinkedList<>( percentMap.entrySet());		
+			service.sort(list, range.getOrder()); //sorting the list with a comparator		
+			list = service.select( range.getQuantity(), list);
+		}						
 		return list;
 	}
 	

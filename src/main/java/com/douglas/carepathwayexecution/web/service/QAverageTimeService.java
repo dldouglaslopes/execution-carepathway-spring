@@ -1,9 +1,13 @@
 package com.douglas.carepathwayexecution.web.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bson.Document;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -91,5 +95,35 @@ public class QAverageTimeService {
 		for (Document document : docs) {
 			times =+ document.getDouble("timeExecution");		
 		}
+	}
+
+	public EQuery getResults(JSONArray data) {
+		Map<String, Double> map = new HashMap<>();
+		for (int i = 0; i < data.length(); i++) {
+			JSONObject object = data.getJSONObject(i);
+			String pathway = object.getJSONObject("pathway").getString("name");
+			double value = object.getDouble("average");
+			if (map.containsKey(pathway)) {
+				double sum = (value +
+							map.get(pathway)) / 2.0;
+				map.replace(pathway, sum);
+			}
+			else {
+				map.put(pathway, value);
+			}
+		}
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		for (String name : map.keySet()) {
+			QAverageTime qAverageTime = Query_metamodelFactory.eINSTANCE.createQAverageTime();
+			qAverageTime.setAverage(map.get(name));
+			Pathway pathway = Query_metamodelFactory.eINSTANCE.createPathway();
+			pathway.setName(name);
+			pathway.setQuantity(0);
+			pathway.setId("");
+			pathway.setVersion(0);
+			qAverageTime.setPathway(pathway);
+			eQuery.getEMethod().add(qAverageTime);
+		}
+		return eQuery;
 	}
 }

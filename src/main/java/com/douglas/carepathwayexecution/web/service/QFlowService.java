@@ -40,14 +40,18 @@ public class QFlowService {
 						flowMap = new HashMap<>();
 						numFlows = 0;
 						eQuery.getEAttribute().getCarePathway().setVersion(i);
-						List<Document> docs = service.filterDocuments(eQuery);	
-						QFlow qFlow = getData(docs, 
-											carePathway, 
-											i, 
-											eQuery.getEAttribute().getRange());
-						docs.clear();
-						if (qFlow.getPathway() != null) {
-							eQuery.getEMethod().add(qFlow);
+						List<Document> docs = new ArrayList<Document>();
+						for (int j = 0; j < 100; j++) {
+							docs = service.filterDocuments(eQuery, j);	
+							QFlow qFlow = getData(docs, 
+												carePathway, 
+												i, 
+												eQuery.getEAttribute().getRange(),
+												j);
+							docs.clear();
+							if (qFlow.getPathway() != null) {
+								eQuery.getEMethod().add(qFlow);
+							}
 						}
 					}
 				}
@@ -64,7 +68,8 @@ public class QFlowService {
 				QFlow qFlow = getData(docs, 
 									carePathway, 
 									i, 
-									eQuery.getEAttribute().getRange());
+									eQuery.getEAttribute().getRange(),
+									99);
 				docs.clear();
 				if (qFlow.getPathway() != null) {
 					eQuery.getEMethod().add(qFlow);
@@ -80,7 +85,8 @@ public class QFlowService {
 			QFlow qFlow = getData(docs, 
 								carePathway, 
 								version, 
-								eQuery.getEAttribute().getRange());
+								eQuery.getEAttribute().getRange(),
+								99);
 			docs.clear();
 			if (qFlow.getPathway() != null) {
 				eQuery.getEMethod().add(qFlow);
@@ -93,13 +99,15 @@ public class QFlowService {
 	private QFlow getData(List<Document> docs,
 								CarePathway carePathway, 
 								int version,
-								ARange range){
+								ARange range,
+								int page){
 		QFlow qFlow = Query_metamodelFactory.eINSTANCE.createQFlow();
-		if (!docs.isEmpty()) {
-			List<Entry<String, Double>> flowsList = getFlows(docs, 
-														carePathway, 
-														range,
-														version);
+		List<Entry<String, Double>> flowsList = getFlows(docs, 
+				carePathway, 
+				range,
+				version,
+				page);
+		if (flowsList.size() > 0) {
 			List<Flow> flows = getSequences(flowsList);
 			for (Flow flow : flows) {
 				qFlow.getFlow().add(flow);
@@ -155,7 +163,8 @@ public class QFlowService {
 	private List<Entry<String, Double>> getFlows(List<Document> docs, 
 													CarePathway carePathway, 
 													ARange range, 
-													int number) {					
+													int number,
+													int page) {					
 		String field = "name";
 		String literal = carePathway.getLiteral();
 		int size = service.count( field, literal, docs);					
@@ -170,16 +179,19 @@ public class QFlowService {
 						"-" + stepDoc.getString("description") + "#";
 			}
 			add(flow); 
-		}				
-		Map<String, Double> percentMap = new HashMap<>();
-		for ( String key : flowMap.keySet()) { //calculating the percent of the flow
-			int dividend = flowMap.get(key);			
-			double percent = service.rate( dividend, size);
-			percentMap.put( key, percent);	
-		}		
-		List<Entry<String, Double>> list = new LinkedList<>( percentMap.entrySet());
-		service.sort( list, range.getOrder());	//sorting the list following the order		
-		list = service.select( range.getQuantity(), list); //dividing the list	
+		}	
+		List<Entry<String, Double>> list = new LinkedList<>();
+		if (page == 99) {
+			Map<String, Double> percentMap = new HashMap<>();
+			for ( String key : flowMap.keySet()) { //calculating the percent of the flow
+				int dividend = flowMap.get(key);			
+				double percent = service.rate( dividend, size);
+				percentMap.put( key, percent);	
+			}		
+			list = new LinkedList<>( percentMap.entrySet());
+			service.sort( list, range.getOrder());	//sorting the list following the order		
+			list = service.select( range.getQuantity(), list); //dividing the list	
+		}
 		return list;
 	}
 	

@@ -33,11 +33,18 @@ public class QAbortedStepService {
 					int numVersion = Version.getByName(carePathway.getName()).getValue();
 					for (int i = 1; i < numVersion + 1; i++) {
 						eQuery.getEAttribute().getCarePathway().setVersion(i);
-						List<Document> docs = service.filterDocuments(eQuery);
-						QAbortedStep qAbortedStep = getData(docs, carePathway, i, step);
-						docs.clear();
-						if (qAbortedStep.getPathway() != null) {
-							eQuery.getEMethod().add(qAbortedStep);
+						this.abortedMap = new HashMap<>();
+						List<Document> docs = new ArrayList<Document>();
+						for (int j = 0; j < 100; j++) {
+							docs = service.filterDocuments(eQuery, j);
+							QAbortedStep qAbortedStep = getData(docs, 
+																carePathway, 
+																i, 
+																step,
+																j);
+							if (qAbortedStep.getPathway() != null) {
+								eQuery.getEMethod().add(qAbortedStep);
+							}
 						}
 					}
 				}
@@ -47,10 +54,10 @@ public class QAbortedStepService {
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
 			int numVersion = Version.getByName(carePathway.getName()).getValue();
 			for (int i = 1; i < numVersion + 1; i++) {
+				this.abortedMap = new HashMap<>();
 				eQuery.getEAttribute().getCarePathway().setVersion(i);
 				List<Document> docs = service.filterDocuments(eQuery);
-				docs.clear();
-				QAbortedStep qAbortedStep = getData(docs, carePathway, i, step);
+				QAbortedStep qAbortedStep = getData(docs, carePathway, i, step, 99);
 				if (qAbortedStep.getPathway() != null) {
 					eQuery.getEMethod().add(qAbortedStep);
 				}
@@ -60,7 +67,8 @@ public class QAbortedStepService {
 			CarePathway carePathway = eQuery.getEAttribute().getCarePathway().getName();
 			eQuery.getEAttribute().getCarePathway().setVersion(version);
 			List<Document> docs = service.filterDocuments(eQuery);
-			QAbortedStep qAbortedStep = getData(docs, carePathway, version, step);
+			this.abortedMap = new HashMap<>();
+			QAbortedStep qAbortedStep = getData(docs, carePathway, version, step, 99);
 			docs.clear();
 			if (qAbortedStep.getPathway() != null) {
 				eQuery.getEMethod().add(qAbortedStep);
@@ -72,11 +80,11 @@ public class QAbortedStepService {
 	private QAbortedStep getData(List<Document> docs, 
 						CarePathway carePathway, 
 						int version, 
-						String stepStr) {
+						String stepStr,
+						int page) {
 		QAbortedStep qAbortedStep = Query_metamodelFactory.eINSTANCE.createQAbortedStep();
-		this.abortedMap = new HashMap<>();
-		if (!docs.isEmpty()) {		
-			getAbortedSteps(docs, version, stepStr);
+		getAbortedSteps(docs, version, stepStr);
+		if (page == 99) {		
 			for (Document key : abortedMap.keySet()) {
 				Step step = Query_metamodelFactory.eINSTANCE.createStep();
 				step.setDescription(key.getString("description"));
