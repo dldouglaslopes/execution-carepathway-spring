@@ -101,25 +101,26 @@ public class QCarePathwayResource {
 			eQuery = qAverageTimeService.getResults(data);
 			break;
 		case "prescription":
-			
+			//
+			eQuery = qPrescriptionService.getResults(data);
 			break;
 		case "exam":
-			
+			eQuery = qExamService.getResults(data);
 			break;
 		case "answer":
-			
+			eQuery = qAnswerService.getResults(data);
 			break;
 		case "abort":
-			
+			eQuery = qAbortedStepService.getResults(data);
 			break;
 		case "step":
-			
+			eQuery = qStepService.getResults(data);
 			break;
 		case "flow":
 			
 			break;
 		case "medication":
-			
+			eQuery = qMedicationService.getResults(data);
 			break;
 		case "return":
 			

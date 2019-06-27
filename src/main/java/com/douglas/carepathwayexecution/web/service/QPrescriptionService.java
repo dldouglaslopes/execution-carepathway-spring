@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bson.Document;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -217,5 +219,38 @@ public class QPrescriptionService {
 			map.put(medication, 1);
 			medicationsMap.put(key, map);
 		}
+	}
+
+	public EQuery getResults(JSONArray data) {
+		Map<String, Integer> map = new HashMap<>();
+		for (int i = 0; i < data.length(); i++) {
+			JSONObject object = data.getJSONObject(i);
+			JSONArray prescriptions = object.getJSONArray("prescription");
+			for (int j = 0; j < prescriptions.length(); j++) {
+				JSONObject prescription = prescriptions.getJSONObject(j);
+				String name = prescription.getString("name");
+				int quantity = prescription.getInt("quantity");
+				if (map.containsKey(name)) {
+					int value = quantity +
+							map.get(name);
+					map.replace( name, value);
+				}
+				else {
+					map.put(name, quantity);
+				}
+			}
+		}
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		for (String name : map.keySet()) {
+			QPrescription qPrescription = Query_metamodelFactory.eINSTANCE.createQPrescription();
+			Prescription prescription = Query_metamodelFactory.eINSTANCE.createPrescription();
+			Integer quantity = map.get(name);
+			prescription.setName(name);
+			prescription.setQuantity(quantity);
+			qPrescription.getPrescription().add(prescription);
+			qPrescription.setPathway(null);
+			eQuery.getEMethod().add(qPrescription);
+		}
+		return eQuery;
 	}
 }

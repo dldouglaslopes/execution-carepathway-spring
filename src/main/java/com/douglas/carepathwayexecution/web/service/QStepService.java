@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.bson.Document;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -154,5 +156,44 @@ public class QStepService {
 				}
 			}
 		}
+	}
+
+	public EQuery getResults(JSONArray data) {
+		Map<String, JSONObject> map = new HashMap<>();
+		Map<String, Integer> map2 = new HashMap<>();
+		for (int i = 0; i < data.length(); i++) {
+			JSONObject object = data.getJSONObject(i);
+			JSONArray steps = object.getJSONArray("step");
+			for (int j = 0; j < steps.length(); j++) {
+				JSONObject step = steps.getJSONObject(j);
+				String id = step.getString("id");
+				int quantity = step.getInt("quantity");
+				if (map2.containsKey(id)) {
+					int value = quantity +
+							map2.get(id);
+					map2.replace( id, value);
+				}
+				else {
+					map.put(id, step);
+					map2.put(id, quantity);
+				}
+			}
+		}
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		for (String id : map.keySet()) {
+			QStep qStep = Query_metamodelFactory.eINSTANCE.createQStep();
+			Step step = Query_metamodelFactory.eINSTANCE.createStep();
+			JSONObject stepObj = map.get(id);
+			step.setDescription(stepObj.getString("description"));
+			step.setId(id);
+			step.setName(stepObj.getString("name"));
+			step.setQuantity(map2.get(id));
+			step.setType(stepObj.getString("type"));
+			step.setPercentage(null);
+			qStep.getStep().add(step);
+			qStep.setPathway(null);
+			eQuery.getEMethod().add(qStep);
+		}
+		return eQuery;
 	}
 }

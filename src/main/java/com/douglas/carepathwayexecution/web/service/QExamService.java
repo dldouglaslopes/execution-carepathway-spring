@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bson.Document;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -256,5 +258,36 @@ public class QExamService {
 			value.put(step, 1);
 			stepsMap.put(key, value);
 		}
+	}
+
+	public EQuery getResults(JSONArray data2) {
+		Map<String, Integer> map = new HashMap<>();
+		for (int i = 0; i < data2.length(); i++) {
+			JSONObject object = data2.getJSONObject(i);
+			JSONArray exams = object.getJSONArray("exam");
+			for (int j = 0; j < exams.length(); j++) {
+				JSONObject exam = exams.getJSONObject(j);
+				int quantity = exam.getInt("quantity");
+				String name = exam.getString("name");
+				if (map.containsKey(name)) {
+					int value = quantity +
+							map.get(name);
+					map.replace( name, value);
+				}
+				else {
+					map.put(name, quantity);
+				}
+			}
+		}
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		for (String name : map.keySet()) {
+			QExam qExam = Query_metamodelFactory.eINSTANCE.createQExam();
+			Exam exam = Query_metamodelFactory.eINSTANCE.createExam();
+			exam.setName(name);
+			exam.setQuantity(map.get(name));
+			qExam.getExam().add(exam);
+			eQuery.getEMethod().add(qExam);
+		}
+		return eQuery;
 	}
 }
