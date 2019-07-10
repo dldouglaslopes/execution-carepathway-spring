@@ -244,11 +244,9 @@ public class QPrescriptionService {
 		for (String name : map.keySet()) {
 			QPrescription qPrescription = Query_metamodelFactory.eINSTANCE.createQPrescription();
 			Prescription prescription = Query_metamodelFactory.eINSTANCE.createPrescription();
-			Integer quantity = map.get(name);
 			prescription.setName(name);
-			prescription.setQuantity(quantity);
+			prescription.setQuantity(map.get(name));
 			qPrescription.getPrescription().add(prescription);
-			qPrescription.setPathway(null);
 			eQuery.getEMethod().add(qPrescription);
 		}
 		return eQuery;

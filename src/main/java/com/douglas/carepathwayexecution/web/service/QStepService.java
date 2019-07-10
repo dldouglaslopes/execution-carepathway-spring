@@ -159,39 +159,31 @@ public class QStepService {
 	}
 
 	public EQuery getResults(JSONArray data) {
-		Map<String, JSONObject> map = new HashMap<>();
-		Map<String, Integer> map2 = new HashMap<>();
+		Map<String, Integer> map = new HashMap<>();
 		for (int i = 0; i < data.length(); i++) {
 			JSONObject object = data.getJSONObject(i);
 			JSONArray steps = object.getJSONArray("step");
 			for (int j = 0; j < steps.length(); j++) {
 				JSONObject step = steps.getJSONObject(j);
-				String id = step.getString("id");
+				String name = step.getString("name");
 				int quantity = step.getInt("quantity");
-				if (map2.containsKey(id)) {
+				if (map.containsKey(name)) {
 					int value = quantity +
-							map2.get(id);
-					map2.replace( id, value);
+							map.get(name);
+					map.replace( name, value);
 				}
 				else {
-					map.put(id, step);
-					map2.put(id, quantity);
+					map.put(name, quantity);
 				}
 			}
 		}
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		for (String id : map.keySet()) {
+		for (String name : map.keySet()) {
 			QStep qStep = Query_metamodelFactory.eINSTANCE.createQStep();
 			Step step = Query_metamodelFactory.eINSTANCE.createStep();
-			JSONObject stepObj = map.get(id);
-			step.setDescription(stepObj.getString("description"));
-			step.setId(id);
-			step.setName(stepObj.getString("name"));
-			step.setQuantity(map2.get(id));
-			step.setType(stepObj.getString("type"));
-			step.setPercentage(null);
+			step.setName(name);
+			step.setQuantity(map.get(name));
 			qStep.getStep().add(step);
-			qStep.setPathway(null);
 			eQuery.getEMethod().add(qStep);
 		}
 		return eQuery;
