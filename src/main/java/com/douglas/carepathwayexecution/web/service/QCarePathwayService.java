@@ -12,7 +12,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bson.Document;
-import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.douglas.carepathwayexecution.query.DBConfig;

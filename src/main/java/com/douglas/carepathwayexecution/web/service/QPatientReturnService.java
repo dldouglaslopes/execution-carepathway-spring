@@ -10,6 +10,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.bson.Document;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -204,5 +205,10 @@ public class QPatientReturnService {
 		}
 		Date[] dates = new Date[]{creation, conclusion};
 		this.datesMap.put(data, dates);
+	}
+
+	public EQuery getResults(JSONArray data) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

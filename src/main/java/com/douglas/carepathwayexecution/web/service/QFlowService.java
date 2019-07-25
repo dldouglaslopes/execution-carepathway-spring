@@ -11,6 +11,9 @@ import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.douglas.carepathwayexecution.query.DBConfig;
+import com.mongodb.client.FindIterable;
+
 import QueryMetamodel.ARange;
 import QueryMetamodel.CarePathway;
 import QueryMetamodel.EQuery;
@@ -205,5 +208,55 @@ public class QFlowService {
 			flowMap.put(flow, 1);
 			this.numFlows++;
 		}
+	}
+
+	public EQuery getResults() {
+		FindIterable<Document> docs = new DBConfig().getFlowCollection().find();
+		Map<String, Integer> map = new HashMap<>();
+		for (Document document : docs) {
+			ArrayList<Document> docList = document.get("flow", new ArrayList<>());
+			for (Document doc : docList) {
+				ArrayList<Document> steps = doc.get("step", new ArrayList<>());
+				int quantity = doc.getInteger("quantity");
+				String str = "";
+				for (Document step : steps) {
+					str += step.getString("name") + "$";
+				}
+				if (map.containsKey(str)) {
+					quantity += map.get(str);
+					map.replace(str, quantity);
+				}
+				else {
+					map.put(str, quantity);
+				}
+			}
+		}
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		int[] top = {0,0,0,0,0};
+		for (String str : map.keySet()) {
+			QFlow qFlow = Query_metamodelFactory.eINSTANCE.createQFlow();
+			Flow flow = Query_metamodelFactory.eINSTANCE.createFlow();
+			Step step = Query_metamodelFactory.eINSTANCE.createStep();
+			step.setName(str);
+			step.setQuantity(map.get(str));
+			flow.getStep().add(step);
+			qFlow.getFlow().add(flow);
+			eQuery.getEMethod().add(qFlow);
+			int quantity = map.get(str);
+			for (int j = 0; j < top.length; j++) {
+				if (quantity > top[j]) {
+					for (int i = top.length - 1; i > j; i--) {
+						top[i] = top[i - 1];
+					}
+					top[j] = quantity;
+					break;
+				}
+			}
+		}
+		for (int i : top) {
+			System.out.println(i);
+		}
+		
+		return eQuery;
 	}
 }

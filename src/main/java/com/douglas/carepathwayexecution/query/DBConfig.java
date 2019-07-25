@@ -32,4 +32,13 @@ public class DBConfig {
 	public void close() {
 		mongoClient.close(); //close client
 	}
+	
+	public MongoCollection<Document> getPrescriptionCollection() {
+		return mongoDatabase.getCollection("prescriptions");
+	}
+	
+	public MongoCollection<Document> getFlowCollection() {
+		return mongoDatabase.getCollection("flows");
+	}
+	
 }

@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ import com.douglas.carepathwayexecution.web.domain.EQueryDTO;
 import com.douglas.carepathwayexecution.web.service.QAbortedStepService;
 import com.douglas.carepathwayexecution.web.service.QAnswerService;
 import com.douglas.carepathwayexecution.web.service.QAverageTimeService;
-import com.douglas.carepathwayexecution.web.service.QCarePathwayService;
 import com.douglas.carepathwayexecution.web.service.QConductsService;
 import com.douglas.carepathwayexecution.web.service.QExamService;
 import com.douglas.carepathwayexecution.web.service.QFlowService;
@@ -67,8 +65,6 @@ public class QCarePathwayResource {
 	private QFlowService qFlowService;
 	@Autowired
 	private QExamService qExamService;
-	@Autowired
-	private QCarePathwayService qCarePathwayService;
 	
 	@ApiOperation(value = "Calculate the results by each care pathway")
 	
@@ -81,12 +77,14 @@ public class QCarePathwayResource {
 	@ResponseBody
 	public ResponseEntity<EQueryDTO> getResults(
 			@PathVariable(value = "method") String method,
-			@RequestParam(value = "path", required = true) String path) throws IOException, JSONException {
+			@RequestParam(value = "path", required = false) String path) throws IOException, JSONException {
 
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
 		FileConfig config = new FileConfig();
-		JSONArray data = config.toJSONObject(path).getJSONArray("method");
-		
+		JSONArray data = new JSONArray();
+		if (method.equals("prescription") || method.equals ("flow")) {
+			data = config.toJSONObject(path).getJSONArray("method");
+		}
 		switch (method) {
 		case "status":
 			eQuery = qStatusService.getResults(data);
@@ -101,8 +99,7 @@ public class QCarePathwayResource {
 			eQuery = qAverageTimeService.getResults(data);
 			break;
 		case "prescription":
-			//
-			eQuery = qPrescriptionService.getResults(data);
+			eQuery = qPrescriptionService.getResults();
 			break;
 		case "exam":
 			eQuery = qExamService.getResults(data);
@@ -117,13 +114,13 @@ public class QCarePathwayResource {
 			eQuery = qStepService.getResults(data);
 			break;
 		case "flow":
-			
+			eQuery = qFlowService.getResults();
 			break;
 		case "medication":
 			eQuery = qMedicationService.getResults(data);
 			break;
 		case "return":
-			
+			eQuery = qPatientReturnService.getResults(data);
 			break;
 		default:
 			break;

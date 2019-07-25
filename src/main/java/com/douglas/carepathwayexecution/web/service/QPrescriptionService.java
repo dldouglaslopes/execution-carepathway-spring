@@ -1,5 +1,6 @@
 package com.douglas.carepathwayexecution.web.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -8,10 +9,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bson.Document;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.douglas.carepathwayexecution.query.DBConfig;
+import com.mongodb.client.FindIterable;
 
 import QueryMetamodel.ARange;
 import QueryMetamodel.CarePathway;
@@ -221,34 +224,56 @@ public class QPrescriptionService {
 		}
 	}
 
-	public EQuery getResults(JSONArray data) {
+	public EQuery getResults() throws JSONException, IOException {
+		FindIterable<Document> docs = new DBConfig().getPrescriptionCollection().find();
+		
+		for (Document document : docs) {
+			ArrayList<Document> docList = document.get("prescription", new ArrayList<>());
+			for (Document doc : docList) {
+				
+			}
+		}	
+		/*JSONArray data = new JSONArray();
 		Map<String, Integer> map = new HashMap<>();
-		for (int i = 0; i < data.length(); i++) {
-			JSONObject object = data.getJSONObject(i);
-			JSONArray prescriptions = object.getJSONArray("prescription");
-			for (int j = 0; j < prescriptions.length(); j++) {
-				JSONObject prescription = prescriptions.getJSONObject(j);
-				String name = prescription.getString("name");
-				int quantity = prescription.getInt("quantity");
-				if (map.containsKey(name)) {
-					int value = quantity +
-							map.get(name);
-					map.replace( name, value);
-				}
-				else {
-					map.put(name, quantity);
+		for (int k = 2; k < 4; k++) {
+			String path = "C:/Users/dldou/Dropbox/Pesquisa/Mestrado - Drive/CompletoRespostaProtocolo/prescriptions";
+			path += k;
+			path += ".json";
+			System.out.println(path);
+			if (new FileConfig().toJSONObject(path).isNull("method")) {
+				data = null;
+			}
+			else {
+				data = new FileConfig().toJSONObject(path).getJSONArray("method");
+				for (int i = 0; i < data.length(); i++) {
+					JSONObject object = data.getJSONObject(i);
+					JSONArray prescriptions = object.getJSONArray("prescription");
+					for (int j = 0; j < prescriptions.length(); j++) {
+						JSONObject prescription = prescriptions.getJSONObject(j);
+						String name = prescription.getString("name");
+						int quantity = prescription.getInt("quantity");
+						if (map.containsKey(name)) {
+							int value = quantity +
+									map.get(name);
+							map.replace( name, value);
+						}
+						else {
+							map.put(name, quantity);
+						}
+					}
 				}
 			}
-		}
+		}*/
+		
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
-		for (String name : map.keySet()) {
+		/*for (String name : map.keySet()) {
 			QPrescription qPrescription = Query_metamodelFactory.eINSTANCE.createQPrescription();
 			Prescription prescription = Query_metamodelFactory.eINSTANCE.createPrescription();
 			prescription.setName(name);
 			prescription.setQuantity(map.get(name));
 			qPrescription.getPrescription().add(prescription);
 			eQuery.getEMethod().add(qPrescription);
-		}
+		}*/
 		return eQuery;
 	}
 }
