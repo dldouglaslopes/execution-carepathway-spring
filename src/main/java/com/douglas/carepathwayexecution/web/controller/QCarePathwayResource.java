@@ -82,7 +82,7 @@ public class QCarePathwayResource {
 		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
 		FileConfig config = new FileConfig();
 		JSONArray data = new JSONArray();
-		if (method.equals("prescription") || method.equals ("flow")) {
+		if (!method.equals ("flow")) {
 			data = config.toJSONObject(path).getJSONArray("method");
 		}
 		switch (method) {
@@ -99,7 +99,7 @@ public class QCarePathwayResource {
 			eQuery = qAverageTimeService.getResults(data);
 			break;
 		case "prescription":
-			eQuery = qPrescriptionService.getResults();
+			eQuery = qPrescriptionService.getResults(data);
 			break;
 		case "exam":
 			eQuery = qExamService.getResults(data);

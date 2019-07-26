@@ -260,10 +260,10 @@ public class QExamService {
 		}
 	}
 
-	public EQuery getResults(JSONArray data2) {
+	public EQuery getResults(JSONArray data) {
 		Map<String, Integer> map = new HashMap<>();
-		for (int i = 0; i < data2.length(); i++) {
-			JSONObject object = data2.getJSONObject(i);
+		for (int i = 0; i < data.length(); i++) {
+			JSONObject object = data.getJSONObject(i);
 			JSONArray exams = object.getJSONArray("exam");
 			for (int j = 0; j < exams.length(); j++) {
 				JSONObject exam = exams.getJSONObject(j);
