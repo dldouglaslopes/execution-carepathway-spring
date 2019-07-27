@@ -101,6 +101,9 @@ public class QCarePathwayResource {
 		case "prescription":
 			eQuery = qPrescriptionService.getResults(data);
 			break;
+		case "prescriptionmed":
+			eQuery = qPrescriptionService.getResultsMed(data);
+			break;
 		case "exam":
 			eQuery = qExamService.getResults(data);
 			break;

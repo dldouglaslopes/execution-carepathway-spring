@@ -190,8 +190,9 @@ public class QMedicationService {
 	public void getMedicationsInSteps(List<Document> executedSteps, String name) { //the medication in executed step
 		for( Document step : executedSteps) {				
 			Document prescribedResource = step.get( "step", new Document());
-			if ( prescribedResource.getString("type").equals("Tratamento") || 
-				 prescribedResource.getString("type").equals("Receita")) {				
+			if ( prescribedResource.getString("type").equals("Tratamento") //|| 
+				 //prescribedResource.getString("type").equals("Receita")
+					) {				
 				List<Document> prescribedMedication = step.get( "pmedication", new ArrayList<Document>());
 				for (Document document : prescribedMedication) {
 					Document medication = document.get( "medication", new Document());

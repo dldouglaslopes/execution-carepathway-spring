@@ -270,4 +270,56 @@ public class QPrescriptionService {
 		}
 		return eQuery;
 	}
+
+	public EQuery getResultsMed(JSONArray data) {
+		Map<String, Integer> map = new HashMap<>();
+		System.out.println(data.length());
+		for (int i = 0; i < data.length(); i++) {
+			JSONObject object = data.getJSONObject(i);
+			JSONArray prescriptions = object.getJSONArray("prescription");
+			for (int j = 0; j < prescriptions.length(); j++) {
+				JSONObject prescription = prescriptions.getJSONObject(j);
+				JSONArray meds = prescription.getJSONArray("medication");
+				for (int k = 0; k < meds.length(); k++) {
+					JSONObject med = meds.getJSONObject(k);
+					int quantity = med.getInt("quantity");
+					String name = med.getString("name");
+					if (map.containsKey(name)) {
+						int value = quantity +
+								map.get(name);
+						map.replace( name, value);
+					}
+					else {
+						map.put(name, quantity);
+					}
+				}
+			}
+		}
+		EQuery eQuery = Query_metamodelFactory.eINSTANCE.createEQuery();
+		int[] top = {0,0,0,0,0};
+		for (String name : map.keySet()) {
+			QPrescription qPrescription = Query_metamodelFactory.eINSTANCE.createQPrescription();
+			Prescription prescription = Query_metamodelFactory.eINSTANCE.createPrescription();
+			Medication medication = Query_metamodelFactory.eINSTANCE.createMedication();
+			medication.setName(name);
+			medication.setQuantity(map.get(name));
+			prescription.getMedication().add(medication);
+			qPrescription.getPrescription().add(prescription);
+			eQuery.getEMethod().add(qPrescription);
+			int quantity = map.get(name);
+			for (int j = 0; j < top.length; j++) {
+				if (quantity > top[j]) {
+					for (int i = top.length - 1; i > j; i--) {
+						top[i] = top[i - 1];
+					}
+					top[j] = quantity;
+					break;
+				}
+			}
+		}
+		for (int i : top) {
+			System.out.println(i);
+		}
+		return eQuery;
+	}
 }
